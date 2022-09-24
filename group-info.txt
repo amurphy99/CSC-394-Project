@@ -1,0 +1,9 @@
+group info
+
+
+
+EC2 Instance SSH:
+* ssh -i "csc-394-group1.pem" ubuntu@ec2-52-55-83-191.compute-1.amazonaws.com
+
+
+
