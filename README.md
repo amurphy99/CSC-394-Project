@@ -1,1 +1,1 @@
-# CSC-394-Project (group 1 test)
+# CSC-394-Project (group 1)
