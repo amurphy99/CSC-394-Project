@@ -1,6 +1,8 @@
 import os
 
-from flask import Flask, render_template
+# Need to figure out how to write the code for pages in other files
+# (the import for g and request won't be needed then)
+from flask import Flask, render_template, g, request
 from flaskr.db import get_database_connection
 
 
@@ -32,14 +34,25 @@ def create_app(test_config=None):
         return 'Hello, World!'
 
     # my testing stuff 
-    @app.route('/index')
+    @app.route('/index', methods=('GET', 'POST'))
     def index():
+
+        userID = 99
+
+        # get all users info
         conn = get_database_connection()
         cur = conn.cursor()
         cur.execute('SELECT * FROM test_user;')
         test_users = cur.fetchall()
         cur.close()
         conn.close()
+        
+        # check if the user is logged in and has admin privelages, if so, show them admin view
+        if g.user != None:
+            if g.user[3] == 1:
+                return render_template('admin_index.html', test_users=test_users, userID=userID)
+
+        # otherwise, show them the regular user version of the page
         return render_template('index.html', test_users=test_users)
 
 

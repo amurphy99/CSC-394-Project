@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Users {% endblock %}</h1>
-
+    <h1>{% block title %} Users - ADMIN VIEW {% endblock %}</h1>
+    <h3> ID of user to be changed: {{ userID }} </h3>
     <table>
         <tr>
           <th>user ID</th>
           <th>username</th>
           <th>password</th>
           <th>privelages</th>
-          
+          <th>Modify?</th>
         </tr>
         {% for this_user in test_users %}
             <tr>
@@ -17,6 +17,13 @@
                 <td> {{ this_user[1] }} </td>
                 <td> {{ this_user[2] }} </td>
                 <td> {{ this_user[3] }} </td>
+                
+                {% if this_user[3]==0 %}    
+                    <td> <input type="submit" name="Promote" value="{{ this_user[0] }}" > </td>
+                {% else %}
+                    <td> <input type="submit" name="Demote"  value="{{ this_user[0] }}" > </td>
+                {% endif %}
+
             </tr>
         {% endfor %}
     </table>

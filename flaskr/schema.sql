@@ -3,10 +3,14 @@ DROP TABLE IF EXISTS books;
 
 
 CREATE TABLE test_user (
-  id        serial  PRIMARY KEY,
-  username  TEXT    UNIQUE NOT NULL,
-  password  TEXT    NOT NULL
+  id            serial  PRIMARY KEY,
+  username      TEXT    UNIQUE NOT NULL,
+  password      TEXT    NOT NULL,
+  privelages    integer DEFAULT             0
 );
+
+INSERT INTO test_user (username, password, privelages)
+VALUES ('admin', 'password', 1);
 
 INSERT INTO test_user (username, password)
 VALUES ('Andrew', 'password');
