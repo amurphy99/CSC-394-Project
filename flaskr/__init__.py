@@ -43,7 +43,7 @@ def create_app(test_config=None):
             0 = delete user 
             1 = load password reset form
             2 = submit password reset
-            3 = change their privelages
+            3 = change their privileges
         
         '''
         # initialize the variables

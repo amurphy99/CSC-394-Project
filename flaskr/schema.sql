@@ -6,10 +6,10 @@ CREATE TABLE test_user (
   id            serial  PRIMARY KEY,
   username      TEXT    UNIQUE NOT NULL,
   password      TEXT    NOT NULL,
-  privelages    integer DEFAULT             0
+  privileges    integer DEFAULT             0
 );
 
-INSERT INTO test_user (username, password, privelages)
+INSERT INTO test_user (username, password, privileges)
 VALUES ('admin', 'password', 1);
 
 INSERT INTO test_user (username, password)
