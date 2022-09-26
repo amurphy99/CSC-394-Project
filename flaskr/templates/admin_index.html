@@ -5,11 +5,11 @@
     <h3> ID of user to be changed: {{ userID }} </h3>
     <table>
         <tr>
-          <th>user ID</th>
-          <th>username</th>
-          <th>password</th>
-          <th>privelages</th>
-          <th>Modify?</th>
+          <th> user ID      </th>
+          <th> username     </th>
+          <th> password     </th>
+          <th> privelages   </th>
+          <th> Modify?      </th>
         </tr>
         {% for this_user in test_users %}
             <tr>
@@ -18,11 +18,17 @@
                 <td> {{ this_user[2] }} </td>
                 <td> {{ this_user[3] }} </td>
                 
-                {% if this_user[3]==0 %}    
-                    <td> <input type="submit" name="Promote" value="{{ this_user[0] }}" > </td>
-                {% else %}
-                    <td> <input type="submit" name="Demote"  value="{{ this_user[0] }}" > </td>
-                {% endif %}
+                <td> 
+                    <form method="post"> 
+                        {% if this_user[3]==0 %}    
+                            <input type="submit" value="Promote" >
+                            <input type="hidden" name="button" id="Promote" value="{{ this_user[0] }}" >  
+                        {% else %}
+                            <input type="submit" value="Demote" >
+                            <input type="hidden" name="button" id="Demote"  value="{{ this_user[0] }}" >
+                        {% endif %}
+                    </form> 
+                </td>
 
             </tr>
         {% endfor %}

@@ -36,8 +36,12 @@ def create_app(test_config=None):
     # my testing stuff 
     @app.route('/index', methods=('GET', 'POST'))
     def index():
-
-        userID = 99
+        # checking if it gets the right user
+        if request.method == 'POST':
+            userID = request.form['button']
+            # SQL to change users privelage level of this userID here
+        else:
+            userID = 99
 
         # get all users info
         conn = get_database_connection()
