@@ -37,11 +37,13 @@ def init_db():
     db  = get_db()
     cur = db.cursor()
 
+    '''
     cur.execute('DROP TABLE IF EXISTS test_user;')
     cur.execute('CREATE TABLE test_user (id        serial  PRIMARY KEY,'
                                         'username  TEXT    UNIQUE NOT NULL,'
                                         'password  TEXT    NOT NULL);'
                                         )
+    '''
 
 
     with current_app.open_resource('schema.sql') as f:
