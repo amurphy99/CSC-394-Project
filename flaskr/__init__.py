@@ -36,12 +36,45 @@ def create_app(test_config=None):
     # my testing stuff 
     @app.route('/index', methods=('GET', 'POST'))
     def index():
+        '''
+        variables for admin_index.html
+        userID = the ID of the user who is being modifies
+        action = the action being taken 
+            0 = delete user 
+            1 = load password reset form
+            2 = submit password reset
+            3 = change their privelages
+        
+        '''
+        # initialize the variables
+        userID          = -1
+        action          = -1
+        new_password    = "NONE"
+
         # checking if it gets the right user
         if request.method == 'POST':
-            userID = request.form['button']
-            # SQL to change users privelage level of this userID here
-        else:
-            userID = 99
+            userID = request.form["modify_userID"]
+            action = request.form["action"]
+            
+            # promote or demote user
+            if action == 3:
+                # SQL goes here
+                pass
+
+            # reload page with reset password form
+            elif action == 1:    
+                pass
+
+            # Change the userID's password to the newly submitted one
+            elif action == 2:
+                new_password = ["new_password"]
+                # SQL goes here
+                pass
+
+        debug_info = f"ID: {userID} | ACTION: {action} | NEW_PASSWORD: {new_password}"
+
+
+
 
         # get all users info
         conn = get_database_connection()
@@ -54,7 +87,7 @@ def create_app(test_config=None):
         # check if the user is logged in and has admin privelages, if so, show them admin view
         if g.user != None:
             if g.user[3] == 1:
-                return render_template('admin_index.html', test_users=test_users, userID=userID)
+                return render_template('admin_index.html', test_users=test_users, debug_info=debug_info, action=action)
 
         # otherwise, show them the regular user version of the page
         return render_template('index.html', test_users=test_users)

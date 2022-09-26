@@ -2,33 +2,62 @@
 
 {% block content %}
     <h1>{% block title %} Users - ADMIN VIEW {% endblock %}</h1>
-    <h3> ID of user to be changed: {{ userID }} </h3>
+    <h3> {{ debug_info }} </h3>
     <table>
         <tr>
-          <th> user ID      </th>
-          <th> username     </th>
-          <th> password     </th>
-          <th> privelages   </th>
-          <th> Modify?      </th>
+          <th> User ID      </th>
+          <th> Username     </th>
+          <th> Password     </th>
+          <th> Privelages   </th>
+          
         </tr>
         {% for this_user in test_users %}
             <tr>
+                <!-- user ID -->
+                <!-- -------------------------------------------------------- -->
                 <td> {{ this_user[0] }} </td>
+
+
+                <!-- Username -->
+                <!-- -------------------------------------------------------- -->
                 <td> {{ this_user[1] }} </td>
-                <td> {{ this_user[2] }} </td>
-                <td> {{ this_user[3] }} </td>
-                
+
+
+                <!-- Password -->
+                <!-- -------------------------------------------------------- -->
                 <td> 
                     <form method="post"> 
-                        {% if this_user[3]==0 %}    
-                            <input type="submit" value="Promote" >
-                            <input type="hidden" name="button" id="Promote" value="{{ this_user[0] }}" >  
+                        {% if this_user[0]==userID and action==1 %}    
+                            <!-- if this user's password IS being reset, show an input box and submit button -->
+                            <!-- <input type="password" name="password" id="password" required> -->
+                            <input type="new_password" name="new_password" id="new_password" required>
+                            <input type="submit" value="Submit">
                         {% else %}
-                            <input type="submit" value="Demote" >
-                            <input type="hidden" name="button" id="Demote"  value="{{ this_user[0] }}" >
+                            <!-- if this user's password is NOT being reset, show their password and the "Reset Passwird" button -->
+                            {{ this_user[2] }} 
+                            <input type="submit" value="Change Password" >
+                            <input type="hidden" name="modify_userID" id="Change Password"  value="{{ this_user[0] }}" >
                         {% endif %}
                     </form> 
                 </td>
+
+
+                <!-- Privelage Level -->
+                <!-- -------------------------------------------------------- -->
+                <td> 
+                    {{ this_user[3] }}
+
+                    <form method="post"> 
+                        {% if this_user[3]==0 %}    
+                            <input type="submit" value="Promote" >
+                            <input type="hidden" name="modify_userID" id="Promote" value="{{ this_user[0] }}" >  
+                        {% else %}
+                            <input type="submit" value="Demote" >
+                            <input type="hidden" name="modify_userID" id="Demote"  value="{{ this_user[0] }}" >
+                        {% endif %}
+                    </form> 
+                </td>
+
 
             </tr>
         {% endfor %}
