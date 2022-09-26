@@ -6,7 +6,7 @@ from flaskr.db import get_db
 
 
 #@app.route('/index', methods=('GET', 'POST'))
-def index2():
+def index():
     '''
     variables for admin_index.html
     userID = the ID of the user who is being modifies
