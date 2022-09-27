@@ -46,25 +46,53 @@ def index():
         elif action == 2:
             if "new_password" in request.form: # shouldnt need this, but just in case
                 new_password = request.form["new_password"]
-            # SQL goes here
-            # - change the password for userID to be new_password
-            pass
+                # SQL goes here
+                # - change the password for userID to be new_password
+                db  = get_db()
+                cur = db.cursor()
+
+                cur.execute( f"UPDATE test_user set password = '{new_password}' WHERE id = '{userID}'" )
+                db.commit()
+
+                cur.close()
+                db.close()
 
         # promote user
         # -------------
         elif action == 3:
             # SQL goes here
             # change userIDs privileges to 1
-            pass
+            db  = get_db()
+            cur = db.cursor()
+
+            cur.execute( f"UPDATE test_user set privileges = {1} WHERE id = '{userID}'" )
+            db.commit()
+
+            cur.close()
+            db.close()
 
         # demote user 
         # ------------
         elif action == 4:
+<<<<<<< Updated upstream
             if int(userID) == 0: pass # (protection to prevent "admin" from getting demoted)
             else:
                 # SQL goes here
                 # change userIDs privileges to 0
                 pass
+=======
+            #if int(userID) == 0: pass # (protection to prevent "admin" from getting demoted)
+            # SQL goes here
+            # change userIDs privileges to 0
+            db  = get_db()
+            cur = db.cursor()
+
+            cur.execute( f"UPDATE test_user set privileges = {0} WHERE id = '{userID}'" )
+            db.commit()
+
+            cur.close()
+            db.close()
+>>>>>>> Stashed changes
 
         # create new user (should probably add protections for using the same username twice)
         # -----------------------------------------------------------------------------------
