@@ -38,7 +38,15 @@ def index():
         elif action == 6:
             # SQL goes here
             # - remove user from database
-            pass
+            db  = get_db()
+            cur = db.cursor()
+
+            cur.execute(f"DELETE FROM test_user WHERE id = '{userID}'")
+            db.commit()
+
+            cur.close()
+            db.close()
+            
         
         # Change the userID's password to the newly submitted one
         # --------------------------------------------------------
