@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Users - ADMIN VIEW {% endblock %}</h1>
+    <h1>{% block title %} ADMIN PANEL {% endblock %}</h1>
     <h3> {{ debug_info }} </h3>
     <table>
         <tr>
@@ -91,27 +91,27 @@
 
         <!-- Add User Button -->
         <!-- -------------------------------------------------------- -->
-        <tr>
+        <tr class="test3">
         	<form method="post"> 
                 <!-- Button to display form fields and to confirm when done -->
            		{% if action|int == 7 %}    
-           			<td> 
+           			<td class="test1"> 
                         <input type="submit" value="Finish" >
                         <input type="hidden" name="action"        value="{{  8 }}"  >
                         <input type="hidden" name="modify_userID" value="{{ -1 }}"  >    
 					</td>
-					<td> Username: <input type="new_username" name="new_username" id="new_username" required> </td>
-					<td> Password: <input type="new_password" name="new_password" id="new_password" required> </td>
-					<td> Default Privilege Level: 0 </td>
+					<td class="test2"> Username: <input type="new_username" name="new_username" id="new_username" required> </td>
+					<td class="test2"> Password: <input type="new_password" name="new_password" id="new_password" required> </td>
+					<td class="test1"> Default Privilege Level: 0 </td>
 				{% else %}
-					<td>
+					<td class="test1">
 						<input type="submit" value="Create New User" >
                         <input type="hidden" name="action"        value="{{  7 }}"  >
                         <input type="hidden" name="modify_userID" value="{{ -1 }}"  >  
                     </td>
-					<td>   </td>
-					<td>   </td>
-					<td>   </td>
+					<td class="test2">   </td>
+					<td class="test2">   </td>
+					<td class="test1">   </td>
 				{% endif %}
 			</form>
 	    </tr>

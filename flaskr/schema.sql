@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS test_user;
-DROP TABLE IF EXISTS books;
 
 
 CREATE TABLE test_user (
@@ -8,6 +7,7 @@ CREATE TABLE test_user (
   password      TEXT    NOT NULL,
   privileges    integer DEFAULT             0
 );
+
 
 INSERT INTO test_user (username, password, privileges)
 VALUES ('admin', 'password', 1);
@@ -32,21 +32,3 @@ VALUES ('Benas', 'password');
 
 
 
-CREATE TABLE books (id          serial      PRIMARY KEY,
-                    title       varchar     (150) NOT NULL,
-                    author      varchar     (50) NOT NULL,
-                    pages_num   integer     NOT NULL,
-                    review      text,
-                    date_added  date        DEFAULT CURRENT_TIMESTAMP);
-
-INSERT INTO books (title, author, pages_num, review)
-VALUES ('A Tale of Two Cities',
-        'Charles Dickens',
-        489,
-        'A great classic!');
-
-INSERT INTO books (title, author, pages_num, review)
-VALUES ('Anna Karenina',
-        'Leo Tolstoy',
-        864,
-        'Another great classic!');
