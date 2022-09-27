@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Users {% endblock %}</h1>
+
+    <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+    
+    <table>
+        <tr>
+          <th>user ID</th>
+          <th>username</th>
+          <th>password</th>
+          <th>privileges</th>
+          
+        </tr>
+        {% for this_user in test_users %}
+            <tr>
+                <td> {{ this_user[0] }} </td>
+                <td> {{ this_user[1] }} </td>
+                <td> {{ this_user[2] }} </td>
+                <td> {{ this_user[3] }} </td>
+            </tr>
+        {% endfor %}
+
+        <tr>
+            <td>
+                <div>
+                    <form hx-post="/test2" hx-trigger="click" hx-target="#box" hx-swap="outerHTML" > 
+                        <input type="submit" value="Swap Color" >
+                        <input type="hidden" name="new_color" value="{{ hidden_val }}" >  
+                    </form>
+                </div>
+            </td>
+
+            <td>       
+                <div id="box">
+                    <div style="background:red" > Red </div>
+                </div>
+            </td>
+
+
+
+            <td>password        </td>
+            <td>privileges      </td>
+        </tr>
+
+
+    </table>
+
+{% endblock %}
