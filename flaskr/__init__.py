@@ -43,4 +43,8 @@ def create_app(test_config=None):
     from . import index
     app.add_url_rule('/index', methods=('GET', 'POST'), view_func=index.index)
 
+    from . import test
+    app.add_url_rule('/test1', methods=('GET', 'POST'), view_func=test.test1)
+    app.add_url_rule('/test2', methods=('GET', 'POST'), view_func=test.test2)
+
     return app

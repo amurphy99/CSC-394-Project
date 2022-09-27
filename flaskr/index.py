@@ -60,11 +60,10 @@ def index():
         # demote user 
         # ------------
         elif action == 4:
-            if int(userID) == 0: pass # (protection to prevent "admin" from getting demoted)
-            else:
-                # SQL goes here
-                # change userIDs privileges to 0
-                pass
+            #if int(userID) == 0: pass # (protection to prevent "admin" from getting demoted)
+            # SQL goes here
+            # change userIDs privileges to 0
+            pass
 
         # create new user (should probably add protections for using the same username twice)
         # -----------------------------------------------------------------------------------

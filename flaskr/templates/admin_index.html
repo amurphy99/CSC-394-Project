@@ -3,19 +3,19 @@
 {% block content %}
     <h1>{% block title %} Users - ADMIN VIEW {% endblock %}</h1>
     <h3> {{ debug_info }} </h3>
-    <table>
-        <tr>
-          <th> User ID      </th>
-          <th> Username     </th>
-          <th> Password     </th>
-          <th> Privileges   </th>
+    <table class="test4">
+        <tr class="test3">
+          <th class="test1">User ID</th>
+          <th class="test2">Username</th>
+          <th class="test2">Password</th>
+          <th class="test1">Privileges</th>
           
         </tr>
         {% for this_user in test_users %}
-            <tr>
+            <tr class="test3">
                 <!-- user ID -->
                 <!-- -------------------------------------------------------- -->
-                <td> 
+                <td class="test1"> 
                     {{ this_user[0] }}
                     <!-- stars show which user is currently selected -->
                     {% if this_user[0]|int == userID|int %}
@@ -28,8 +28,8 @@
 
                 <!-- Username -->
                 <!-- -------------------------------------------------------- -->
-                <td> 
-                    {{ this_user[1] }}
+                <td class="test2"> 
+                    <div> {{ this_user[1] }} </div>
                     <!-- Buttons to delte user, need to click a second time to confirm -->
                     <form method="post"> 
                         {% if this_user[0]|int == userID and action|int == 5 %}    
@@ -47,7 +47,7 @@
 
                 <!-- Password -->
                 <!-- -------------------------------------------------------- -->
-                <td> 
+                <td class="test2"> 
                     <form method="post"> 
                         {% if this_user[0]|int == userID and action|int == 1 %}    
                             <!-- if this user's password IS being reset, show an input box and submit button -->
@@ -68,8 +68,9 @@
 
                 <!-- Privilege Level -->
                 <!-- -------------------------------------------------------- -->
-                <td> 
-                    {{ this_user[3] }}
+                <td class="test1"> 
+                    <div> {{ this_user[3] }} </div>
+                    
                     <!-- Button just changes the users privelages -->
                     <form method="post"> 
                         {% if this_user[3] == 0 %}    
