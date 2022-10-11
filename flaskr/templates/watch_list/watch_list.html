@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div id="box">
+
+    <h1>{% block title %} {{ list_title }} {% endblock %}</h1>
+
+    <h3> {{ debug_info }} </h3>
+
+    <div>
+        <h3> Owner: {{ list_owner }} </h3>
+        <form hx-post="/edit_watch_list_htmx" hx-trigger="click" hx-target="#box" hx-swap="outerHTML" >
+            <input type="submit" value="Edit" >
+            <!-- probably hidden inputs with all of the other values -->
+
+        </form>       
+    </div>
+
+
+    <table class="test4">
+        <tr>
+          <th>Ranking</th>
+          <th>Movie Title</th>
+          <th>Completion Status</th>
+          <th>Rating</th>
+          
+        </tr>
+        {% for movie in movie_list %}
+            <tr >
+                <!-- Ranking -->
+                <!-- -------------------------------------------------------- -->
+                <td> 
+                   {{ movie[0] }}
+                </td>
+
+                <!-- Movie Title -->
+                <!-- -------------------------------------------------------- -->
+                <td> 
+                     {{ movie[1] }} 
+                </td>
+
+                <!-- Completion Status -->
+                <!-- -------------------------------------------------------- -->
+                <td> 
+                    {{ movie[2] }} 
+                </td>
+
+                <!-- Rating -->
+                <!-- -------------------------------------------------------- -->
+                <td> 
+                     {{ movie[3] }} 
+                </td>
+
+
+            </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+{% endblock %}

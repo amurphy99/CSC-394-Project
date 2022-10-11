@@ -1,5 +1,9 @@
 DROP TABLE IF EXISTS test_user;
 
+DROP TABLE IF EXISTS task_config;
+DROP TABLE IF EXISTS task_response;
+
+
 
 CREATE TABLE test_user (
   id            serial  PRIMARY KEY,
@@ -7,6 +11,9 @@ CREATE TABLE test_user (
   password      TEXT    NOT NULL,
   privileges    integer DEFAULT             0
 );
+
+
+
 
 
 INSERT INTO test_user (username, password, privileges)
