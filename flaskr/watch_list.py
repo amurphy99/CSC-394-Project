@@ -9,11 +9,11 @@ def watch_list():
     list_title = "list title"
     list_owner = "list owner"
     #           ranking, title, watched?, rating
-    movie_list=["1", "Spongebob", "Completed", "10/10",
-                "2", "Spongebob", "Completed", "10/10",
-                "3", "Spongebob", "Completed", "10/10",
-                "4", "Spongebob", "Completed", "10/10",
-                "5", "Spongebob", "Completed", "10/10",
+    movie_list=[["1", "Spongebob", "Completed", "10/10"],
+                ["2", "Spongebob", "Completed", "10/10"],
+                ["3", "Spongebob", "Completed", "10/10"],
+                ["4", "Spongebob", "Completed", "10/10"],
+                ["5", "Spongebob", "Completed", "10/10"],
     ]
 
 
