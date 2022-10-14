@@ -18,28 +18,29 @@ CREATE TABLE test_user (
 
 
 
-INSERT INTO test_user (username, password, privileges)
-VALUES ('admin', 'password', 1);
 INSERT INTO test_user (id, username, password, privileges)
 VALUES ('T01', 'admin', 'password', 1);
 
-INSERT INTO test_user (id, username, password)
-VALUES ('T02', 'Andrew', 'password');
+INSERT INTO test_user (id, username, password, privileges)
+VALUES ('T02', 'NewUser', 'password', 1);
 
 INSERT INTO test_user (id, username, password)
-VALUES ('T03', 'Calvin', 'password');
+VALUES ('T03', 'Andrew', 'password');
 
 INSERT INTO test_user (id, username, password)
-VALUES ('T04', 'Joseph', 'password');
+VALUES ('T04', 'Calvin', 'password');
 
 INSERT INTO test_user (id, username, password)
-VALUES ('T05', 'Brendan', 'password');
+VALUES ('T05', 'Joseph', 'password');
 
 INSERT INTO test_user (id, username, password)
-VALUES ('T06', 'Derrick', 'password');
+VALUES ('T06', 'Brendan', 'password');
 
 INSERT INTO test_user (id, username, password)
-VALUES ('T07', 'Benas', 'password');
+VALUES ('T07', 'Derrick', 'password');
+
+INSERT INTO test_user (id, username, password)
+VALUES ('T08', 'Benas', 'password');
 
 CREATE TABLE MOVIES (
   MID     TEXT  PRIMARY KEY,
