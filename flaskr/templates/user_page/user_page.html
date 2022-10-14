@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>{% block title %} {{ this_user[1] }}'s Page {% endblock %}</h1>
+    <h3>  User ID = {{ this_user[0] }} </h3>
+    <h3>  User Password = {{ this_user[2] }} </h3>
+    <h3>  User Privileges = {{ this_user[3] }} </h3>
+    
+
+{% endblock %}

@@ -1,94 +1,92 @@
-DROP TABLE IF EXISTS test_user;
-DROP TABLE IF EXISTS MOVIES;
-DROP TABLE IF EXISTS MOVIESLIST;
+DROP TABLE IF EXISTS movies_list;
+DROP TABLE IF EXISTS movies_list_info;
 
-DROP TABLE IF EXISTS task_config;
-DROP TABLE IF EXISTS task_response;
-
+DROP TABLE IF EXISTS movies     CASCADE;
+DROP TABLE IF EXISTS test_user  CASCADE;
 
 
 CREATE TABLE test_user (
-  id            TEXT  PRIMARY KEY,
+  id            serial 	PRIMARY KEY,
   username      TEXT    UNIQUE NOT NULL,
   password      TEXT    NOT NULL,
   privileges    integer DEFAULT             0
 );
 
-
-
-
-
-INSERT INTO test_user (id, username, password, privileges)
-VALUES ('T01', 'admin', 'password', 1);
-
-INSERT INTO test_user (id, username, password, privileges)
-VALUES ('T02', 'NewUser', 'password', 1);
-
-INSERT INTO test_user (id, username, password)
-VALUES ('T03', 'Andrew', 'password');
-
-INSERT INTO test_user (id, username, password)
-VALUES ('T04', 'Calvin', 'password');
-
-INSERT INTO test_user (id, username, password)
-VALUES ('T05', 'Joseph', 'password');
-
-INSERT INTO test_user (id, username, password)
-VALUES ('T06', 'Brendan', 'password');
-
-INSERT INTO test_user (id, username, password)
-VALUES ('T07', 'Derrick', 'password');
-
-INSERT INTO test_user (id, username, password)
-VALUES ('T08', 'Benas', 'password');
-
-CREATE TABLE MOVIES (
-  MID     TEXT  PRIMARY KEY,
-  Name    TEXT    NOT NULL,
-  Rating  integer    NOT NULL
+CREATE TABLE movies (
+  id 		serial      PRIMARY KEY,
+  name 	varchar(30)
 );
 
-INSERT INTO MOVIES (MID, Name, Rating)
-VALUES ('M01', 'John Wick', 6);
-
-INSERT INTO MOVIES (MID, Name, Rating)
-VALUES ('M02', 'Mission Impossible', 8);
-
-INSERT INTO MOVIES (MID, Name, Rating)
-VALUES ('M03','Jumanji', 8);
-
-INSERT INTO MOVIES (MID, Name, Rating)
-VALUES ('M04','London has Fallen', 9);
-
-INSERT INTO MOVIES (MID, Name, Rating)
-VALUES ('M05','Game of Thrones', 7);
-
-
-CREATE TABLE MOVIESLIST (
-  UserID  TEXT    NOT NULL,
-  FOREIGN KEY (UserID) REFERENCES test_user(id),
-  MID     TEXT    NOT NULL,
-  FOREIGN KEY (MID) REFERENCES MOVIES(MID),
-  STATUS  TEXT    NOT NULL,
-  PRIMARY KEY(UserID, MID)
+CREATE TABLE movies_list_info (
+  id 				        serial 	PRIMARY KEY,
+  owner_id  	      int,
+  editor_ids        TEXT,
+  list_name         TEXT,
+  list_description  TEXT,
+  date_created      timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO MOVIESLIST (userID, MID, STATUS)
-VALUES ('T01', 'M01', 'YES');
+CREATE TABLE movies_list (
+  movieID 	int references movies(id),
+  listID 	  int references movies_list_info(id),
+  status 	  int DEFAULT    0,
+  constraint pk_movies_list primary key (movieID, listID)
+);
 
-INSERT INTO MOVIESLIST (userID, MID, STATUS)
-VALUES ('T01', 'M02', 'YES');
 
-INSERT INTO MOVIESLIST (userID, MID, STATUS)
-VALUES ('T03', 'M01', 'NO');
 
-INSERT INTO MOVIESLIST (userID, MID, STATUS)
-VALUES ('T05', 'M05', 'NO');
+INSERT INTO test_user (username, password, privileges)
+VALUES ('admin', 'password', 1);
 
-INSERT INTO MOVIESLIST (userID, MID, STATUS)
-VALUES ('T03', 'M02', 'YES');
+INSERT INTO test_user (username, password)
+VALUES ('Andrew', 'password');
 
-INSERT INTO MOVIESLIST (userID, MID, STATUS)
-VALUES ('T07', 'M05', 'YES');
+INSERT INTO test_user (username, password)
+VALUES ('Calvin', 'password');
+
+INSERT INTO test_user (username, password)
+VALUES ('Joseph', 'password');
+
+INSERT INTO test_user (username, password)
+VALUES ('Brendan', 'password');
+
+INSERT INTO test_user (username, password)
+VALUES ('Derrick', 'password');
+
+INSERT INTO test_user (username, password)
+VALUES ('Benas', 'password');
+
+
+INSERT INTO movies (name) VALUES ('Star Wars');
+INSERT INTO movies (name) VALUES ('Spongebob');
+INSERT INTO movies (name) VALUES ('Batman');
+INSERT INTO movies (name) VALUES ('James Bond');
+INSERT INTO movies (name) VALUES ('Jurassic Park');
+
+
+
+INSERT INTO movies_list_info (owner_id, list_name, list_description)
+VALUES (1, 'test list', 'testing movie list');
+
+
+INSERT INTO movies_list(movieID, listID)
+VALUES (1, 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
