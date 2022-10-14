@@ -3,9 +3,24 @@
 {% block content %}
 
     <h1>{% block title %} {{ this_user[1] }}'s Page {% endblock %}</h1>
-    <h3>  User ID = {{ this_user[0] }} </h3>
-    <h3>  User Password = {{ this_user[2] }} </h3>
-    <h3>  User Privileges = {{ this_user[3] }} </h3>
+
+    <p>  User ID = {{ this_user[0] }} </p>
+    <p>  User Password = {{ this_user[2] }} </p>
+    <p>  User Privileges = {{ this_user[3] }} </p>
     
+    <div>
+        <h3> {{ this_user[1] }}'s Watch Lists</h3>
+        {% for user_list in user_lists %}
+
+        <div>
+            <h3> List Name:     {{ user_list[3] }}  </h3>
+            <p>  Description:   {{ user_list[4] }}  </p>
+            <p>  Created On:    {{ user_list[3] }}  </p>
+            <a href="{{ url_for('watch_list', listID=user_list[0]) }}">View List</a>
+        </div>
+
+        {% endfor %}
+    </div>
+
 
 {% endblock %}

@@ -19,29 +19,17 @@
 
     <table class="test4">
         <tr>
-          <th>Ranking</th>
+       
           <th>Movie Title</th>
           <th>Completion Status</th>
-          <th>Rating</th>
           
         </tr>
         {% for movie in movie_list %}
             <tr >
-                <!-- Ranking -->
-                <!-- -------------------------------------------------------- -->
+
                 <td> {{ movie[0] }} </td>
 
-                <!-- Movie Title -->
-                <!-- -------------------------------------------------------- -->
                 <td> {{ movie[1] }} </td>
-
-                <!-- Completion Status -->
-                <!-- -------------------------------------------------------- -->
-                <td> {{ movie[2] }} </td>
-
-                <!-- Rating -->
-                <!-- -------------------------------------------------------- -->
-                <td> {{ movie[3] }} </td>
 
             </tr>
         {% endfor %}

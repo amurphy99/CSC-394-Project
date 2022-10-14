@@ -18,8 +18,8 @@ CREATE TABLE movies (
 );
 
 CREATE TABLE movies_list_info (
-  id 				        serial 	PRIMARY KEY,
-  owner_id  	      int,
+  id                serial 	PRIMARY KEY,
+  owner_id          int,
   editor_ids        TEXT,
   list_name         TEXT,
   list_description  TEXT,
@@ -27,10 +27,10 @@ CREATE TABLE movies_list_info (
 );
 
 CREATE TABLE movies_list (
-  movieID 	int references movies(id),
-  listID 	  int references movies_list_info(id),
+  movie_id 	int references movies(id),
+  list_id 	  int references movies_list_info(id),
   status 	  int DEFAULT    0,
-  constraint pk_movies_list primary key (movieID, listID)
+  constraint pk_movies_list primary key (movie_id, list_id)
 );
 
 
@@ -69,12 +69,14 @@ INSERT INTO movies_list_info (owner_id, list_name, list_description)
 VALUES (1, 'test list', 'testing movie list');
 
 
-INSERT INTO movies_list(movieID, listID)
-VALUES (1, 1)
+INSERT INTO movies_list(movie_id, list_id)
+VALUES (1, 1);
 
+INSERT INTO movies_list(movie_id, list_id)
+VALUES (2, 1);
 
-
-
+INSERT INTO movies_list(movie_id, list_id)
+VALUES (4, 1);
 
 
 

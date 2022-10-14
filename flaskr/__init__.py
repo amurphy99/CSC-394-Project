@@ -52,8 +52,7 @@ def create_app(test_config=None):
     app.add_url_rule('/reset_password_htmx',    methods=('GET', 'POST'), view_func=index_htmx.reset_password_htmx)
 
     from . import watch_list
-    app.add_url_rule('/watch_list',             methods=('GET', 'POST'), view_func=watch_list.watch_list)
-    app.add_url_rule('/edit_watch_list_htmx',   methods=('GET', 'POST'), view_func=watch_list.watch_list)
+    app.add_url_rule('/watch_list/<listID>',    methods=('GET', 'POST'), view_func=watch_list.watch_list)
 
     from . import user_page
     app.add_url_rule('/user/<userID>',           methods=('GET', 'POST'), view_func=user_page.user_page)
