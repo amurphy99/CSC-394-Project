@@ -2,7 +2,7 @@
 <title>{% block title %}{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
-  <h1>CSC 394 - group 1</h1>
+  <h1 class="top-logo">CinemUs</h1>
   <ul>
     <li><a href="{{ url_for('index') }}">Users</a>
     {% if g.user %}
