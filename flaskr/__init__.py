@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template
 
 
 
@@ -56,5 +56,10 @@ def create_app(test_config=None):
 
     from . import user_page
     app.add_url_rule('/user/<userID>',           methods=('GET', 'POST'), view_func=user_page.user_page)
+
+    # a simple page that says hello
+    @app.route('/test3')
+    def test3():
+        return render_template('test2.html')
 
     return app

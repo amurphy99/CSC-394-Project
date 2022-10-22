@@ -1,0 +1,135 @@
+/* User Page Start */
+/* --------------- */
+.user_page_header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 0.5rem;
+    gap: 1.0rem;
+}
+
+/* Content */
+.user_page_VStack {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.user_page_HStack {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Header */
+.user_page_header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 1.0rem;
+}
+
+/* Bio */
+.user_page_bio {
+    border: solid 1px;
+    padding: 0 1.0rem;
+}
+
+/* Socials Bar */
+.user_page_socials {
+    border: solid 1px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 1.0rem;
+    gap: 1.0rem;
+}
+.user_page_socials > .socials_item {
+    border: solid 1px;
+    display: flex;
+    justify-content: space-between;
+    gap: 1.0rem;
+}
+
+/* User Statistics */
+.user_statistics {
+    width: 22.5%;
+    border: solid 1px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.user_statistics > h3 {
+    padding: 0 1.0rem;
+}
+.user_statistics > .table_row {
+    padding: 0 1.0rem;
+    display: flex;
+    justify-content: space-between;
+}
+.user_statistics > .table_row > p {
+    font-size: 0.90rem;
+    color: rgba(0,122,255);
+}
+
+
+
+/* User Watch Lists */
+.user_watch_lists {
+    width: 75%;
+    border: solid 1px;
+}
+.user_watch_lists > h3 {
+    padding: 0 1.0rem;
+}
+.watch_lists_info {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 1.0rem;
+    gap: 1.0rem;
+}
+.list_preview_wrapper {
+    padding: 1.0rem;
+
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: repeat(2, 1fr);   
+    gap: 1.0rem;
+}
+.list_preview {
+    background: rgba(209,209,214);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    padding: 0.25rem 0.5rem;
+}
+
+
+
+/*
+Flex Box Reference
+-------------------
+    https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+
+Shadows
+--------
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+
+System Grays 
+-------------
+https://developer.apple.com/design/human-interface-guidelines/foundations/color/
+
+    lightmode
+    gray 2: rgba(174,174,178)
+    gray 4: rgba(209,209,214)
+    gray 5: rgba(229,229,234)
+
+    darkmode 
+    gray 3: rgba(72,72,74)
+
+
+System Colors
+--------------
+https://developer.apple.com/design/human-interface-guidelines/foundations/color/
+
+    lightmode
+    blue: rgba(0,122,255)
+
+*/
