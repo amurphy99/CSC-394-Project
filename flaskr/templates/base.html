@@ -4,6 +4,7 @@
 <nav>
   <h1 class="top-logo">CinemUs</h1>
   <ul>
+    <li><a href="{{ url_for('home_page', userID=g.user[0]) }}"> Home              </a>
     <li><a href="{{ url_for('index') }}">Users</a>
     {% if g.user %}
       <li><a href="{{ url_for('user_page', userID=g.user[0]) }}"> {{ g.user[1] }} </a>
