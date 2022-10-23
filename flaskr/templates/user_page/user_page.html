@@ -1,26 +1,94 @@
 {% extends 'base.html' %}
 
+<!--
+ideas to add:
+    * recent updates (display previous 3 shows/movies added)
+    * statistics
+        - movies watched
+        - shows watched
+        - average rating
+--> 
+
 {% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_page_light.css') }}">
 
-    <h1>{% block title %} {{ this_user[1] }}'s Page {% endblock %}</h1>
+    <div class="user_page_VStack">
 
-    <p>  User ID = {{ this_user[0] }} </p>
-    <p>  User Password = {{ this_user[2] }} </p>
-    <p>  User Privileges = {{ this_user[3] }} </p>
-    
-    <div>
-        <h3> {{ this_user[1] }}'s Watch Lists</h3>
-        {% for user_list in user_lists %}
-
-        <div>
-            <h3> List Name:     {{ user_list[3] }}  </h3>
-            <p>  Description:   {{ user_list[4] }}  </p>
-            <p>  Created On:    {{ user_list[3] }}  </p>
-            <a href="{{ url_for('watch_list', listID=user_list[0]) }}">View List</a>
-        </div>
-
-        {% endfor %}
+    <!-- User Page Header -->
+    <div class="user_page_header">
+        <h1>{% block title %} {{ this_user[1] }}'s Page {% endblock %}</h1>
+        <h3> #{{ this_user[2] }} </h3>
     </div>
 
+
+
+    <!-- User Bio -->
+    <div class="user_page_bio">
+        <p>
+            {{ "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et egestas quis ipsum suspendisse ultrices gravida. Nec feugiat in fermentum posuere urna nec tincidunt praesent semper. Tortor dignissim convallis aenean et tortor. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor. Libero justo laoreet sit amet. In ornare quam viverra orci sagittis eu. Auctor urna nunc id cursus metus. Tincidunt augue interdum velit euismod in pellentesque massa placerat. Aliquam malesuada bibendum arcu vitae." }}
+        </p>
+    </div>
+
+
+
+    <!-- Socials -->
+    <div class="user_page_socials">
+
+        <div class="socials_item">     <p> Friends      </p>    <p> {{ 25 }} </p> </div>
+        <div class="socials_item">     <p> Followers    </p>    <p> {{  2 }} </p> </div>
+
+        <div class="socials_item">
+            <form hx-post="/edit_watch_list_htmx" hx-trigger="click" hx-target="#box" hx-swap="outerHTML" >
+                <input type="submit" value="Add Friend" >
+            </form>     
+        </div>
+
+    </div>
+
+
+
+    <!-- User Page Content -->
+    <div class="user_page_HStack">
+
+        <!-- User Statistics -->
+        <div class="user_statistics">
+            <h3> Statistics </h3>
+
+            <div class="table_row">     <p> Joined              </p>    <p> {{ this_user[4]     }} </p> </div>
+            <div class="table_row">     <p> Completed           </p>    <p> {{ statistics[0]    }} </p> </div>
+            <div class="table_row">     <p> Currently Watching  </p>    <p> {{ statistics[1]    }} </p> </div>
+            <div class="table_row">     <p> Plan to Watch       </p>    <p> {{ statistics[2]    }} </p> </div>
+            <div class="table_row">     <p> Watch Time          </p>    <p> {{ statistics[3]    }} </p> </div>
+
+        </div>
+
+        <!-- Watch List Display -->
+        <div class="user_watch_lists">
+
+            <div class="watch_lists_info">
+                <h3> {{ this_user[1] }}'s Watch Lists</h3>
+                
+                <form hx-post="/edit_watch_list_htmx" hx-trigger="click" hx-target="#box" hx-swap="outerHTML" >
+                    <input type="submit" value="Add New" >
+                </form>     
+            </div>
+
+            <div class="list_preview_wrapper">
+                {% for watch_list in user_lists %}
+
+                <div class="list_preview">
+                    <h3> {{ watch_list[3] }} </h3>
+                    <p>  {{ watch_list[3] }}  </p>
+                    <p>  Created On: {{ watch_list[3] }}  </p>
+                    <a href="{{ url_for('watch_list', listID=0) }}">View List</a>
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>  
+    
+    </div>
 
 {% endblock %}

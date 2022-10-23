@@ -1,0 +1,30 @@
+<div id="results-table">
+    <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+
+    <p> Enter movie query </p>
+
+    <form hx-post="/send_query_htmx" hx-trigger="click" hx-target="#results-table" hx-swap="outerHTML" > 
+
+        <input type="api_query" name="api_query" id="api_query" required>
+        <input type="submit" value="Search">
+
+    </form>
+
+    <table>
+        <tr>
+        <th>Key</th>
+        <th>Value</th>
+        </tr>
+
+        {% for line in results %}
+        <tr>
+
+            <td> {{ line[0] }} </td>
+            <td> {{ line[1] }} </td>
+
+        </tr>
+    {% endfor %}
+
+    </table>
+
+</div>

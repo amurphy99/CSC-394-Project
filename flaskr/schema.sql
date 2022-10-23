@@ -6,10 +6,12 @@ DROP TABLE IF EXISTS test_user  CASCADE;
 
 
 CREATE TABLE test_user (
-  id            serial 	PRIMARY KEY,
-  username      TEXT    UNIQUE NOT NULL,
-  password      TEXT    NOT NULL,
-  privileges    integer DEFAULT             0
+  id            serial 	  PRIMARY KEY,
+  username      TEXT      UNIQUE NOT NULL,
+  password      TEXT      NOT NULL,
+  privileges    int       DEFAULT             0,
+  date_joined   timestamp DEFAULT             CURRENT_TIMESTAMP,
+  style_mode    int       DEFAULT             0
 );
 
 CREATE TABLE movies (
@@ -28,7 +30,7 @@ CREATE TABLE movies_list_info (
 
 CREATE TABLE movies_list (
   movie_id 	int references movies(id),
-  list_id 	  int references movies_list_info(id),
+  list_id 	int references movies_list_info(id),
   status 	  int DEFAULT    0,
   constraint pk_movies_list primary key (movie_id, list_id)
 );
