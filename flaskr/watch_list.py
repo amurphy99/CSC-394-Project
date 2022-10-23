@@ -45,3 +45,8 @@ def watch_list(listID):
 
 
 
+# app.add_url_rule('/watch_list/modal', methods=('GET', 'POST'), view_func=watch_list.add_movie_modal)
+def add_movie_modal():
+    return render_template('watch_list/add_movie_modal.html')
+
+

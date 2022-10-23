@@ -38,11 +38,23 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
+
     # created function for handling the index page (stored in another file)
     # ---------------------------------------------
     from . import index
     app.add_url_rule('/index', methods=('GET', 'POST'), view_func=index.index)
 
+    from . import user_page
+    app.add_url_rule('/user/<userID>',          methods=('GET', 'POST'), view_func=user_page.user_page)
+    app.add_url_rule('/user/modal',             methods=('GET', 'POST'), view_func=user_page.new_list_modal)
+    app.add_url_rule('/user/create_new_list',   methods=('GET', 'POST'), view_func=user_page.create_new_list)
+
+    from . import watch_list
+    app.add_url_rule('/watch_list/<listID>',    methods=('GET', 'POST'), view_func=watch_list.watch_list)
+
+
+    # ALL TESTING PAGES
+    # ---------------------------------------------
     from . import test
     app.add_url_rule('/test1', methods=('GET', 'POST'), view_func=test.test1)
     app.add_url_rule('/test2', methods=('GET', 'POST'), view_func=test.test2)
@@ -51,13 +63,6 @@ def create_app(test_config=None):
     app.add_url_rule('/index_htmx',             methods=('GET', 'POST'), view_func=index_htmx.index_htmx         )
     app.add_url_rule('/reset_password_htmx',    methods=('GET', 'POST'), view_func=index_htmx.reset_password_htmx)
 
-    from . import watch_list
-    app.add_url_rule('/watch_list/<listID>',    methods=('GET', 'POST'), view_func=watch_list.watch_list)
-
-    from . import user_page
-    app.add_url_rule('/user/<userID>',           methods=('GET', 'POST'), view_func=user_page.user_page)
-
-    # a simple page that says hello
     @app.route('/test3')
     def test3():
         return render_template('test2.html')

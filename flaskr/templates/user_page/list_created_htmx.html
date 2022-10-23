@@ -1,0 +1,43 @@
+<div class="new-list-creation-response">
+<!--
+    Form to create a new watch list
+    ----------------------------------
+    CREATE TABLE movies_list_info (
+        id                serial 	PRIMARY KEY,
+        owner_id          int,
+        editor_ids        TEXT,
+        list_name         TEXT,
+        list_description  TEXT,
+        date_created      timestamp DEFAULT CURRENT_TIMESTAMP
+    );
+
+    * the button for closing the modal is separate from the submission button.
+    * fields:
+        - list name
+        - list description
+        (LATER ON)
+        - add editors
+        - public/private
+
+    * after form is submitted with the "finish" button
+        - send sql query to create it
+        - replace form with a link to the list page
+        (LATER ON)
+        - perform error checks (no two lists with the same name, etc)
+
+-->
+
+    <div id="create-new-list-form">
+
+        <h1> {{ new_list[3] }} successfully created! </h1>
+
+        <div class="list_preview">
+            <h3> {{ new_list[3] }} </h3>
+            <p>  {{ new_list[4] }}  </p>
+            <p>  Created On: {{ new_list[5] }}  </p>
+            <a href="{{ url_for('watch_list', listID=new_list[0]) }}">View List</a>
+        </div>
+
+    </div>
+
+</div>

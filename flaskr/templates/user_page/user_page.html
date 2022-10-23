@@ -10,14 +10,17 @@ ideas to add:
 --> 
 
 {% block content %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='user_page_light.css') }}">
+<script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>                
 
-    <div class="user_page_VStack">
+<link rel="stylesheet" href="{{ url_for('static', filename='user_page_light.css') }}">
+
+
+<div class="user_page_VStack">
 
     <!-- User Page Header -->
     <div class="user_page_header">
         <h1>{% block title %} {{ this_user[1] }}'s Page {% endblock %}</h1>
-        <h3> #{{ this_user[2] }} </h3>
+        <h3> #{{ this_user[0] }} </h3>
     </div>
 
 
@@ -67,10 +70,32 @@ ideas to add:
 
             <div class="watch_lists_info">
                 <h3> {{ this_user[1] }}'s Watch Lists</h3>
+
+                <!-- 
+                Only show the edit buttons if the one viewing this user page is logged in as the owner
+                    the users id (if logged in):    {{ g.user[0]    }}
+                    id of the user page:            {{ this_user[0] }}
+
+                Later on I want to give the modal dialogue the user id so it can see the user's data (movies already in this list, etc)
+                    The URL would need to be: /user/<userID>/modal
+                    So:
+                        hx-get="/user/{{g.user[0]}}/modal"
+                -->
+
+                {% if g.user[0]|int == this_user[0]|int %}
                 
-                <form hx-post="/edit_watch_list_htmx" hx-trigger="click" hx-target="#box" hx-swap="outerHTML" >
-                    <input type="submit" value="Add New" >
-                </form>     
+                <button 
+                    hx-get="/user/modal" 
+                    hx-target="#modals-here" 
+                    hx-trigger="click"
+                    hx-swap="innerHTML"
+                    > Create New Watch List
+                </button>
+
+                {% endif %}
+
+                
+
             </div>
 
             <div class="list_preview_wrapper">
@@ -78,8 +103,8 @@ ideas to add:
 
                 <div class="list_preview">
                     <h3> {{ watch_list[3] }} </h3>
-                    <p>  {{ watch_list[3] }}  </p>
-                    <p>  Created On: {{ watch_list[3] }}  </p>
+                    <p>  {{ watch_list[4] }}  </p>
+                    <p>  Created On: {{ watch_list[5] }}  </p>
                     <a href="{{ url_for('watch_list', listID=0) }}">View List</a>
                 </div>
 
@@ -88,7 +113,9 @@ ideas to add:
         </div>
 
     </div>  
-    
-    </div>
+
+    <div id="modals-here"> </div>
+
+</div>
 
 {% endblock %}

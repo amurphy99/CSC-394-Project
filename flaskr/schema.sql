@@ -32,6 +32,7 @@ CREATE TABLE movies_list (
   movie_id 	int references movies(id),
   list_id 	int references movies_list_info(id),
   status 	  int DEFAULT    0,
+  rating 	  int DEFAULT    -1,
   constraint pk_movies_list primary key (movie_id, list_id)
 );
 

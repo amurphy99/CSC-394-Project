@@ -1,40 +1,128 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div id="box">
+<div>
+<!--
+    Watch List Page:
+    ------------------
+        * shows the watch list info
+        * shows all of the movies in the watch list 
+            - just some basic data for now, pictures can come later
+        * edit button brings up a modal window
+        
+    Modal Window:
+    --------------
+        * search bar and "search" button
+        * sends a query to the movieDB api
+        * display first ~3 results for now
+            - when displaying results, compare them to the movies already in the list
+            - for those that are already in, do not show the add button
+        * next to each result there will be an "add" button
 
-    <h1>{% block title %} {{ list_title }} {% endblock %}</h1>
+    LATER:
+    ------
+        * add ability to edit...
+            - list name
+            - list description
+            - list editors
+            - delete list
+        * add statistics
+            - list movie count
+            - list watch time
+            - list genres pie chart
+            - etc....
 
-    <h3> {{ debug_info }} </h3>
 
-    <div>
-        <h3> Owner: {{ list_owner }} </h3>
-        <form hx-post="/edit_watch_list_htmx" hx-trigger="click" hx-target="#box" hx-swap="outerHTML" >
-            <input type="submit" value="Edit" >
-            <!-- probably hidden inputs with all of the other values -->
+    Values Passed:
+    --------------
+    * "list_info"
+    CREATE TABLE movies_list_info (
+        id                serial 	PRIMARY KEY,
+        owner_id          int,
+        editor_ids        TEXT,
+        list_name         TEXT,
+        list_description  TEXT,
+        date_created      timestamp DEFAULT CURRENT_TIMESTAMP
+    );
 
-        </form>       
+    * "movies_list"
+    CREATE TABLE movies_list (
+        movie_id    int references movies(id),
+        list_id     int references movies_list_info(id),
+        status      int DEFAULT    0,
+        rating      int DEFAULT    -1,
+        constraint pk_movies_list primary key (movie_id, list_id)
+    );
+
+    * "owner_username"
+        - retrieved in the python file server
+
+-->
+    <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>                
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_page_light.css') }}">
+
+    <div id="box">
+
+        <!-- List Title and Info -->
+        <h1>{% block title %} {{ list_info[3] }} {% endblock %}</h1>
+        
+        <div>
+            <h1> Owner: {{ owner_username }} </h3>
+            <h3> #{{ list_info[1] }} </h3>
+            <p> Created on: {{ list_info[5] }} </p>
+            <p> {{ list_info[4] }} </p>
+        </div>
+
+
+        <!-- "Add Movie" Modal -->
+        <div class="watch_lists_info">
+            <h3> {{ this_user[1] }}'s Watch Lists</h3>
+
+            <!-- 
+            Only show the edit buttons if the one viewing this user page is logged in as the owner or an editor
+                the users id (if logged in):    {{ g.user[0]    }}
+                id of the user page owner:      {{ list_info[1] }}
+                ids of editors:                 (not yet implemented)
+
+            -->
+            {% if g.user[0]|int == list_info[1]|int %}
+            
+            <button 
+                hx-get="/watch_list/modal" 
+                hx-target="#modals-here" 
+                hx-trigger="click"
+                hx-swap="innerHTML"
+                > Add Movie
+            </button>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Movies List Table -->
+        <table class="test4">
+            <tr>
+        
+            <th>Movie Title</th>
+            <th>Completion Status</th>
+            
+            </tr>
+            {% for movie in movie_list %}
+                <tr >
+
+                    <td> {{ movie[0] }} </td>
+
+                    <td> {{ movie[1] }} </td>
+
+                </tr>
+            {% endfor %}
+
+        </table>
+        
     </div>
 
+    <div id="modals-here"> </div>
 
-    <table class="test4">
-        <tr>
-       
-          <th>Movie Title</th>
-          <th>Completion Status</th>
-          
-        </tr>
-        {% for movie in movie_list %}
-            <tr >
-
-                <td> {{ movie[0] }} </td>
-
-                <td> {{ movie[1] }} </td>
-
-            </tr>
-        {% endfor %}
-
-    </table>
-    
 </div>
 {% endblock %}

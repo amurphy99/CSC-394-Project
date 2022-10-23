@@ -1,0 +1,102 @@
+<div id="user-modal">
+<!--
+    Form to create a new watch list
+    -----------------------------------
+    
+    CREATE TABLE movies_list_info (
+        id                serial 	PRIMARY KEY,
+        owner_id          int,
+        editor_ids        TEXT,
+        list_name         TEXT,
+        list_description  TEXT,
+        date_created      timestamp DEFAULT CURRENT_TIMESTAMP
+    );
+
+    * the button for closing the modal is separate from the submission button.
+    * fields:
+        - list name
+        - list description
+        (LATER ON)
+        - add editors
+        - public/private
+
+    * after form is submitted with the "finish" button
+        - send sql query to create it
+        - replace form with a link to the list page
+        (LATER ON)
+        - perform error checks (no two lists with the same name, etc)
+
+-->
+    <style>
+        .my-modal {
+            position: absolute;
+            left: 25%;
+            top: 25%;
+            z-index: 2;
+
+            margin: auto;
+            width: 50%;
+            background-color: white;
+            border: 3px solid green;
+            padding: 10px;
+
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        .my-modal-backdrop {
+            position: absolute;
+            left: 0%;
+            top: 0%;
+            z-index: 1;
+
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 50%;
+        }
+    </style>
+
+    <!-- BACKDROP (translucent background for the modal) -->
+    <div class="my-modal-backdrop"
+        hx-get="/user/modal" 
+        hx-target="#user-modal" 
+        hx-trigger="click"
+        hx-swap="delete">
+    </div>
+
+
+    <!-- MODAL CONTENT (title, form, close button) -->
+    <div class="my-modal">
+
+        <div id="create-new-list-form">
+
+            <h1> Create New Watch List </h1>
+
+            <form hx-post="/user/create_new_list" hx-target="#create-new-list-form" hx-swap="outerHTML">
+
+                <h3> Title </h3>
+                <input type="text" id="new-list-title" name="new-list-title" required>
+
+                <h4> Description </h4>
+                <input type="text" id="new-list-description" name="new-list-description"  required>
+
+                <input type="hidden" name="userID" value="{{ g.user[0] }}">
+
+                <button type="submit"> Finish </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Close Button -->
+        <button 
+            hx-get="/user/modal" 
+            hx-target="#user-modal" 
+            hx-trigger="click"
+            hx-swap="delete"
+            >Close
+        </button>
+
+    </div>
+
+</div>
