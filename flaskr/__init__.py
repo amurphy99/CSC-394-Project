@@ -44,6 +44,9 @@ def create_app(test_config=None):
     from . import index
     app.add_url_rule('/index', methods=('GET', 'POST'), view_func=index.index)
 
+    from . import home_page
+    app.add_url_rule('/home_page/<userID>', methods=('GET', 'POST'), view_func=home_page.home_page)
+
     from . import user_page
     app.add_url_rule('/user/<userID>',          methods=('GET', 'POST'), view_func=user_page.user_page)
     app.add_url_rule('/user/modal',             methods=('GET', 'POST'), view_func=user_page.new_list_modal)
