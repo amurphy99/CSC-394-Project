@@ -61,6 +61,17 @@
                 background-color: black;
                 opacity: 50%;
             }
+
+            .user-movie-card {
+                border: solid 1px;
+                display: flex;
+                justify-content: space-around;
+            }
+            .user-movie-card > img {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+
         </style>
     
         <!-- BACKDROP (translucent background for the modal) -->
@@ -74,28 +85,21 @@
     
         <!-- MODAL CONTENT (title, form, close button) -->
         <div class="my-modal">
-    
-            <div id="create-new-list-form">
-    
-                <h1> Create New Watch List </h1>
-    
-                <form hx-post="/user/create_new_list" hx-target="#create-new-list-form" hx-swap="outerHTML">
-    
-                    <h3> Title </h3>
-                    <input type="text" id="new-list-title" name="new-list-title" required>
-    
-                    <h4> Description </h4>
-                    <input type="text" id="new-list-description" name="new-list-description"  required>
-    
-                    <input type="hidden" name="userID" value="{{ g.user[0] }}">
-    
-                    <button type="submit"> Finish </button>
-    
+
+            <div id="results-table">
+                <form hx-post="/watch_list/get_movie_cards" hx-target="#movie_cards" hx-swap="outerHTML">
+
+                    <h3> Enter movie query </h3>
+                    <input type="text" name="api_query" id="api_query" required>
+                    <button type="submit"> Search </button>
+
                 </form>
-    
+
+                <h4> Results:</h4>
+                <div id="movie_cards"> </div>            
+
             </div>
-    
-    
+
             <!-- Close Button -->
             <button 
                 hx-get="/watch_list/modal" 
@@ -107,11 +111,6 @@
     
         </div>
     
-    
-    
-    
-    
-    
-    
+
     
     </div>

@@ -76,7 +76,7 @@
 
         <!-- "Add Movie" Modal -->
         <div class="watch_lists_info">
-            <h3> {{ this_user[1] }}'s Watch Lists</h3>
+            <h3> {{ "this_user[1]" }}'s Watch Lists</h3>
 
             <!-- 
             Only show the edit buttons if the one viewing this user page is logged in as the owner or an editor
@@ -108,7 +108,7 @@
             <th>Completion Status</th>
             
             </tr>
-            {% for movie in movie_list %}
+            {% for movie in movies_list %}
                 <tr >
 
                     <td> {{ movie[0] }} </td>

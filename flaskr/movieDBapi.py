@@ -7,20 +7,18 @@ from flask import Flask, render_template, g, request, flash
 
 
 '''
+
 page only shows 5 responses for now, doesnt live search, only on button click
 
-api = "api_key=feb6f0eeaa0a72662967d77079850353"
-endpoint = "https://api.themoviedb.org/3/search/movie?query=${search}${api}"
-poster = "https://image.tmdb.org/t/p/w600/"
 
-first_response = requests.get(base_url+facts)
-response_list=first_response.json()
+
+Configuration information for poster sizes:
+https://developers.themoviedb.org/3/configuration/get-api-configuration
 
 '''
 
 def api_query(query):
-
-    # api url
+    # build api request url
     base        = "https://api.themoviedb.org/3/search/movie?api_key="
     api_key     = "f059b4ab8738e8777362529e74ffb62a"
     lang        = "&language=en-US&query="
@@ -33,7 +31,6 @@ def api_query(query):
     response_list   = first_response.json()
 
     print(f'query of "{query}" sent to the api')
-    #print(response_list)
 
     return response_list
 

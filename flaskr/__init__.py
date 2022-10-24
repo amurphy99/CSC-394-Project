@@ -39,7 +39,7 @@ def create_app(test_config=None):
     app.register_blueprint(auth.bp)
 
 
-    # created function for handling the index page (stored in another file)
+    # ALL OFFICIAL PAGES
     # ---------------------------------------------
     from . import index
     app.add_url_rule('/index', methods=('GET', 'POST'), view_func=index.index)
@@ -53,7 +53,9 @@ def create_app(test_config=None):
     app.add_url_rule('/user/create_new_list',   methods=('GET', 'POST'), view_func=user_page.create_new_list)
 
     from . import watch_list
-    app.add_url_rule('/watch_list/<listID>',    methods=('GET', 'POST'), view_func=watch_list.watch_list)
+    app.add_url_rule('/watch_list/<listID>',        methods=('GET', 'POST'), view_func=watch_list.watch_list)
+    app.add_url_rule('/watch_list/modal',           methods=('GET', 'POST'), view_func=watch_list.add_movie_modal)
+    app.add_url_rule('/watch_list/get_movie_cards', methods=('GET', 'POST'), view_func=watch_list.get_movie_cards)
 
 
     # ALL TESTING PAGES
@@ -73,7 +75,6 @@ def create_app(test_config=None):
     from . import movieDBapi
     app.add_url_rule('/api_testing',        methods=('GET', 'POST'), view_func=movieDBapi.api_testing)
     app.add_url_rule('/send_query_htmx',    methods=('GET', 'POST'), view_func=movieDBapi.get_results)
-
 
 
 
