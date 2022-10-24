@@ -102,6 +102,38 @@
 
 
 
+
+
+
+/* Home Page */
+.home-search{
+    background-color: transparent;
+    border: 2px solid;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.home-main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.home-movie{
+    width: 200px;
+    margin: 1rem;
+    border-radius: 3px;
+    box-shadow: 0.2px 4px 5px rgba(0, 0, 0, 0.1);
+}
+
+.home-movie img{
+    width: 100%;
+}
+
+
+
 /*
 Flex Box Reference
 -------------------
