@@ -34,7 +34,7 @@
 
         (the button for closing the modal is separate from the submission button)
     
-    -->
+    
         <style>
             .my-modal {
                 position: absolute;
@@ -73,6 +73,8 @@
             }
 
         </style>
+        
+    -->
     
         <!-- BACKDROP (translucent background for the modal) -->
         <div class="my-modal-backdrop"
@@ -85,20 +87,50 @@
     
         <!-- MODAL CONTENT (title, form, close button) -->
         <div class="my-modal">
+            <!-- 
+                hx-trigger="keyup changed delay:500ms"  
+                placeholder="Search..."
+            -->
 
             <div id="results-table">
-                <form hx-post="/watch_list/get_movie_cards" hx-target="#movie_cards" hx-swap="outerHTML">
-
+                <form 
+                    hx-post="/watch_list/get_movie_cards"
+                    hx-target="#movie_cards" 
+                    hx-swap="outerHTML" 
+                    hx-indicator="#indicator"
+                >
                     <h3> Enter movie query </h3>
-                    <input type="text"      name="api_query" id="api_query" required>
-                    <input type="hidden"    name="listID"   value="{{ listID }}">
+
+                    <input type="text" name="api_query" id="api_query" required
+                        hx-post="/watch_list/get_movie_cards"
+                        hx-trigger="keyup changed" 
+                        hx-target="#movie_cards" 
+                        hx-swap="outerHTML"
+                        hx-indicator="#indicator" 
+                    >
+
+                    <input type="hidden" name="listID" value="{{ listID }}">
+
+                    <!-- button and spinner --> 
+                    <!-- COMMENTED OUT FOR NOW - CANT GET SPINNER TO BE CORRECT SIZE
+                    <div class="modal-button-and-indicator">
+                        <button type="submit"> Search </button>
+
+                        <div class="modal-button-and-indicator-img">
+                            <img id="indicator" class="htmx-indicator" src="/static/assets/spinner.gif"/>
+                        </div>
+                    </div>
+                    -->
 
                     <button type="submit"> Search </button>
-
+                
                 </form>
 
-                <h4> Results:</h4>
+
+                
+
                 <div id="movie_cards"> </div>            
+
 
             </div>
 

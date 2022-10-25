@@ -82,37 +82,18 @@ CREATE TABLE movies_list (
 
 /* TESTING DATA 
 ------------------------ */
-INSERT INTO test_user (username, password, privileges) VALUES ('admin', 'password', 1);
-
-INSERT INTO test_user (username, password) VALUES ('Andrew', 'password');
-
-INSERT INTO test_user (username, password) VALUES ('Calvin', 'password');
-
-INSERT INTO test_user (username, password) VALUES ('Joseph', 'password');
-
-INSERT INTO test_user (username, password) VALUES ('Brendan', 'password');
-
-INSERT INTO test_user (username, password) VALUES ('Derrick', 'password');
-
-INSERT INTO test_user (username, password) VALUES ('Benas', 'password');
+INSERT INTO test_user (username, password, privileges)  VALUES ('admin',    'password', 1);
+INSERT INTO test_user (username, password)              VALUES ('Andrew',   'password');
+INSERT INTO test_user (username, password)              VALUES ('Calvin',   'password');
+INSERT INTO test_user (username, password)              VALUES ('Joseph',   'password');
+INSERT INTO test_user (username, password)              VALUES ('Brendan',  'password');
+INSERT INTO test_user (username, password)              VALUES ('Derrick',  'password');
+INSERT INTO test_user (username, password)              VALUES ('Benas',    'password');
 
 
 /* NEW MOVIE LIST DATA 
 ------------------------ */
 INSERT INTO movies_list_info (owner_id, list_name, list_description) VALUES (1, 'test list', 'testing movie list');
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

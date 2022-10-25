@@ -36,7 +36,9 @@ a:link { text-decoration: none; } /*gets rid of underlines under links */
 
 html { font-family: sans-serif; background: #eee; padding: 1rem; }
 /* body { max-width: 960px; margin: 0 auto; background: white; } */
-body { max-width: 1080px; margin: 0 auto; background: white; }
+body {  max-width: 1080px; margin: 0 auto; background: white; 
+        height: 100%;
+}
 
 h1 { font-family: serif; color: #377ba8; margin: 1rem 0; }
 a { color: #377ba8; }

@@ -1,5 +1,63 @@
-/* User Page Start */
-/* --------------- */
+/* BASE HTML
+--------------------------------------------------------------------------- */
+.my-footer {
+    background: #eee;
+    width: 100%;
+    height: 200px;
+}
+
+
+/* Modal Styling
+--------------------------------------------------------------------------- */
+.my-modal {
+    position: absolute;
+    left: 25%;
+    top: 25%;
+    z-index: 2;
+
+    margin: auto;
+    width: 50%;
+    background-color: white;
+    border: 3px solid green;
+    padding: 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.my-modal-backdrop {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    z-index: 1;
+
+    width: 100vw;
+    height: 100vw;
+    background-color: black;
+    opacity: 50%;
+}
+
+.user-movie-card {
+    border: solid 1px;
+    display: flex;
+    justify-content: space-around;
+}
+.user-movie-card > img {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.modal-button-and-indicator {
+    display: flex;
+    justify-content: space-between;
+}
+.modal-button-and-indicator-img {
+    width: 1.0rem;
+    height: 1.0rem;
+}
+
+
+
+/* User Page Start
+--------------------------------------------------------------------------- */
 .user_page_header {
     width: 100%;
     display: flex;
@@ -105,7 +163,8 @@
 
 
 
-/* Home Page */
+/* Home Page 
+--------------------------------------------------------------------------- */
 .home-search{
     background-color: transparent;
     border: 2px solid;

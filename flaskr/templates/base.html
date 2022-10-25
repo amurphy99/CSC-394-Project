@@ -1,6 +1,11 @@
 <!doctype html>
 <title>{% block title %}{% endblock %}</title>
+
+<!-- Imports -->
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style-light.css') }}">
+<script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+
 <nav>
   <h1 class="top-logo">CinemUs</h1>
   <ul>
@@ -24,3 +29,8 @@
   {% endfor %}
   {% block content %}{% endblock %}
 </section>
+
+<!-- Footer -->
+<div class="my-footer"> 
+  <!-- MovieDB api credit for movie info -->
+</div>

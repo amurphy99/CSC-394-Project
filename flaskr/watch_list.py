@@ -96,9 +96,11 @@ def get_movie_cards():
     # get request info
     listID      = int(request.form["listID"])
     query       = request.form["api_query"]
-    api_results = api_query(query)
+    if len(query) < 1: return 
+
 
     # for api request feedback
+    api_results = api_query(query)
     total_results = api_results["total_results"]
 
     # only showing 3 results for now while testing
@@ -109,7 +111,7 @@ def get_movie_cards():
     results = []
     for i in range(NUMBER_SHOWN):
         single_movie = api_results["results"][i]
-
+        
         movie_info = {}
         # image -> dict{image source, alt text}
         BASE_URL    = "http://image.tmdb.org/t/p/"
