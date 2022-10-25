@@ -37,7 +37,17 @@
                 </div>
 
                 <div class="movie-card-button">
-                    <button> Select </button>
+
+                    <form hx-post="/watch_list/show_user_input_form" hx-target="#movie_cards" hx-swap="outerHTML">
+        
+                        <input type="hidden" name="listID"     value="{{ listID    }}">
+                        <input type="hidden" name="movie_info" value="{{ movie }}">
+
+                        <button type="submit"> Select </button>
+        
+                    </form>
+
+                    
                 </div>
 
             </div>

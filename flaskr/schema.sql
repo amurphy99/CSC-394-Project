@@ -14,11 +14,44 @@ CREATE TABLE test_user (
   style_mode    int       DEFAULT             0
 );
 
+
+/*
+movies
+-------
+    Possible Additions:
+        * total_score
+            - (allows for average site-wide score)
+            - after popularity, could add "total_score"
+            - when somebody inserts the movie to their list, add the rating they give it
+            - allows for site-wide movie average scores
+        * average_score
+            - could probably just calculate this on the fly whenever a movie is added
+*/
 CREATE TABLE movies (
-  id 		serial      PRIMARY KEY,
-  name 	varchar(30)
+    id 		      int     PRIMARY KEY,
+    title 	    TEXT,
+    poster      TEXT,
+    popularity  int     DEFAULT 1
 );
 
+
+/* 
+movies_list_info
+-----------------
+    Future Functionality:
+        * each user has a "general" list
+            - automatically created
+            - cant be deleted
+            - when a movie is added to any other list, it is automatically added to this one as well
+            - (if doing this, then the statistics data is only needed for lists, not users, since user stats would be equal to their general list)
+
+    Possible Additions:
+        * various statistics
+          - total watch time
+          - genre counts
+          - average rating
+          - etc...
+*/
 CREATE TABLE movies_list_info (
   id                serial 	PRIMARY KEY,
   owner_id          int,
@@ -28,6 +61,13 @@ CREATE TABLE movies_list_info (
   date_created      timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
+
+/* 
+movies_list
+------------
+    Possible Additions:
+        * date_added
+*/
 CREATE TABLE movies_list (
   movie_id 	int references movies(id),
   list_id 	int references movies_list_info(id),
@@ -38,48 +78,29 @@ CREATE TABLE movies_list (
 
 
 
-INSERT INTO test_user (username, password, privileges)
-VALUES ('admin', 'password', 1);
-
-INSERT INTO test_user (username, password)
-VALUES ('Andrew', 'password');
-
-INSERT INTO test_user (username, password)
-VALUES ('Calvin', 'password');
-
-INSERT INTO test_user (username, password)
-VALUES ('Joseph', 'password');
-
-INSERT INTO test_user (username, password)
-VALUES ('Brendan', 'password');
-
-INSERT INTO test_user (username, password)
-VALUES ('Derrick', 'password');
-
-INSERT INTO test_user (username, password)
-VALUES ('Benas', 'password');
 
 
-INSERT INTO movies (name) VALUES ('Star Wars');
-INSERT INTO movies (name) VALUES ('Spongebob');
-INSERT INTO movies (name) VALUES ('Batman');
-INSERT INTO movies (name) VALUES ('James Bond');
-INSERT INTO movies (name) VALUES ('Jurassic Park');
+/* TESTING DATA 
+------------------------ */
+INSERT INTO test_user (username, password, privileges) VALUES ('admin', 'password', 1);
+
+INSERT INTO test_user (username, password) VALUES ('Andrew', 'password');
+
+INSERT INTO test_user (username, password) VALUES ('Calvin', 'password');
+
+INSERT INTO test_user (username, password) VALUES ('Joseph', 'password');
+
+INSERT INTO test_user (username, password) VALUES ('Brendan', 'password');
+
+INSERT INTO test_user (username, password) VALUES ('Derrick', 'password');
+
+INSERT INTO test_user (username, password) VALUES ('Benas', 'password');
 
 
+/* NEW MOVIE LIST DATA 
+------------------------ */
+INSERT INTO movies_list_info (owner_id, list_name, list_description) VALUES (1, 'test list', 'testing movie list');
 
-INSERT INTO movies_list_info (owner_id, list_name, list_description)
-VALUES (1, 'test list', 'testing movie list');
-
-
-INSERT INTO movies_list(movie_id, list_id)
-VALUES (1, 1);
-
-INSERT INTO movies_list(movie_id, list_id)
-VALUES (2, 1);
-
-INSERT INTO movies_list(movie_id, list_id)
-VALUES (4, 1);
 
 
 

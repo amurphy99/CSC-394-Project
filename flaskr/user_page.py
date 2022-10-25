@@ -31,6 +31,8 @@ def user_page(userID):
 
 
 
+
+
 #@app.route('/new_list_modal', methods=('POST'))
 def new_list_modal():
     return render_template('user_page/new_list_modal.html')

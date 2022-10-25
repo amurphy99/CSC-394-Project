@@ -1,0 +1,46 @@
+<div id="movie_cards">
+    <!--
+        Inputs:
+            * movie
+                - "source"      = url for movie poster
+                - "alt_text"    = alt text for image
+                - "info"        = list of (key, value) tuples with movie info
+            * watch_status
+            * rating
+            * sql_response
+
+    -->
+        <div>
+            
+            <div class="user-movie-card">
+        
+                <img src="{{ movie['source'] }}" alt="{{ movie['alt_text'] }}">
+
+                <div class="movie-card-info">
+                    <table>
+                        <tr> <th> Key                   </th> <th> Value                </th> </tr>
+                        {% for info_pair in movie['info'] %}
+                        <tr> <td> {{ info_pair[0] }}    </td> <td> {{ info_pair[1] }}   </td> </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- User Data -->
+            <div>
+
+                <label for="status"> Status: </label>
+                <p id="status"> {{ watch_status }} </p>
+
+                <label for="rating"> Rating: </label>
+                <p id="rating"> {{ rating }}/5 </p>
+
+            </div>
+            
+        </div>
+    
+    <p> PostreSQL response: {{ "(not implemented yet)" }} </p>
+    
+</div>
+    

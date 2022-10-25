@@ -53,9 +53,11 @@ def create_app(test_config=None):
     app.add_url_rule('/user/create_new_list',   methods=('GET', 'POST'), view_func=user_page.create_new_list)
 
     from . import watch_list
-    app.add_url_rule('/watch_list/<listID>',        methods=('GET', 'POST'), view_func=watch_list.watch_list)
-    app.add_url_rule('/watch_list/modal',           methods=('GET', 'POST'), view_func=watch_list.add_movie_modal)
-    app.add_url_rule('/watch_list/get_movie_cards', methods=('GET', 'POST'), view_func=watch_list.get_movie_cards)
+    app.add_url_rule('/watch_list/<listID>',                methods=('GET', 'POST'), view_func=watch_list.watch_list)
+    app.add_url_rule('/watch_list/modal',                   methods=('GET', 'POST'), view_func=watch_list.add_movie_modal)
+    app.add_url_rule('/watch_list/get_movie_cards',         methods=('GET', 'POST'), view_func=watch_list.get_movie_cards)
+    app.add_url_rule('/watch_list/show_user_input_form',    methods=('GET', 'POST'), view_func=watch_list.show_user_input_form)
+    app.add_url_rule('/watch_list/movie_added_htmx',        methods=('GET', 'POST'), view_func=watch_list.movie_added)
 
 
     # ALL TESTING PAGES

@@ -90,7 +90,9 @@
                 <form hx-post="/watch_list/get_movie_cards" hx-target="#movie_cards" hx-swap="outerHTML">
 
                     <h3> Enter movie query </h3>
-                    <input type="text" name="api_query" id="api_query" required>
+                    <input type="text"      name="api_query" id="api_query" required>
+                    <input type="hidden"    name="listID"   value="{{ listID }}">
+
                     <button type="submit"> Search </button>
 
                 </form>

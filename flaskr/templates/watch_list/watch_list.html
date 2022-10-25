@@ -59,7 +59,7 @@
 
 -->
     <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>                
-    <link rel="stylesheet" href="{{ url_for('static', filename='user_page_light.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-light.css') }}">
 
     <div id="box">
 
@@ -86,14 +86,15 @@
 
             -->
             {% if g.user[0]|int == list_info[1]|int %}
-            
-            <button 
-                hx-get="/watch_list/modal" 
-                hx-target="#modals-here" 
-                hx-trigger="click"
-                hx-swap="innerHTML"
-                > Add Movie
-            </button>
+
+            <form hx-post="/watch_list/modal" hx-target="#modals-here" hx-swap="innerHTML">
+
+                <input type="hidden" name="listID"      value="{{ listID    }}">
+                <input type="hidden" name="movie_info"  value="{{ movie     }}">
+
+                <button type="submit"> Add Movie </button>
+
+            </form>
 
             {% endif %}
 
@@ -102,20 +103,34 @@
 
         <!-- Movies List Table -->
         <table class="test4">
+    
             <tr>
-        
-            <th>Movie Title</th>
-            <th>Completion Status</th>
-            
+                <th> Movie Poster   </th>
+                <th> Movie Info     </th>
+                <th> User Review    </th>
             </tr>
+            
             {% for movie in movies_list %}
-                <tr >
+            <tr>
+                <!-- Movie Poster -->
+                <td> <img src="{{ movie['poster'] }}" alt="Poster for {{ movie['title'] }}"> </td>
+                
+                <!-- Movies Info -->
+                <td> 
+                    <h3>    {{ movie['title']   }} </h2>
+                    <p>    #{{ movie['id']      }} </p>
+                </td>
 
-                    <td> {{ movie[0] }} </td>
+                <!-- User Review -->
+                <td> 
+                    <h4> Status: </h4>
+                    <p> {{ movie['status'] }} </p>
 
-                    <td> {{ movie[1] }} </td>
+                    <h4> Rating: </h4>
+                    <p> {{ movie['rating']/5 }} </p>
+                </td>
 
-                </tr>
+            </tr>
             {% endfor %}
 
         </table>

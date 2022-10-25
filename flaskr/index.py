@@ -73,7 +73,7 @@ def index():
             db  = get_db()
             cur = db.cursor()
 
-            cur.execute( f"UPDATE test_user set privileges = {1} WHERE id = '{userID}'" )
+            cur.execute( f"UPDATE test_user SET privileges = {1} WHERE id = '{userID}'" )
             db.commit()
 
             cur.close()
@@ -88,7 +88,7 @@ def index():
             db  = get_db()
             cur = db.cursor()
 
-            cur.execute( f"UPDATE test_user set privileges = {0} WHERE id = '{userID}'" )
+            cur.execute( f"UPDATE test_user SET privileges = {0} WHERE id = '{userID}'" )
             db.commit()
 
             cur.close()

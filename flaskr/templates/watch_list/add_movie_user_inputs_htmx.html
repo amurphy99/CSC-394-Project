@@ -1,0 +1,69 @@
+<div id="movie_cards">
+    <!--
+        Inputs:
+            * results
+                - "source"      = url for movie poster
+                - "alt_text"    = alt text for image
+                - "info"        = list of (key, value) tuples with movie info
+                
+            * api_feedback
+                - tuple with (number of results shown, total results received)
+    
+    -->
+        <div>
+            
+            <div class="user-movie-card">
+        
+                <img src="{{ movie['source'] }}" alt="{{ movie['alt_text'] }}">
+
+                <div class="movie-card-info">
+                    <table>
+                        <tr> <th> Key                   </th> <th> Value                </th> </tr>
+                        {% for info_pair in movie['info'] %}
+                        <tr> <td> {{ info_pair[0] }}    </td> <td> {{ info_pair[1] }}   </td> </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+            </div>
+
+
+            <!-- User Input Form -->
+            <div>
+
+                <form hx-post="/watch_list/movie_added_htmx" hx-target="#movie_cards" hx-swap="outerHTML">
+    
+                    <label for="watch-status"> Enter Completion Status: </label>
+                    <select id="watch-status" name="watch-status">
+                        <option value="0"> Plan to Watch        </option>
+                        <option value="1"> Currently Watching   </option>
+                        <option value="2"> Finished Watching    </option>
+                    </select>
+    
+                    <label for="rating"> Enter Rating: </label>
+                    <select id="rating" name="rating">
+                        <option value="0"> 0 </option>
+                        <option value="1"> 1 </option>
+                        <option value="2"> 2 </option>
+                        <option value="3"> 3 </option>
+                        <option value="4"> 4 </option>
+                        <option value="5"> 5 </option>
+                    </select>
+    
+                    <input type="hidden" name="listID"      value="{{ listID    }}">
+                    <input type="hidden" name="movie_info"  value="{{ movie     }}">
+                    <input type="hidden" name="userID"      value="{{ g.user[0] }}">
+                    <button type="submit"> Finish </button>
+    
+                </form>
+
+            </div>
+
+            
+            
+        </div>
+    
+    
+    
+    </div>
+    
