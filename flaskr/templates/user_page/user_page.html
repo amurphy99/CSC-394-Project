@@ -81,17 +81,18 @@ ideas to add:
                     So:
                         hx-get="/user/{{g.user[0]}}/modal"
                 -->
+                {% if g.user is not none %}
+                    {% if g.user[0]|int == this_user[0]|int %}
+                    
+                    <button 
+                        hx-get="/user/modal" 
+                        hx-target="#modals-here" 
+                        hx-trigger="click"
+                        hx-swap="innerHTML"
+                        > Create New Watch List
+                    </button>
 
-                {% if g.user[0]|int == this_user[0]|int %}
-                
-                <button 
-                    hx-get="/user/modal" 
-                    hx-target="#modals-here" 
-                    hx-trigger="click"
-                    hx-swap="innerHTML"
-                    > Create New Watch List
-                </button>
-
+                    {% endif %}
                 {% endif %}
 
                 

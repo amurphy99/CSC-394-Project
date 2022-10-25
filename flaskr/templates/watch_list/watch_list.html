@@ -85,17 +85,19 @@
                 ids of editors:                 (not yet implemented)
 
             -->
-            {% if g.user[0]|int == list_info[1]|int %}
+            {% if g.user is not none %}
+                {% if g.user[0]|int == list_info[1]|int %}
 
-            <form hx-post="/watch_list/modal" hx-target="#modals-here" hx-swap="innerHTML">
+                <form hx-post="/watch_list/modal" hx-target="#modals-here" hx-swap="innerHTML">
 
-                <input type="hidden" name="listID"      value="{{ listID    }}">
-                <input type="hidden" name="movie_info"  value="{{ movie     }}">
+                    <input type="hidden" name="listID"      value="{{ listID    }}">
+                    <input type="hidden" name="movie_info"  value="{{ movie     }}">
 
-                <button type="submit"> Add Movie </button>
+                    <button type="submit"> Add Movie </button>
 
-            </form>
+                </form>
 
+                {% endif %}
             {% endif %}
 
         </div>
