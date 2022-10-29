@@ -1,10 +1,14 @@
 DROP TABLE IF EXISTS movies_list;
 DROP TABLE IF EXISTS movies_list_info;
-
 DROP TABLE IF EXISTS movies     CASCADE;
 DROP TABLE IF EXISTS test_user  CASCADE;
 
 
+
+/* test_user:
+--------------
+  should probably rename at some point
+*/
 CREATE TABLE test_user (
   id            serial 	  PRIMARY KEY,
   username      TEXT      UNIQUE NOT NULL,
@@ -15,17 +19,17 @@ CREATE TABLE test_user (
 );
 
 
-/*
-movies
--------
+
+/* movies:
+-----------
     Possible Additions:
-        * total_score
-            - (allows for average site-wide score)
-            - after popularity, could add "total_score"
-            - when somebody inserts the movie to their list, add the rating they give it
-            - allows for site-wide movie average scores
-        * average_score
-            - could probably just calculate this on the fly whenever a movie is added
+      * total_score
+        - (allows for average site-wide score)
+        - after popularity, could add "total_score"
+        - when somebody inserts the movie to their list, add the rating they give it
+        - allows for site-wide movie average scores
+      * average_score
+        - could probably just calculate this on the fly whenever a movie is added
 */
 CREATE TABLE movies (
     id 		      int     PRIMARY KEY,
@@ -35,22 +39,24 @@ CREATE TABLE movies (
 );
 
 
-/* 
-movies_list_info
------------------
+
+/* movies_list_info:
+---------------------
     Future Functionality:
-        * each user has a "general" list
-            - automatically created
-            - cant be deleted
-            - when a movie is added to any other list, it is automatically added to this one as well
-            - (if doing this, then the statistics data is only needed for lists, not users, since user stats would be equal to their general list)
+      * each user has a "general" list
+        - automatically created
+        - cant be deleted
+        - when a movie is added to any other list, it is automatically added to this one as well
+        - (if doing this, then the statistics data is only needed for lists, not users, since user stats would be equal to their general list)
 
     Possible Additions:
-        * various statistics
-          - total watch time
-          - genre counts
-          - average rating
-          - etc...
+      * various statistic
+        - number of movies in list
+        - total watch time
+        - genre counts
+        - average rating
+        - average release date
+        - etc...
 */
 CREATE TABLE movies_list_info (
   id                serial 	PRIMARY KEY,
@@ -58,15 +64,16 @@ CREATE TABLE movies_list_info (
   editor_ids        TEXT,
   list_name         TEXT,
   list_description  TEXT,
+  /* statistics */
   date_created      timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
 
-/* 
-movies_list
-------------
+
+/* movies_list:
+----------------
     Possible Additions:
-        * date_added
+      * date_added to list
 */
 CREATE TABLE movies_list (
   movie_id 	int references movies(id),
@@ -75,6 +82,8 @@ CREATE TABLE movies_list (
   rating 	  int DEFAULT    -1,
   constraint pk_movies_list primary key (movie_id, list_id)
 );
+
+
 
 
 

@@ -1,4 +1,4 @@
-from lib2to3.pgen2.token import NUMBER
+#from lib2to3.pgen2.token import NUMBER
 from flask import Flask, render_template, g, request, flash
 
 from flaskr.db import get_database_connection
@@ -97,7 +97,6 @@ def get_movie_cards():
     listID      = int(request.form["listID"])
     query       = request.form["api_query"]
     if len(query) < 1: return 
-
 
     # for api request feedback
     api_results = api_query(query)

@@ -6,6 +6,18 @@ from flaskr.db import get_db
 
 #@app.route('/user/<userID>', methods=('GET', 'POST'))
 def user_page(userID):
+    '''
+    GET request only
+
+    takes:
+        * userID
+
+    returns:
+        * user_info
+        * statistics
+        * user_lists
+    
+    '''
 
     # get info from database
     # -----------------------
@@ -21,11 +33,11 @@ def user_page(userID):
     cur.close()
     db.close()
 
-    # completed
-    # currently watching
-    # plan to watch
-    # watch time
-    statistics = [ 123, 3, 12, "24d 05h 22m"]
+    statistics = [  ("Joined:",             str(this_user[4])[:10]  ),
+                    ("Movies Completed:",   123                     ), 
+                    ("Currently Watching:", 3                       ), 
+                    ("Plan to Watch:",      12                      ),
+                    ("Watch Time:",         "24d 05h 22m"           )   ]
 
     return render_template('user_page/user_page.html', this_user=this_user, user_lists=user_lists, statistics=statistics)
 

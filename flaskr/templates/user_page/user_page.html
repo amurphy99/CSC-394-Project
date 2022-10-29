@@ -2,20 +2,16 @@
 
 {% block content %}
 
+<!--
+    ideas to add:
+        * recent updates (display previous 3 shows/movies added)
+        * statistics
+            - movies watched
+            - shows watched
+            - average rating
 
-    <!--
-        ideas to add:
-            * recent updates (display previous 3 shows/movies added)
-            * statistics
-                - movies watched
-                - shows watched
-                - average rating
 
-                
-    <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>                
-    <link rel="stylesheet" href="{{ url_for('static', filename='style-light.css') }}">
-
-    --> 
+--> 
 
 <div class="user_page_VStack">
 
@@ -24,7 +20,6 @@
         <h1>{% block title %} {{ this_user[1] }}'s Page {% endblock %}</h1>
         <h3> #{{ this_user[0] }} </h3>
     </div>
-
 
 
     <!-- User Bio -->
@@ -38,16 +33,9 @@
 
     <!-- Socials -->
     <div class="user_page_socials">
-
-        <div class="socials_item">     <p> Friends      </p>    <p> {{ 25 }} </p> </div>
-        <div class="socials_item">     <p> Followers    </p>    <p> {{  2 }} </p> </div>
-
-        <div class="socials_item">
-            <form hx-post="/edit_watch_list_htmx" hx-trigger="click" hx-target="#box" hx-swap="outerHTML" >
-                <input type="submit" value="Add Friend" >
-            </form>     
-        </div>
-
+        <p> Friends:   {{ 25 }} </p>
+        <p> Followers: {{ 12 }} </p>
+        <button type="submit"> Add Friend </button>
     </div>
 
 
@@ -56,22 +44,28 @@
     <div class="user_page_HStack">
 
         <!-- User Statistics -->
-        <div class="user_statistics">
-            <h3> Statistics </h3>
+        <div class="user-page-statistics">
 
-            <div class="table_row">     <p> Joined              </p>    <p> {{ this_user[4]     }} </p> </div>
-            <div class="table_row">     <p> Completed           </p>    <p> {{ statistics[0]    }} </p> </div>
-            <div class="table_row">     <p> Currently Watching  </p>    <p> {{ statistics[1]    }} </p> </div>
-            <div class="table_row">     <p> Plan to Watch       </p>    <p> {{ statistics[2]    }} </p> </div>
-            <div class="table_row">     <p> Watch Time          </p>    <p> {{ statistics[3]    }} </p> </div>
+            <p class="statistics-header"> Statistics </p>
+        
+            <ul class="user-statistics">
+                {% for entry in statistics %}
 
+                <div class="statistics-spacer">
+                <li class="statistics-label"> {{ entry[0] }} <li>
+                <li class="statistics-item" > {{ entry[1] }} <li>
+                </div>
+
+                {% endfor %}
+            </ul>
+        
         </div>
 
         <!-- Watch List Display -->
         <div class="user_watch_lists">
 
             <div class="watch_lists_info">
-                <h3> {{ this_user[1] }}'s Watch Lists</h3>
+                <h3> {{ this_user[1] }}'s Watch Lists </h3>
 
                 <!-- 
                 Only show the edit buttons if the one viewing this user page is logged in as the owner
