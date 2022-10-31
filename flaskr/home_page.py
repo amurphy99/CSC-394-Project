@@ -7,10 +7,11 @@ from flaskr.movieDBapi import api_home
 
 #@app.route('/home_page/<userID>', methods=('GET', 'POST'))
 def home_page(userID):
-
+    # Poster url 
     BASE_URL    = "http://image.tmdb.org/t/p/"
     POSTER_SIZE = "w500"
-    trending = api_home()["results"][:3]
+
+    trending = api_home()["results"][:4]
     movieDisplay = []
     for movie in trending:
         temp = {

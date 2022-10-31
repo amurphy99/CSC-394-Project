@@ -80,7 +80,6 @@ def api_home():
     first_response  = requests.get(endpoint)
     response_list   = first_response.json()
 
-    # print(f'query of "{query}" sent to the api')
     print(response_list)
 
     return response_list
