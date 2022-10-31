@@ -27,7 +27,6 @@ def add_movie(listID, movie, userID, watch_status, rating):
         cur.close(); db.close()
     
     
-    
     '''
     # prepare sql statements
     f_movie_id      = movie["info"][1][1]
@@ -46,18 +45,10 @@ def add_movie(listID, movie, userID, watch_status, rating):
 
     # add to movies_list table
     cur.execute(f"INSERT INTO movies_list (movie_id, list_id, status, rating) VALUES ('{f_movie_id}', '{listID}', '{watch_status}', '{rating}')")
-
-    # update movies list info
-    # count 
-    # watch time 
-    # average release date
-    # average rating
-
     db.commit()
     
+
     cur.close(); db.close()
-
-
 
 
     return
