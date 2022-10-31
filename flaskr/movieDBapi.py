@@ -61,3 +61,26 @@ def get_results():
 
 
     return "<h1> this shouldnt be returned </h1>"
+
+ 
+
+
+
+
+def api_home():
+    # build api request url
+
+    base = "https://api.themoviedb.org/3/trending"
+    optionals = "/movie/day?api_key="
+    api_key     = "f059b4ab8738e8777362529e74ffb62a"
+
+    endpoint = base + optionals + api_key
+
+    # returns a dictionary
+    first_response  = requests.get(endpoint)
+    response_list   = first_response.json()
+
+    # print(f'query of "{query}" sent to the api')
+    print(response_list)
+
+    return response_list
