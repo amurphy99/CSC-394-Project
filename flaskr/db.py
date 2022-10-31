@@ -5,6 +5,7 @@ from flask import current_app, g
 
 
 # Returns object for the database
+# (need to change from hardcoded to environment variables for security)
 def get_database_connection():
     conn = psycopg2.connect(
         host        = "db-hw3.cjthe8fzvkmu.us-east-1.rds.amazonaws.com",
@@ -15,11 +16,8 @@ def get_database_connection():
     return conn
 
 
-
 def get_db():
-    if 'db' not in g:
-        g.db = get_database_connection()
-    
+    if 'db' not in g: g.db = get_database_connection()
     return g.db
 
 
@@ -32,24 +30,38 @@ def close_db(e=None):
 
 
 
+# custom command for triggers
+# ----------------------------
+# testing data wont be affected ny these, init-db will always be called first
+def init_triggers():
+    db  = get_db(); cur = db.cursor()
 
-def init_db():
-    db  = get_db()
-    cur = db.cursor()
-
-    '''
-    cur.execute('DROP TABLE IF EXISTS test_user;')
-    cur.execute('CREATE TABLE test_user (id        serial  PRIMARY KEY,'
-                                        'username  TEXT    UNIQUE NOT NULL,'
-                                        'password  TEXT    NOT NULL);'
-                                        )
-    '''
-
-
-    with current_app.open_resource('schema.sql') as f:
+    with current_app.open_resource('database/triggers.sql') as f:
         cur.execute( f.read().decode('utf8') )
-    db.commit()
-    cur.close()
+
+    db.commit(); cur.close()
+
+
+@click.command('init-triggers')
+def init_triggers_command():
+    """Clear the existing database functions and triggers and create new ones."""
+    init_triggers()
+    click.echo('Initialized database triggers.')
+
+
+
+
+
+# command from the flask tutorial
+# --------------------------------
+def init_db():
+    db  = get_db(); cur = db.cursor()
+
+    with current_app.open_resource('database/schema.sql') as f:
+        cur.execute( f.read().decode('utf8') )
+
+    db.commit(); cur.close()
+
 
 @click.command('init-db')
 def init_db_command():
@@ -64,6 +76,7 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(init_triggers_command) # custom command
 
 
 

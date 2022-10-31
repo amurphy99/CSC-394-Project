@@ -203,7 +203,7 @@ def movie_added():
         db.commit()
 
         # add to movies_list table
-        cur.execute(f"INSERT INTO movies_list (movie_id, list_id, status, rating) VALUES ('{f_movie_id}', '{listID}', '{watch_status}', '{rating}')")
+        cur.execute(f"INSERT INTO movies_list (movie_id, list_id, status, rating) VALUES ('{f_movie_id}', '{listID}', '{watch_status}', '{rating}');")
         db.commit()
         
         cur.close(); db.close()

@@ -33,10 +33,22 @@ def user_page(userID):
     cur.close()
     db.close()
 
+    # wont need this once the default general list is implemented for every user
+    if len(user_lists) == 0:
+        plan_to_watch       = 0 
+        currently_watching  = 0
+        finished            = 0
+    else:
+        first_list = user_lists[0]
+        plan_to_watch       = first_list[10]   
+        currently_watching  = (first_list[9] - (first_list[10] + first_list[11]))
+        finished            = first_list[11]  
+
+
     statistics = [  ("Joined:",             str(this_user[4])[:10]  ),
-                    ("Movies Completed:",   123                     ), 
-                    ("Currently Watching:", 3                       ), 
-                    ("Plan to Watch:",      12                      ),
+                    ("Movies Completed:",   finished                ), 
+                    ("Currently Watching:", currently_watching      ), 
+                    ("Plan to Watch:",      plan_to_watch           ),
                     ("Watch Time:",         "24d 05h 22m"           )   ]
 
     return render_template('user_page/user_page.html', this_user=this_user, user_lists=user_lists, statistics=statistics)
