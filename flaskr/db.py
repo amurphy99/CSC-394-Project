@@ -1,4 +1,5 @@
 import psycopg2
+import sqlite3
 
 import click
 from flask import current_app, g
@@ -16,8 +17,18 @@ def get_database_connection():
     return conn
 
 
-def get_db():
-    if 'db' not in g: g.db = get_database_connection()
+def get_db(testing=False):
+    if 'db' not in g: 
+        # if in testing mode, use sqlite
+        if testing: 
+            g.db = sqlite3.connect( current_app.config['DATABASE'], 
+                                    detect_types=sqlite3.PARSE_DECLTYPES )
+            g.db.row_factory = sqlite3.Row
+
+        # if not in testing mode then use the actual postgres
+        else:
+            g.db = get_database_connection()
+
     return g.db
 
 
@@ -57,8 +68,9 @@ def init_triggers_command():
 def init_db():
     db  = get_db(); cur = db.cursor()
 
-    with current_app.open_resource('database/schema.sql') as f:
-        cur.execute( f.read().decode('utf8') )
+    print("init_db() called")
+    #with current_app.open_resource('database/schema.sql') as f:
+        #cur.execute( f.read().decode('utf8') )
 
     db.commit(); cur.close()
 

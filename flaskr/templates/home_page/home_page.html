@@ -1,38 +1,64 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='style-light.css') }}">
-<header>
-    <h1>{% block title %} Home {% endblock %}</h1>
+<!--
+    includes:
+    ----------
+        * trending movies
+            - from movieDisplay
 
-    <form id="form">
-        <input type="text" placeholder="Search" id="search" class="home-search">
-    </form>
-</header>
+        * friends list
+-->
+<header> <h1>{% block title %} Home {% endblock %}</h1> </header>
 
-<!-- <main id="main" class="home-main">
-    <div class="home-movie">
-        <img src="http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png" alt="image">
-        <div class="movie-info">
-            <h3>Movie Title</h3>
-        </div>
-    </div> -->
 
-    {% for movie in movieDisplay %}
-        <!-- Movie Poster -->
+<div class="home-page-content">
+    
 
-        <main id="main" class="home-main">
-            <div class="home-movie">
-                <img src="{{movie['poster']}}" alt="image">
-                <div class="movie-info">
-                    <h3>{{movie['title']}}</h3>
+    <div class="trending-movies">
+    <!-- 
+    each one includes:
+        * poster
+        * title 
+        * link to individual movie page 
+            - which means we also need the movies id
+            - should just be the entire box
+            - so i think that means it should be "a" and not "div"
+    -->
+        <p class="trending-list-header"> Trending Movies </p>
+        
+        <div class="trending-list"> 
+            {% for movie in movieDisplay %}
+                <div class="trending-item">
+        
+                    <img src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
+                    <h3> {{ movie['title'] }} </h3>
+                    <!-- the link includes {{ movie['id'] }}-->
+            
                 </div>
-            </div>
+            {% endfor %}
+        </div>
+    </div>
 
-    {% endfor %}
 
-</main>
+    <div class="friends-list">
+    <!-- 
+    includes:
+        * users name
+        * link to individual movie page 
+            - which means we also need the users id
+    -->
+        <p class="friends-list-header"> Friends </p>
 
+        <ul class="user-friends-list">
+            {% for friend in user_friends %}
+            <li class="friend-username"> {{ friend[0] }} <li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</div>
 
     
 {% endblock %}

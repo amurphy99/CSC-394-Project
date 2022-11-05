@@ -51,7 +51,20 @@ def user_page(userID):
                     ("Plan to Watch:",      plan_to_watch           ),
                     ("Watch Time:",         "24d 05h 22m"           )   ]
 
-    return render_template('user_page/user_page.html', this_user=this_user, user_lists=user_lists, statistics=statistics)
+
+    if g.user != None:
+        logged_in = g.user
+
+    # user page owner       = this_user
+    # user who is logged in = logged_in
+
+    user_comparison = [ ("Similar Movies", 10),
+                        ("Different Movies", 10)
+    ]
+
+        
+
+    return render_template('user_page/user_page.html', this_user=this_user, user_lists=user_lists, statistics=statistics, user_comparison=user_comparison)
 
 
 

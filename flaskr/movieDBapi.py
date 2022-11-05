@@ -7,9 +7,7 @@ from flask import Flask, render_template, g, request, flash
 
 
 '''
-
 page only shows 5 responses for now, doesnt live search, only on button click
-
 
 
 Configuration information for poster sizes:
@@ -80,6 +78,6 @@ def api_home():
     first_response  = requests.get(endpoint)
     response_list   = first_response.json()
 
-    print(response_list)
+    #print(response_list)
 
     return response_list

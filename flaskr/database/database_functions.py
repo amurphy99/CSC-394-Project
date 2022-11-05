@@ -8,7 +8,6 @@ from flaskr.db import get_db
 '''
 
 
-
 def add_movie(listID, movie, userID, watch_status, rating):
     # in the future could also include userID in inputs for permission verification
     '''
@@ -17,7 +16,6 @@ def add_movie(listID, movie, userID, watch_status, rating):
         userID          = int (request.form["userID"        ])
         watch_status    = int (request.form["watch-status"  ])
         rating          = int (request.form["rating"        ])
-
 
 
         # add to movies_list table
