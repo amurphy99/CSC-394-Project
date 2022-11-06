@@ -1,5 +1,54 @@
+
 /* BASE HTML
 --------------------------------------------------------------------------- */
+html { 
+    font-family: sans-serif; 
+    background: rgba(238, 238, 238); 
+    padding: 1rem; 
+}
+
+/* header */
+.base-header {
+    width: 100vw; max-width: 100%;
+    position: absolute; left: 0%; top: 0%;
+    padding: 0.0rem;
+}
+.header-content {
+    background-color: rgba(0,122,255);
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0.0rem 5.0rem 0.0rem 5.0rem;
+}
+.header-title { color: white; }
+.header-links {
+    display: flex; 
+    list-style: none; 
+    margin: 0; 
+    padding: 0;
+}
+.header-links > li {
+    color: white;
+    text-decoration: none; 
+    /* padding: 0.25rem 0.5rem; */
+    padding: 0.0rem 0.5rem;
+}
+.header-links > li > a { color: white; }
+
+
+/* content */
+.content { 
+    max-width: 1080px; 
+    height: 100%;
+    margin: 0 auto; 
+    background: white;
+    padding: 3.0rem 1.0rem 1.0rem 1.0rem; 
+}
+.content > header { border-bottom: 1px solid lightgray; display: flex; align-items: flex-end; }
+.content > header h1 { flex: auto; margin: 1rem 0 0.25rem 0; }
+
+/* footer */
 .my-footer {
     background: #eee;
     width: 100%;
@@ -7,7 +56,8 @@
 }
 
 
-/* Modal Styling
+
+/* MODAL STYLE
 --------------------------------------------------------------------------- */
 .my-modal {
     position: absolute;
@@ -56,7 +106,7 @@
 
 
 
-/* User Page Start
+/* USER PAGE
 --------------------------------------------------------------------------- */
 .user_page_header {
     width: 100%;
@@ -182,16 +232,20 @@
 
 
 
-/* Testing
+
+/* HOME PAGE
 --------------------------------------------------------------------------- */
 .home-page-content {
     display: flex;
     justify-content: space-between;
+    column-gap: 1.0rem;
     padding: 1.0rem 0;
 }
 .trending-movies {
-    width: 70%;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-grow: 3;
+    flex-direction: column;
     padding: 0 1.0rem 1.0rem 1.0rem;
 }
 .trending-list-header  { 
@@ -218,9 +272,10 @@
 
 
 .friends-list {
-    width: 20%;
+    min-width: 15%;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     justify-content: flex-start;
     padding: 0 1.0rem;

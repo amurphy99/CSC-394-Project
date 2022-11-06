@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block header %}
+  <h1> {% block title %} Home {% endblock %} </h1>
+{% endblock %}
+
 {% block content %}
 <!--
     includes:
@@ -9,12 +13,9 @@
 
         * friends list
 -->
-<header> <h1>{% block title %} Home {% endblock %}</h1> </header>
-
 
 <div class="home-page-content">
     
-
     <div class="trending-movies">
     <!-- 
     each one includes:
@@ -52,7 +53,8 @@
 
         <ul class="user-friends-list">
             {% for friend in user_friends %}
-            <li class="friend-username"> {{ friend[0] }} <li>
+            
+            <li class="friend-username"> <a href="{{ url_for('user_page', userID=friend[1]) }}"> {{ friend[0] }} </a> </li>
             {% endfor %}
         </ul>
 

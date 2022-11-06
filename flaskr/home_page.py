@@ -11,7 +11,7 @@ def home_page(userID):
     POSTER_SIZE = "w500"
 
     # api call to get trending movies
-    trending = api_home()["results"][:8]
+    trending = api_home()["results"][:9]
 
     # prepare movie data for display
     movieDisplay = []
@@ -22,13 +22,13 @@ def home_page(userID):
         movieDisplay.append(temp)
 
     # prepare friends list for display [id, username]
-    user_friends = [    ["admin",   0], 
-                        ["Andrew",  1],
-                        ["Calvin",  2],
-                        ["Joseph",  3],
-                        ["Brenden", 4],
-                        ["Derrick", 5],
-                        ["Benas",   6]  ]
+    user_friends = [    ["admin",   1], 
+                        ["Andrew",  2],
+                        ["Calvin",  3],
+                        ["Joseph",  4],
+                        ["Brenden", 5],
+                        ["Derrick", 6],
+                        ["Benas",   7]  ]
 
     # display page
     return render_template('home_page/home_page.html', movieDisplay=movieDisplay, user_friends=user_friends)
