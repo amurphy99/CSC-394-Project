@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -16,14 +17,11 @@
 <div class="user_page_VStack">
 
     <!-- User Page Header -->
-    <div class="user_page_header">
-        <h1>{% block title %} {{ this_user[1] }}'s Page {% endblock %}</h1>
-        <h3> #{{ this_user[0] }} </h3>
-    </div>
+    <h1 class="text-center">{% block title %} {{ this_user[1] }}'s Page {% endblock %} <span>#{{ this_user[0] }} </span></h1>
 
-
+    
     <!-- User Bio -->
-    <div class="user_page_bio">
+    <div class="user_page_bio rounded py-2 shadow">
         <p>
             {{ "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et egestas quis ipsum suspendisse ultrices gravida. Nec feugiat in fermentum posuere urna nec tincidunt praesent semper. Tortor dignissim convallis aenean et tortor. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor. Libero justo laoreet sit amet. In ornare quam viverra orci sagittis eu. Auctor urna nunc id cursus metus. Tincidunt augue interdum velit euismod in pellentesque massa placerat. Aliquam malesuada bibendum arcu vitae." }}
         </p>
@@ -32,22 +30,19 @@
 
 
     <!-- Socials -->
-    <div class="user_page_socials">
-        <p> Friends:   {{ 25 }} </p>
-        <p> Followers: {{ 12 }} </p>
-        <button type="submit"> Add Friend </button>
-    </div>
-
+    <ul class="bg-primary text-light d-flex justify-content-center list-inline py-2 align-items-center">
+        <li class="me-3 fs-5 fw-bold border border-light p-1">Friends: {{ 25 }} </li>
+        <li class="me-3 fs-5 fw-bold border border-light p-1">Followers: {{ 12 }} </li>
+        <li><button class="btn btn-danger" type="submit"> Add Friend </button></li>
+    </ul>
 
 
     <!-- User Page Content -->
-    <div class="user_page_HStack">
+    <div class="row d-flex justify-content-center">  
 
         <!-- User Statistics -->
-        <div class="user-page-statistics">
-
-            <p class="statistics-header"> Statistics </p>
-        
+        <div class="col-md-2 col-10 border border-dark shadow p-2">
+            <p class="py-2 text-center fw-bold">Statistics</p>
             <ul class="user-statistics">
                 {% for entry in statistics %}
 
@@ -58,14 +53,13 @@
 
                 {% endfor %}
             </ul>
-        
         </div>
-
+            
         <!-- Watch List Display -->
-        <div class="user_watch_lists">
+        <div class="col-10 my-2">
 
             <div class="watch_lists_info">
-                <h3> {{ this_user[1] }}'s Watch Lists </h3>
+                <h3 class="text-center"> {{ this_user[1] }}'s Watch Lists </h3>
 
                 <!-- 
                 Only show the edit buttons if the one viewing this user page is logged in as the owner
@@ -80,12 +74,12 @@
                 {% if g.user is not none %}
                     {% if g.user[0]|int == this_user[0]|int %}
                     
-                    <button 
+                    <button class="btn btn-primary btn-sm"
                         hx-get="/user/modal" 
                         hx-target="#modals-here" 
                         hx-trigger="click"
                         hx-swap="innerHTML"
-                        > Create New Watch List
+                        > New Watch List
                     </button>
 
                     {% endif %}
@@ -98,33 +92,17 @@
             <div class="list_preview_wrapper">
                 {% for watch_list in user_lists %}
 
-                <div class="list_preview">
+                <div class="p-3 bg-secondary border rounded shadow text-light">
                     <h3> {{ watch_list[3] }} </h3>
                     <p>  {{ watch_list[4] }}  </p>
-                    <p>  Created On: {{ watch_list[6] }}  </p>
-                    <a href="{{ url_for('watch_list', listID=watch_list[0]) }}">View List</a>
+                    <p> <span class="fw-bold">Created On:</span> {{ watch_list[6] }}  </p>
+                    <p class="text-center">
+                        <a class="btn btn-primary" href="{{ url_for('watch_list', listID=watch_list[0]) }}">View List</a>
+                    </p>
+                    
                 </div>
-
                 {% endfor %}
             </div>
-        </div>
-
-        <!-- User Statistics -->
-        <div class="user-page-statistics">
-
-            <p class="statistics-header"> User Comparison </p>
-        
-            <ul class="user-statistics">
-                {% for entry in user_comparison %}
-
-                <div class="statistics-spacer">
-                <li class="statistics-label"> {{ entry[0] }} <li>
-                <li class="statistics-item" > {{ entry[1] }} <li>
-                </div>
-
-                {% endfor %}
-            </ul>
-        
         </div>
 
     </div>  
