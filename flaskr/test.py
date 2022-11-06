@@ -12,7 +12,7 @@ def test1():
     # -----------------------------------
     conn = get_database_connection()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM test_user;")
+    cur.execute("SELECT * FROM all_users;")
     test_users = cur.fetchall()
     cur.close()
     conn.close()

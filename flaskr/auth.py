@@ -30,7 +30,7 @@ def register():
                 cur.execute(
                     #f"INSERT INTO test_user (username, password) VALUES ({username}, {generate_password_hash(password)})"
                     # removed password hash bc caused error
-                    f"INSERT INTO test_user (username, password) VALUES ('{username}', '{password}')"
+                    f"INSERT INTO all_users (username, password) VALUES ('{username}', '{password}')"
                 )
                 db.commit()
                 cur.close()
@@ -56,7 +56,7 @@ def login():
         error = None
 
         cur = db.cursor()
-        cur.execute( f"SELECT * FROM test_user WHERE username = '{username}'" )
+        cur.execute( f"SELECT * FROM all_users WHERE username = '{username}'" )
         user = cur.fetchone()
         cur.close()
 
@@ -71,7 +71,8 @@ def login():
             session.clear()
             session['user_id'] = user[0]
             #return redirect(url_for('index'))
-            return redirect( url_for('user_page', userID=user[0]) )
+            #return redirect( url_for('user_page', userID=user[0]) )
+            return redirect( url_for('home_page') )
 
         flash(error)
 
@@ -86,7 +87,7 @@ def load_logged_in_user():
         g.user = None
     else:
         cur = get_db().cursor()
-        cur.execute( f"SELECT * FROM test_user WHERE id = '{user_id}'" )
+        cur.execute( f"SELECT * FROM all_users WHERE id = '{user_id}'" )
         g.user = cur.fetchone()
         cur.close()
 
@@ -95,7 +96,7 @@ def load_logged_in_user():
 @bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('home_page'))
 
 # Require Authentication in Other Views
 # ---------------------------------------

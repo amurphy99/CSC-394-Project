@@ -17,19 +17,22 @@ def get_database_connection():
     return conn
 
 
-def get_db(testing=False):
+def get_db():
     if 'db' not in g: 
+
         # if in testing mode, use sqlite
-        if testing: 
+        if current_app.config["TESTING"]:
             g.db = sqlite3.connect( current_app.config['DATABASE'], 
                                     detect_types=sqlite3.PARSE_DECLTYPES )
             g.db.row_factory = sqlite3.Row
 
         # if not in testing mode then use the actual postgres
-        else:
-            g.db = get_database_connection()
+        else: g.db = get_database_connection()
 
     return g.db
+
+
+
 
 
 def close_db(e=None):

@@ -43,7 +43,7 @@ def watch_list(listID):
     cur.execute( f"SELECT * FROM movies_list_info WHERE id = '{listID}';" )
     list_info = cur.fetchone()
 
-    cur.execute( f"SELECT * FROM test_user WHERE id = '{list_info[1]}';" )
+    cur.execute( f"SELECT * FROM all_users WHERE id = '{list_info[1]}';" )
     list_owner = cur.fetchone()
 
     cur.execute( f"SELECT * FROM movies_list WHERE list_id = '{list_info[0]}';" )

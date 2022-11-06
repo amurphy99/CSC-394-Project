@@ -45,7 +45,7 @@ def create_app(test_config=None):
     app.add_url_rule('/index', methods=('GET', 'POST'), view_func=index.index)
 
     from . import home_page
-    app.add_url_rule('/home_page/<userID>', methods=('GET', 'POST'), view_func=home_page.home_page)
+    app.add_url_rule('/', methods=('GET', 'POST'), view_func=home_page.home_page)
 
     from . import movie_page
     app.add_url_rule('/movie_page/<movieID>', methods=('GET', 'POST'), view_func=movie_page.movie_page)

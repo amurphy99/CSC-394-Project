@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS test_user  CASCADE;
   * add rule to delete lists on user deletion
     - maybe transfer ownership to the oldest editorID if any
 */
-CREATE TABLE test_user (
+CREATE TABLE all_users (
   id            serial 	  PRIMARY KEY,
   username      TEXT      UNIQUE NOT NULL,
   password      TEXT      NOT NULL,
@@ -138,14 +138,27 @@ CREATE TABLE genre_counts (
 
 
 /* TESTING DATA 
------------------------- */
-INSERT INTO test_user (username, password, privileges)  VALUES ('admin',    'password', 1);
-INSERT INTO test_user (username, password)              VALUES ('Andrew',   'password');
+------------------------ 
+
+INSERT INTO all_users (username, password)              VALUES ('Andrew',   'password');
 INSERT INTO test_user (username, password)              VALUES ('Calvin',   'password');
 INSERT INTO test_user (username, password)              VALUES ('Joseph',   'password');
 INSERT INTO test_user (username, password)              VALUES ('Brendan',  'password');
 INSERT INTO test_user (username, password)              VALUES ('Derrick',  'password');
 INSERT INTO test_user (username, password)              VALUES ('Benas',    'password');
+*/
+INSERT INTO all_users (username, password, privileges)  VALUES ('admin',    'password', 1);
+
+INSERT INTO all_users (username, password)
+VALUES 
+  ('Andrew',   'password'),
+  ('Calvin',   'password'),
+  ('Joseph',   'password'),
+  ('Brendan',  'password'),
+  ('Derrick',  'password'),
+  ('Benas',    'password');
+
+
 
 
 /* NEW MOVIE LIST DATA 

@@ -4,8 +4,12 @@ from flaskr.movieDBapi import api_home
 
 
 
-#@app.route('/home_page/<userID>', methods=('GET', 'POST'))
-def home_page(userID):
+#@app.route('/', methods=('GET', 'POST'))
+def home_page():
+    '''
+        later on will be using g.user to display friends list
+        when g.user is None, load something else in that area
+    '''
     # Poster url 
     BASE_URL    = "http://image.tmdb.org/t/p/"
     POSTER_SIZE = "w500"

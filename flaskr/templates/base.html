@@ -20,8 +20,8 @@
 
     <ul class="header-links">
       <!-- nav bar links that are always present -->
-      <li><a href="{{ url_for('home_page', userID=g.user[0]) }}"  > Home            </a>
-      <li><a href="{{ url_for('index') }}"                        > Users           </a>
+      <li><a href="{{ url_for('home_page')  }}"                   > Home            </a>
+      <li><a href="{{ url_for('index')      }}"                   > Users           </a>
       
       <!-- changes what is displayed based on if the viewer is signed in or not -->
       {% if g.user %}

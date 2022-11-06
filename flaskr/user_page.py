@@ -24,7 +24,7 @@ def user_page(userID):
     db  = get_db()
     cur = db.cursor()
 
-    cur.execute( f"SELECT * FROM test_user WHERE id = '{userID}';" )
+    cur.execute( f"SELECT * FROM all_users WHERE id = '{userID}';" )
     this_user = cur.fetchone()
 
     cur.execute( f"SELECT * FROM movies_list_info WHERE owner_id = '{userID}';" )

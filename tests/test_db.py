@@ -3,7 +3,7 @@ import sqlite3
 import pytest
 from flaskr.db import get_db
 
-import psycopg2
+#import psycopg2
 
 
 def test_get_close_db(app):

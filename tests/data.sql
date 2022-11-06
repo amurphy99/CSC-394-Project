@@ -27,10 +27,10 @@ INSERT INTO movies_list (movie_id, list_id, status, rating) VALUES (200, 1, 0, 2
 
 
 
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS all_users;
 DROP TABLE IF EXISTS post;
 
-CREATE TABLE user (
+CREATE TABLE all_users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL
@@ -42,7 +42,18 @@ CREATE TABLE post (
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title TEXT NOT NULL,
   body TEXT NOT NULL,
-  FOREIGN KEY (author_id) REFERENCES user (id)
+  FOREIGN KEY (author_id) REFERENCES all_users (id)
 );
 
 
+
+
+INSERT INTO all_users (username, password)
+VALUES
+  ('test', 'test'),
+  ('test1', 'pbkdf2:sha256:50000$TCI4GzcX$0de171a4f4dac32e3364c7ddc7c14f3e2fa61f2d17574483f7ffbb431b4acb2f'),
+  ('other', 'pbkdf2:sha256:50000$kJPKsz6N$d2d4784f1b030a9761f5ccaeeaca413f27f2ecb76d6168407af962ddce849f79');
+
+INSERT INTO post (title, body, author_id, created)
+VALUES
+  ('test title', 'test' || x'0a' || 'body', 1, '2018-01-01 00:00:00');
