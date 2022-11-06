@@ -30,13 +30,13 @@
         
         <div class="trending-list"> 
             {% for movie in movieDisplay %}
-                <div class="trending-item">
+                <a href="/movie_page" class="trending-item">
         
                     <img src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
                     <h3> {{ movie['title'] }} </h3>
                     <!-- the link includes {{ movie['id'] }}-->
             
-                </div>
+                </a>
             {% endfor %}
         </div>
     </div>

@@ -261,6 +261,7 @@ html {
     row-gap: 1.0rem;
     column-gap: 1.0rem;
     padding: 0;
+    text-decoration: none;
 }
 .trending-item {
     width: 25%;
@@ -268,6 +269,7 @@ html {
     display: flex;
     flex-direction: column;
     padding: 1.0rem 1.0rem 0.0rem 1.0rem;
+    text-decoration: none;
 }
 
 
