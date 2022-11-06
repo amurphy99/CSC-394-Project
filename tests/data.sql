@@ -1,7 +1,10 @@
 
 
 /* TESTING DATA 
------------------------- */
+------------------------ 
+new branch test
+*/
+
 /*
 INSERT INTO test_user (username, password, privileges)  VALUES ('admin',    'password', 1);
 INSERT INTO test_user (username, password) VALUES ('testing user', 'password');
