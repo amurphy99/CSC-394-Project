@@ -17,7 +17,8 @@ def home_page(userID):
     movieDisplay = []
     for movie in trending:
         temp = {    "title"     : movie["title"],
-                    "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"] }
+                    "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
+                    "id"        : movie["id"] }
 
         movieDisplay.append(temp)
 

@@ -5,9 +5,9 @@ from flaskr.movieDBapi import api_home
 
 
 #@app.route('/home_page/<userID>', methods=('GET', 'POST'))
-def movie_page():
+def movie_page(movieID):
     
-    return render_template('home_page/movie_page.html')
+    return render_template('home_page/movie_page.html', movieID = movieID)
 
 
 
