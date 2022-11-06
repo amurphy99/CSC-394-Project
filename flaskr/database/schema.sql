@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS movies_list;
 DROP TABLE IF EXISTS movies_list_info;
 DROP TABLE IF EXISTS movies     CASCADE;
 DROP TABLE IF EXISTS test_user  CASCADE;
-
+DROP TABLE IF EXISTS all_users  CASCADE;
 
 
 /* test_user:
