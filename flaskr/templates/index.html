@@ -1,21 +1,21 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Users {% endblock %}</h1>
+    <h1 class="text-center">{% block title %} Users {% endblock %}</h1>
 
-    <table>
+    <table class="table table-bordered table-striped table-secondary text-center align-middle shadow">
         <tr>
-          <th>user ID</th>
-          <th>username</th>
-          <th>password</th>
-          <th>privileges</th>
-          
+          <th>User ID</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Privileges</th>
         </tr>
         {% for this_user in test_users %}
             <tr>
                 <td> {{ this_user[0] }} </td>
                 <td> {{ this_user[1] }} </td>
-                <td> ********           </td>
+                <td> ******** </td>
                 <td> {{ this_user[3] }} </td>
             </tr>
         {% endfor %}
