@@ -1,11 +1,9 @@
 /* OTHER TRIGGERS NEEDED:
 --------------------------
-    * create "general" movie list when any new user is created
-    * delete "general" movie list when any user is deleted
-        - transfer ownership of other lists or delete them
-        - delete both movie_list_info and movie_list table entries
+    * finish update_general_movies_list()
 
-    * if a user adds a movie to another list and it isn't in their general list yet, add it to their general list
+    * dont allow users to make a new movie list with the name "general"
+    * dont allow addition of the same movie to a list twice
 
 */
 
@@ -69,7 +67,6 @@ CREATE OR REPLACE FUNCTION update_movies_list_statistics() RETURNS TRIGGER AS $$
 $$ LANGUAGE plpgsql;
 
 
-
 /* Create the trigger (drop it if it already exists too)
 --------------------------------------------------------- */
 DROP TRIGGER IF EXISTS movies_list_statistics_trigger ON movies_list;
@@ -80,4 +77,114 @@ CREATE TRIGGER movies_list_statistics_trigger
     FOR EACH ROW -- could you do ROW.id instead ? "postgresql create trigger for each row value of a specific column"
     EXECUTE PROCEDURE update_movies_list_statistics();
 
+
+
+
+
+
+
+
+
+/* general movie list creation and deletion:
+----------------------------------------------
+    * create "general" movie list when any new user is created
+    * delete "general" movie list when any user is deleted
+        - transfer ownership of other lists or delete them
+        - delete both movie_list_info and movie_list table entries
+
+    general_movies_list_control()
+    general_movies_list_control_trigger
+
+*/
+DROP FUNCTION IF EXISTS general_movies_list_control();
+
+CREATE OR REPLACE FUNCTION general_movies_list_control() RETURNS TRIGGER AS $$
+    BEGIN
+        IF (TG_OP = 'DELETE') THEN
+            -- delete all of the movies from their movie lists
+            -- on user deletion delete their general movies list
+            -- later on do something about their other lists: if there were other editors than give one ownership
+            DELETE FROM movies_list WHERE list_id = (SELECT id FROM movies_list_info WHERE id = OLD.id);
+            DELETE FROM movies_list_info WHERE id = OLD.id;
+            RETURN OLD;
+
+        ELSIF (TG_OP = 'INSERT') THEN
+            -- on user creation create a new general movies list
+            INSERT INTO movies_list_info (owner_id, list_name, list_description)
+            VALUES (NEW.id, 'general', CONCAT(NEW.username, '''s general movie list.'));
+            RETURN NEW;
+            
+        END IF;
+    END;
+$$ LANGUAGE plpgsql;
+
+
+/* Create the trigger (drop it if it already exists too)
+--------------------------------------------------------- */
+DROP TRIGGER IF EXISTS general_movies_list_control_trigger ON all_users;
+
+CREATE TRIGGER general_movies_list_control_trigger
+    AFTER INSERT OR DELETE
+    ON all_users
+    FOR EACH ROW -- could you do ROW.id instead ? "postgresql create trigger for each row value of a specific column"
+    EXECUTE PROCEDURE general_movies_list_control();
+
+
+
+
+
+
+
+
+
+
+
+/* trigger for updating general list
+----------------------------------------------
+    * if a user adds a movie to another list and it isn't in their general list yet, add it to their general list
+
+    update_general_movies_list()
+    update_general_movies_list_trigger
+
+*/
+DROP FUNCTION IF EXISTS update_general_movies_list();
+
+CREATE OR REPLACE FUNCTION update_general_movies_list() RETURNS TRIGGER AS $$
+    BEGIN
+        IF (TG_OP = 'DELETE') THEN
+            RETURN OLD;
+
+        ELSIF (TG_OP = 'UPDATE') THEN
+            RETURN NEW;
+
+        ELSIF (TG_OP = 'INSERT') THEN
+            -- check if the name of the list is general
+            IF NOT ((SELECT list_name FROM movies_list_info WHERE id = NEW.list_id) = 'general') THEN
+
+                INSERT INTO movies_list (movie_id, list_id, status, rating) 
+                VALUES (
+                    NEW.movie_id, 
+                    (SELECT id FROM movies_list_info WHERE 
+                        list_name = 'general' AND 
+                        owner_id = (SELECT owner_id FROM movies_list_info WHERE id = NEW.list_id)), 
+                    NEW.status, 
+                    NEW.rating);
+
+            END IF;
+            RETURN NEW;
+            
+        END IF;
+    END;
+$$ LANGUAGE plpgsql;
+
+
+/* Create the trigger (drop it if it already exists too)
+--------------------------------------------------------- */
+DROP TRIGGER IF EXISTS update_general_movies_list_trigger ON movies_list;
+
+CREATE TRIGGER update_general_movies_list_trigger
+    AFTER INSERT OR UPDATE OR DELETE
+    ON movies_list
+    FOR EACH ROW -- could you do ROW.id instead ? "postgresql create trigger for each row value of a specific column"
+    EXECUTE PROCEDURE update_general_movies_list();
 

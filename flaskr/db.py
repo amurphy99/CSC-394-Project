@@ -44,9 +44,20 @@ def close_db(e=None):
 
 
 
-# custom command for triggers
+
+
+# schema
 # ----------------------------
-# testing data wont be affected ny these, init-db will always be called first
+def init_schema():
+    db  = get_db(); cur = db.cursor()
+
+    with current_app.open_resource('database/schema.sql') as f:
+        cur.execute( f.read().decode('utf8') )
+
+    db.commit(); cur.close()
+
+# triggers
+# ----------------------------
 def init_triggers():
     db  = get_db(); cur = db.cursor()
 
@@ -56,26 +67,35 @@ def init_triggers():
     db.commit(); cur.close()
 
 
-@click.command('init-triggers')
-def init_triggers_command():
-    """Clear the existing database functions and triggers and create new ones."""
-    init_triggers()
-    click.echo('Initialized database triggers.')
-
-
-
-
-
-# command from the flask tutorial
-# --------------------------------
-def init_db():
+# sample data
+# ----------------------------
+def init_sample_data():
     db  = get_db(); cur = db.cursor()
 
-    print("init_db() called")
-    #with current_app.open_resource('database/schema.sql') as f:
-        #cur.execute( f.read().decode('utf8') )
+    with current_app.open_resource('database/sample_data.sql') as f:
+        cur.execute( f.read().decode('utf8') )
 
     db.commit(); cur.close()
+
+
+
+
+
+
+# modified command from the flask tutorial
+# --------------------------------
+def init_db():
+    '''
+    Takes 3 steps because you can't add triggers before the schema 
+    is defined and you don't want to add data until the triggers 
+    are defined.
+    '''
+    # dont do anything if testing
+    if current_app.config["TESTING"]: print("init_db() called")
+    else:
+        init_schema()
+        init_triggers()
+        init_sample_data()
 
 
 @click.command('init-db')
@@ -91,7 +111,6 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
-    app.cli.add_command(init_triggers_command) # custom command
 
 
 

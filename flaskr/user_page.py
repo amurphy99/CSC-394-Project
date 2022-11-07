@@ -1,6 +1,7 @@
 from flask import Flask, render_template, g, request, flash, session
-from flaskr.db import get_database_connection
+
 from flaskr.db import get_db
+from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list
 
 
 
@@ -18,11 +19,9 @@ def user_page(userID):
         * user_lists
     
     '''
-
     # get info from database
     # -----------------------
-    db  = get_db()
-    cur = db.cursor()
+    db = get_db(); cur = db.cursor()
 
     cur.execute( f"SELECT * FROM all_users WHERE id = '{userID}';" )
     this_user = cur.fetchone()
@@ -30,21 +29,18 @@ def user_page(userID):
     cur.execute( f"SELECT * FROM movies_list_info WHERE owner_id = '{userID}';" )
     user_lists = cur.fetchall()
 
-    cur.close()
-    db.close()
-
-    # wont need this once the default general list is implemented for every user
-    if len(user_lists) == 0:
-        plan_to_watch       = 0 
-        currently_watching  = 0
-        finished            = 0
-    else:
-        first_list = user_lists[0]
-        plan_to_watch       = first_list[10]   
-        currently_watching  = (first_list[9] - (first_list[10] + first_list[11]))
-        finished            = first_list[11]  
+    cur.close(); db.close()
 
 
+    # get general list for stats
+    # ---------------------------
+    general_list        = get_general_user_statistics([ this_user[0] ])[this_user[0]]
+    plan_to_watch       = general_list[10]   
+    currently_watching  = (general_list[9] - (general_list[10] + general_list[11]))
+    finished            = general_list[11]  
+
+    # prepare stats
+    # --------------
     statistics = [  ("Joined:",             str(this_user[4])[:10]  ),
                     ("Movies Completed:",   finished                ), 
                     ("Currently Watching:", currently_watching      ), 
@@ -52,18 +48,48 @@ def user_page(userID):
                     ("Watch Time:",         "24d 05h 22m"           )   ]
 
 
+
+    # -------------------------------------------------------------------------------
+    # area for the comparison code
+    # -------------------------------------------------------------------------------
+
+    '''
+    statistics comparison notes:
+    -----------------------------
+    (just ideas, dont have to do exacly this)
+
+        if not signed in:
+            return "sign in to compare your watch histories!"
+
+        if signed in:
+            num movies in common
+            num movies youve seen that they havent
+            num movies theyve seen that you havent
+            % match, out of total unique movies between the two of you, % that u both have seen
+
+        if movies in common >= 6:
+            top 3 closest agreement in rating + their raitng + your rating 
+            top 3 biggest disagreement in rating + their raitng + your rating 
+    
+    '''
+
+    # checks if the current user is logged in
     if g.user != None:
-        logged_in = g.user
+        # look in database/database_functions.py for more info on what this gives
+        movie_lists = get_general_movie_list([userID, g.user[0]])
 
-    # user page owner       = this_user
-    # user who is logged in = logged_in
 
-    user_comparison = [ ("Similar Movies", 10),
-                        ("Different Movies", 10)
-    ]
 
-        
+    # prepare the user comparison data for the page
+    user_comparison = [ ("Similar Movies",      10),
+                        ("Different Movies",    10) ]
 
+
+    # -------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------
+
+
+    # return the template with all of the information we assembled for display
     return render_template('user_page/user_page.html', this_user=this_user, user_lists=user_lists, statistics=statistics, user_comparison=user_comparison)
 
 

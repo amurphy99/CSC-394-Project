@@ -99,13 +99,13 @@ CREATE TABLE movies_list_info (
 /* movies_list:
 ----------------
     Possible Additions:
-      * date_added to list
 */
 CREATE TABLE movies_list (
-  movie_id 	int references movies(id),
-  list_id 	int references movies_list_info(id),
-  status 	  int DEFAULT    0,
-  rating 	  int DEFAULT    -1,
+  movie_id 	  INTEGER   references  movies(id),
+  list_id 	  INTEGER   references  movies_list_info(id),
+  status 	    INTEGER   DEFAULT     0,
+  rating 	    INTEGER   DEFAULT     -1,
+  date_added  TIMESTAMP DEFAULT     CURRENT_TIMESTAMP,
   constraint pk_movies_list primary key (movie_id, list_id)
 );
 
@@ -132,42 +132,4 @@ CREATE TABLE genre_counts (
 */
 
 
-
-
-
-
-
-/* TESTING DATA 
------------------------- 
-
-INSERT INTO all_users (username, password)              VALUES ('Andrew',   'password');
-INSERT INTO test_user (username, password)              VALUES ('Calvin',   'password');
-INSERT INTO test_user (username, password)              VALUES ('Joseph',   'password');
-INSERT INTO test_user (username, password)              VALUES ('Brendan',  'password');
-INSERT INTO test_user (username, password)              VALUES ('Derrick',  'password');
-INSERT INTO test_user (username, password)              VALUES ('Benas',    'password');
-*/
-INSERT INTO all_users (username, password, privileges)  VALUES ('admin',    'password', 1);
-
-INSERT INTO all_users (username, password)
-VALUES 
-  ('Andrew',   'password'),
-  ('Calvin',   'password'),
-  ('Joseph',   'password'),
-  ('Brendan',  'password'),
-  ('Derrick',  'password'),
-  ('Benas',    'password');
-
-
-
-
-/* NEW MOVIE LIST DATA 
------------------------- */
-INSERT INTO movies_list_info (owner_id, list_name, list_description) VALUES (1, 'test list', 'testing movie list');
-
-INSERT INTO movies (id, title, poster) VALUES (100, 'testing100', 'none') ON CONFLICT (id) DO UPDATE SET popularity = EXCLUDED.popularity + 1;
-INSERT INTO movies (id, title, poster) VALUES (200, 'testing200', 'none') ON CONFLICT (id) DO UPDATE SET popularity = EXCLUDED.popularity + 1;
-
-INSERT INTO movies_list (movie_id, list_id, status, rating) VALUES (100, 1, 1, 5);
-INSERT INTO movies_list (movie_id, list_id, status, rating) VALUES (200, 1, 0, 2);
 
