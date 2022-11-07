@@ -81,3 +81,18 @@ def api_home():
     #print(response_list)
 
     return response_list
+
+
+
+def api_movie_page(movieID):
+
+    base = "https://api.themoviedb.org/3/movie/"
+    api_key = "?api_key=f059b4ab8738e8777362529e74ffb62a"
+    lang = "&language=en-US"
+
+    endpoint = base + movieID + api_key + lang
+
+    first_response = requests.get(endpoint)
+    response_list = first_response.json()
+
+    return response_list
