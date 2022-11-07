@@ -9,11 +9,20 @@ from flaskr.movieDBapi import api_query
 #@app.route('/home_page/<userID>', methods=('GET', 'POST'))
 def movie_page(movieID):
     
+    BASE_URL    = "http://image.tmdb.org/t/p/"
+    POSTER_SIZE = "w500"
+
     result_movie = api_movie_page(movieID)
+    poster_movie = BASE_URL + POSTER_SIZE + result_movie['poster_path']
 
-    print(result_movie)
+    movieDisplay = []
+    movieDisplay.append(result_movie['title'])
+    movieDisplay.append(poster_movie)
+    movieDisplay.append(result_movie['overview'])
 
-    return render_template('home_page/movie_page.html', movieID = movieID)
+
+
+    return render_template('home_page/movie_page.html', movieID = movieID, movieDisplay = movieDisplay)
 
 
 
