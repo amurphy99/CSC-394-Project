@@ -9,19 +9,35 @@ from flaskr.movieDBapi import api_query
 #@app.route('/home_page/<userID>', methods=('GET', 'POST'))
 def movie_page(movieID):
     
+    # Poster url 
     BASE_URL    = "http://image.tmdb.org/t/p/"
     POSTER_SIZE = "w500"
 
+    # api call to get trending movies
     result_movie = api_movie_page(movieID)
     poster_movie = BASE_URL + POSTER_SIZE + result_movie['poster_path']
 
-    movieDisplay = []
+    # prepare movie data for display
+    movieDisplay = [] 
     movieDisplay.append(result_movie['title'])
     movieDisplay.append(poster_movie)
     movieDisplay.append(result_movie['overview'])
+    movieDisplay.append(result_movie['release_date'])
+    movieDisplay.append(result_movie['runtime'])
+    
 
+    '''
+    movieDisplay[0] = title
+    movieDisplay[1] = poster
+    movieDisplay[2] = overview
+    movieDisplay[3] = release date
+    movieDisplay[4] = runtime
+    
+    
+    '''
+    print(result_movie['genres'])
 
-
+    # display page
     return render_template('home_page/movie_page.html', movieID = movieID, movieDisplay = movieDisplay)
 
 
