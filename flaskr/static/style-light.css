@@ -270,6 +270,7 @@ html {
     flex-direction: column;
     padding: 1.0rem 1.0rem 0.0rem 1.0rem;
     text-decoration: none;
+    color: black;
 }
 
 
@@ -340,6 +341,39 @@ html {
 .home-movie img{
     width: 100%;
 }
+
+
+
+
+/* Movie Page
+-------------------------------------------------------------------------------------- */
+
+.movie-page-img-container {
+    width: 300px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    text-decoration: none;
+    color: black;
+}
+
+.movie-page-overview-container {
+    width: 600px;
+    height: 385px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    padding: 20px;
+    text-decoration: none;
+    color: black;
+    position: relative;
+    left: 325px;
+    bottom: 455px;
+}
+
+
 
 
 
