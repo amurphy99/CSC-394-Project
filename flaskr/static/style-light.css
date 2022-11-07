@@ -201,7 +201,7 @@ html {
 
 /* User Watch Lists */
 .user_watch_lists {
-    width: 75%;
+    width: 60%;
     border: solid 1px;
 }
 .user_watch_lists > h3 {

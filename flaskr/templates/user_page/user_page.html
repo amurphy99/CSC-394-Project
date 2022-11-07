@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block header %}
+  <h1> {% block title %} {{ this_user[1] }}'s Page {% endblock %} #{{ this_user[0] }} </h1>
+{% endblock %}
+
 {% block content %}
 
 <!--
@@ -15,11 +19,7 @@
 
 <div class="user_page_VStack">
 
-    <!-- User Page Header -->
-    <div class="user_page_header">
-        <h1>{% block title %} {{ this_user[1] }}'s Page {% endblock %}</h1>
-        <h3> #{{ this_user[0] }} </h3>
-    </div>
+
 
 
     <!-- User Bio -->
