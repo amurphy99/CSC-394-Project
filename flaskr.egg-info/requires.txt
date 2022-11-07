@@ -1,4 +1,0 @@
-flask
-
-[test]
-pytest
