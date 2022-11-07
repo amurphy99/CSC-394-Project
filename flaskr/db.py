@@ -27,7 +27,8 @@ def get_db():
             g.db.row_factory = sqlite3.Row
 
         # if not in testing mode then use the actual postgres
-        else: g.db = get_database_connection()
+        else: 
+            g.db = get_database_connection()
 
     return g.db
 

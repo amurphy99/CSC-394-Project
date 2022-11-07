@@ -1,6 +1,6 @@
 from flask import Flask, render_template, g, request, flash, session
 
-from flaskr.db import get_db
+from flaskr.db import get_db, close_db
 from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list
 
 
@@ -30,11 +30,13 @@ def user_page(userID):
     user_lists = cur.fetchall()
 
     cur.close(); db.close()
+    close_db()
 
 
     # get general list for stats
     # ---------------------------
-    general_list        = get_general_user_statistics([ this_user[0] ])[this_user[0]]
+    general_lists       = get_general_user_statistics([ this_user[0] ])
+    general_list        = general_lists[this_user[0]]
     plan_to_watch       = general_list[10]   
     currently_watching  = (general_list[9] - (general_list[10] + general_list[11]))
     finished            = general_list[11]  

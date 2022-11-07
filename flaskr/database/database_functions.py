@@ -1,4 +1,4 @@
-from flaskr.db import get_db
+from flaskr.db import get_db, close_db
 
 '''
     Contains:
@@ -48,7 +48,8 @@ def get_general_user_statistics(user_ids):
     user_statistics_dict = {}
 
     # open db connection
-    db = get_db(); cur = db.cursor()
+    db = get_db()
+    cur = db.cursor()
 
     for userID in user_ids:
         # make sure the user exists
@@ -67,6 +68,7 @@ def get_general_user_statistics(user_ids):
 
     # close the cursor and db connection
     cur.close(); db.close()
+    close_db()
 
     # return the dict
     return user_statistics_dict
@@ -126,6 +128,7 @@ def get_general_movie_list(user_ids):
 
     # close the cursor and db connection
     cur.close(); db.close()
+    close_db()
 
     # return the dict
     return movie_list_dict
