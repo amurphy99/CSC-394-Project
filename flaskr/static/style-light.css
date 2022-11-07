@@ -360,7 +360,7 @@ html {
 
 .movie-page-overview-container {
     width: 600px;
-    height: 385px;
+    height: 410px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     flex-direction: column;
@@ -370,7 +370,7 @@ html {
     color: black;
     position: relative;
     left: 325px;
-    bottom: 455px;
+    bottom: 480px;
 }
 
 
