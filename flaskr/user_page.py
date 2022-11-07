@@ -92,7 +92,11 @@ def user_page(userID):
 
 
     # return the template with all of the information we assembled for display
-    return render_template('user_page/user_page.html', this_user=this_user, user_lists=user_lists, statistics=statistics, user_comparison=user_comparison)
+    return render_template( 'user_page/user_page.html', 
+                            this_user       = this_user, 
+                            user_lists      = user_lists, 
+                            statistics      = statistics, 
+                            user_comparison = user_comparison   )
 
 
 
