@@ -94,9 +94,10 @@ def init_db():
     # dont do anything if testing
     if current_app.config["TESTING"]: print("init_db() called")
     else:
-        init_schema()
-        init_triggers()
-        init_sample_data()
+        print("init-db called")
+        #init_schema()
+        #init_triggers()
+        #init_sample_data()
 
 
 @click.command('init-db')

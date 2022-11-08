@@ -14,20 +14,79 @@
             - shows watched
             - average rating
 
-
 --> 
-
-
 
 <div class="user_page_VStack">
     
+    <div class="user-page-item"> 
 
+        <!-- User Bio -->
+        <div class="user_page_bio"> <p> {{ user_bio }} </p>  </div>
 
+        <!-- This will create a pie chart comparing the number of similar and different movies watched by the current user and a friend -->
+        <div id="userComparisonChart" class="user_pie_chart">
+            <h4>Total movie count by genre</h4>
+            <script src="https://d3js.org/d3.v4.js"></script>
+            <script>
+                // function pieChart(){
+                var width = 250
+                height = 250
+                margin = 20
 
-    <!-- User Bio -->
-    <div class="user_page_bio">
-        <p> {{ user_bio }} </p>
+                // The radius of the piepchart
+                var radius = Math.min(width, height) / 2 - margin
+
+            //add chart to canvas
+                var svg = d3.select("#userComparisonChart")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .append("g")
+                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+                var data = {Horror: 6, Comedy: 3, Action:9, Documentary: 6}
+
+                // set the colors
+                var color = d3.scaleOrdinal()
+                    .domain(data)
+                    .range(["#377ba8", "#cae6f6","gray","#D3D3D3"])
+
+                // Calculate the relative size of each section
+                var pie = d3.pie()
+                    .value(function(d) {return d.value; })
+                    var enterData = pie(d3.entries(data))
+
+                // graph each section of the pie chart
+                svg
+                    .selectAll('mySlices')
+                    .data(enterData)
+                    .enter()
+                    .append('path')
+                    .attr('d', d3.arc()
+                    .innerRadius(0)
+                    .outerRadius(radius))
+                    .attr('fill', function(d){ return(color(d.data.key)) })
+                        .attr("stroke", "black")
+                        .style("stroke-width", "3px")
+                    
+                //Adds labels
+                svg
+                .selectAll('mySlices')
+                .data(enterData)
+                .enter()
+                .append('text')
+                .text(function(d){ return d.data.key+""})
+                .attr("transform", function(d) { return "translate(" + d3.arc().innerRadius(0).outerRadius(radius).centroid(d) + ")";  })
+                .style("text-anchor", "middle")
+                .style("font-size", 12)
+
+            // }
+            </script>
+
+        </div>
+
     </div>
+
 
 
 
@@ -65,66 +124,9 @@
 
         <!-- Watch List Display -->
         <div class="user_watch_lists">
-             <!-- This will create a pie chart comparing the number of similar and different movies watched by the current user and a friend -->
-             <div id="userComparisonChart" class="user_pie_chart">
-                <h4>Total movie count by genre</h4>
-                <script src="https://d3js.org/d3.v4.js"></script>
-                <script>
-                    // function pieChart(){
-                    var width = 250
-                    height = 250
-                    margin = 20
-
-                    // The radius of the piepchart
-                    var radius = Math.min(width, height) / 2 - margin
-
-                   //add chart to canvas
-                    var svg = d3.select("#userComparisonChart")
-                        .append("svg")
-                        .attr("width", width)
-                        .attr("height", height)
-                        .append("g")
-                        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-                    var data = {Horror: 6, Comedy: 3, Action:9, Documentary: 6}
-
-                    // set the colors
-                    var color = d3.scaleOrdinal()
-                        .domain(data)
-                        .range(["#377ba8", "#cae6f6","gray","#D3D3D3"])
-
-                    // Calculate the relative size of each section
-                    var pie = d3.pie()
-                        .value(function(d) {return d.value; })
-                        var enterData = pie(d3.entries(data))
-
-                    // graph each section of the pie chart
-                    svg
-                        .selectAll('mySlices')
-                        .data(enterData)
-                        .enter()
-                        .append('path')
-                        .attr('d', d3.arc()
-                        .innerRadius(0)
-                        .outerRadius(radius))
-                        .attr('fill', function(d){ return(color(d.data.key)) })
-                            .attr("stroke", "black")
-                            .style("stroke-width", "3px")
-                        
-                    //Adds labels
-                    svg
-                    .selectAll('mySlices')
-                    .data(enterData)
-                    .enter()
-                    .append('text')
-                    .text(function(d){ return d.data.key+""})
-                    .attr("transform", function(d) { return "translate(" + d3.arc().innerRadius(0).outerRadius(radius).centroid(d) + ")";  })
-                    .style("text-anchor", "middle")
-                    .style("font-size", 12)
+            
 
 
-                // }
-                </script>
             <div class="watch_lists_info">
                 <h3> {{ this_user[1] }}'s Watch Lists </h3>
                 <!-- 
