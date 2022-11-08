@@ -117,12 +117,7 @@ def init_app(app):
 
 
 
-
-
-
-
-
-
+#Make functionally fully work as most of it is currently hard coded
 
 
 

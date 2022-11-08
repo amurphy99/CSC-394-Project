@@ -34,6 +34,7 @@ a:link { text-decoration: none; } /*gets rid of underlines under links */
 
 
 /* Nav bar adjusments */   
+/* Deleted bar so it is fully on top of screen*/
 
  h1 { font-family: serif; color: #377ba8; margin: 1rem 0; }
  a { color: #377ba8; }
@@ -111,7 +112,8 @@ a:link { text-decoration: none; } /*gets rid of underlines under links */
  
  
  
- 
+ /* Reformat user page to make bio less space */   
+/* rework colors and add dark mode */
  
  
  
