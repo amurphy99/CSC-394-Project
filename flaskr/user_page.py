@@ -49,8 +49,8 @@ def user_page(userID):
                     ("Currently Watching:", currently_watching      ), 
                     ("Plan to Watch:",      plan_to_watch           ),
                     ("Watch Time:",         "24d 05h 22m"           ),  
-                    ( "Genres Watched",              "5"            ),
-                    ( "Rewatched Movies",             "2"           ) ]
+                    ( "Genres Watched",              "5"            ),   #Hard coded new data for now will make functionality work next week
+                    ( "Rewatched Movies",             "2"           ) ]  #Hard coded new data for now will make functionality work next week
 
 
 
