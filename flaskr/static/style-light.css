@@ -359,8 +359,8 @@ html {
 }
 
 .movie-page-overview-container {
-    width: 600px;
-    height: 410px;
+    width: 700px;
+    height: 450px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     flex-direction: column;
@@ -371,6 +371,11 @@ html {
     position: relative;
     left: 325px;
     bottom: 480px;
+}
+
+.movie-page-header {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 

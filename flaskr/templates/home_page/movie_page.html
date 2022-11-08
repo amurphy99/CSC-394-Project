@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1> {% block title %} {{ movieDisplay[0] }} {% endblock %} </h1>
+  <h1 class="movie-page-header"> {% block title %} {{ movieDisplay[0] }} {% endblock %} </h1>
 {% endblock %}
 
 {% block content %}
@@ -9,10 +9,13 @@
         <img src="{{ movieDisplay[1] }}" alt="image">
     </div>
     <div class="movie-page-overview-container">
+        {{ movieDisplay[5]}}
+        <br>
         <h3>Overview:</h3>
         <p>{{ movieDisplay[2] }} </p>
         <p>Release Date: {{ movieDisplay[3] }} <br>
-        Runtime: {{ movieDisplay[4] }}</p>
+        Runtime: {{ movieDisplay[4] }} minutes</p>
     </div>
+    
     
 {% endblock %}
