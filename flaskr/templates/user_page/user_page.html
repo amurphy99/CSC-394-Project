@@ -17,16 +17,16 @@
 
 --> 
 
-<div class="user_page_VStack">
 
+
+<div class="user_page_VStack">
+    
 
 
 
     <!-- User Bio -->
     <div class="user_page_bio">
-        <p>
-            {{ "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et egestas quis ipsum suspendisse ultrices gravida. Nec feugiat in fermentum posuere urna nec tincidunt praesent semper. Tortor dignissim convallis aenean et tortor. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor. Libero justo laoreet sit amet. In ornare quam viverra orci sagittis eu. Auctor urna nunc id cursus metus. Tincidunt augue interdum velit euismod in pellentesque massa placerat. Aliquam malesuada bibendum arcu vitae." }}
-        </p>
+        <p> {{ user_bio }} </p>
     </div>
 
 
@@ -36,6 +36,8 @@
         <p> Friends:   {{ 25 }} </p>
         <p> Followers: {{ 12 }} </p>
         <button type="submit"> Add Friend </button>
+        <button type="submit"> Edit Bio </button>
+        <!-- button for user to edit Bio (No Functionality yet)-->
     </div>
 
 
@@ -63,10 +65,68 @@
 
         <!-- Watch List Display -->
         <div class="user_watch_lists">
+             <!-- This will create a pie chart comparing the number of similar and different movies watched by the current user and a friend -->
+             <div id="userComparisonChart" class="user_pie_chart">
+                <h4>Total movie count by genre</h4>
+                <script src="https://d3js.org/d3.v4.js"></script>
+                <script>
+                    // function pieChart(){
+                    var width = 250
+                    height = 250
+                    margin = 20
 
+                    // The radius of the piepchart
+                    var radius = Math.min(width, height) / 2 - margin
+
+                   //add chart to canvas
+                    var svg = d3.select("#userComparisonChart")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height)
+                        .append("g")
+                        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+                    var data = {Horror: 6, Comedy: 3, Action:9, Documentary: 6}
+
+                    // set the colors
+                    var color = d3.scaleOrdinal()
+                        .domain(data)
+                        .range(["#377ba8", "#cae6f6","gray","#D3D3D3"])
+
+                    // Calculate the relative size of each section
+                    var pie = d3.pie()
+                        .value(function(d) {return d.value; })
+                        var enterData = pie(d3.entries(data))
+
+                    // graph each section of the pie chart
+                    svg
+                        .selectAll('mySlices')
+                        .data(enterData)
+                        .enter()
+                        .append('path')
+                        .attr('d', d3.arc()
+                        .innerRadius(0)
+                        .outerRadius(radius))
+                        .attr('fill', function(d){ return(color(d.data.key)) })
+                            .attr("stroke", "black")
+                            .style("stroke-width", "3px")
+                        
+                    //Adds labels
+                    svg
+                    .selectAll('mySlices')
+                    .data(enterData)
+                    .enter()
+                    .append('text')
+                    .text(function(d){ return d.data.key+""})
+                    .attr("transform", function(d) { return "translate(" + d3.arc().innerRadius(0).outerRadius(radius).centroid(d) + ")";  })
+                    .style("text-anchor", "middle")
+                    .style("font-size", 12)
+
+
+                // }
+                </script>
             <div class="watch_lists_info">
                 <h3> {{ this_user[1] }}'s Watch Lists </h3>
-
                 <!-- 
                 Only show the edit buttons if the one viewing this user page is logged in as the owner
                     the users id (if logged in):    {{ g.user[0]    }}
@@ -94,6 +154,7 @@
                 
 
             </div>
+            
 
             <div class="list_preview_wrapper">
                 {% for watch_list in user_lists %}
@@ -123,6 +184,9 @@
                 </div>
 
                 {% endfor %}
+               
+
+            </div>
             </ul>
         
         </div>
