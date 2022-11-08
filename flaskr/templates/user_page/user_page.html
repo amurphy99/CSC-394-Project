@@ -17,8 +17,10 @@
 
 --> 
 
-<div class="user_page_VStack">
 
+
+<div class="user_page_VStack">
+    
 
 
 
@@ -34,6 +36,8 @@
         <p> Friends:   {{ 25 }} </p>
         <p> Followers: {{ 20 }} </p>
         <button type="submit"> Add Friend </button>
+        <button type="submit"> Edit Bio </button>
+        <!-- button for user to edit Bio (No Functionality yet)-->
     </div>
 
 
@@ -150,6 +154,7 @@
                 
 
             </div>
+            
 
             <div class="list_preview_wrapper">
                 {% for watch_list in user_lists %}
@@ -179,6 +184,9 @@
                 </div>
 
                 {% endfor %}
+               
+
+            </div>
             </ul>
         
         </div>
