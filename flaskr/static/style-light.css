@@ -411,6 +411,31 @@
 
 
 
+/* Watch List Page
+-------------------------------------------------------------------------------------- */
+.watch-list-info {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 1.0rem;
+    padding: 1.0rem;
+}
+.watch-list-description {
+    flex-grow: 4;
+}
+.watch_list_pie_chart {
+    flex-grow: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
 /*
 Flex Box Reference
 -------------------

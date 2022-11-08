@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block header %}
+  <h1> {% block title %} {{ owner_username }} - {{ list_info[3] }} {% endblock %} </h1>
+{% endblock %}
+
 {% block content %}
 <div>
 <!--
@@ -36,23 +40,7 @@
     Values Passed:
     --------------
     * "list_info"
-    CREATE TABLE movies_list_info (
-        id                serial 	PRIMARY KEY,
-        owner_id          int,
-        editor_ids        TEXT,
-        list_name         TEXT,
-        list_description  TEXT,
-        date_created      timestamp DEFAULT CURRENT_TIMESTAMP
-    );
 
-    * "movies_list"
-    CREATE TABLE movies_list (
-        movie_id    int references movies(id),
-        list_id     int references movies_list_info(id),
-        status      int DEFAULT    0,
-        rating      int DEFAULT    -1,
-        constraint pk_movies_list primary key (movie_id, list_id)
-    );
 
     * "owner_username"
         - retrieved in the python file server
@@ -63,22 +51,17 @@
 
     <div id="box">
 
-        <!-- List Title and Info -->
-        <h1>{% block title %} {{ list_info[3] }} {% endblock %}</h1>
+
         
-        <div>
-            <h1> Owner: {{ owner_username }} </h3>
-            <h3> #{{ list_info[1] }} </h3>
-            <p> Created on: {{ list_info[5] }} </p>
-            <p> {{ list_info[4] }} </p>
-        </div>
+        <div class="watch-list-info"> 
 
+            <div class="watch-list-description">
+                <p> Created on: {{ list_info[5] }} </p>
+                <p> {{ list_info[5] }} </p>
+            </div>
 
-        <!-- "Add Movie" Modal -->
-        <div class="watch_lists_info">
-            <h3> {{ "this_user[1]" }}'s Watch Lists</h3>
             <!-- This will create a pie chart comparing the number of similar and different movies watched by the current user and a friend -->
-            <div id="userComparisonChart" class="user_pie_chart">
+            <div id="userComparisonChart" class="watch_list_pie_chart">
                 <h4>Watch list movie count by genre</h4>
                 <script src="https://d3js.org/d3.v4.js"></script>
                 <script>
@@ -90,7 +73,7 @@
                     // The radius of the piepchart
                     var radius = Math.min(width, height) / 2 - margin
 
-                   //add chart to canvas
+                    //add chart to canvas
                     var svg = d3.select("#userComparisonChart")
                         .append("svg")
                         .attr("width", width)
@@ -137,6 +120,17 @@
 
                 // }
                 </script>
+            </div>
+
+    </div>
+
+
+
+
+        <!-- "Add Movie" Modal -->
+        <div class="watch_lists_info">
+            <h3> {{ "this_user[1]" }}'s Watch Lists</h3>
+
             <!-- 
             Only show the edit buttons if the one viewing this user page is logged in as the owner or an editor
                 the users id (if logged in):    {{ g.user[0]    }}
