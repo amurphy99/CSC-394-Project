@@ -1,6 +1,6 @@
 from flask import Flask, render_template, g, request, flash, session
 
-from flaskr.db import get_db
+from flaskr.db import get_db, close_db
 from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list
 
 
@@ -30,14 +30,17 @@ def user_page(userID):
     user_lists = cur.fetchall()
 
     cur.close(); db.close()
+    close_db()
 
 
     # get general list for stats
     # ---------------------------
-    general_list        = get_general_user_statistics([ this_user[0] ])[this_user[0]]
+    general_lists       = get_general_user_statistics([ this_user[0] ])
+    general_list        = general_lists[this_user[0]]
     plan_to_watch       = general_list[10]   
     currently_watching  = (general_list[9] - (general_list[10] + general_list[11]))
     finished            = general_list[11]  
+    user_bio            = general_list[4]
 
     # prepare stats
     # --------------
@@ -90,7 +93,21 @@ def user_page(userID):
 
 
     # return the template with all of the information we assembled for display
-    return render_template('user_page/user_page.html', this_user=this_user, user_lists=user_lists, statistics=statistics, user_comparison=user_comparison)
+    return render_template( 'user_page/user_page.html', 
+                            this_user       = this_user, 
+                            user_bio        = user_bio,
+                            user_lists      = user_lists, 
+                            statistics      = statistics, 
+                            user_comparison = user_comparison   )
+
+
+
+
+
+
+
+
+
 
 
 
@@ -99,8 +116,6 @@ def user_page(userID):
 #@app.route('/new_list_modal', methods=('POST'))
 def new_list_modal():
     return render_template('user_page/new_list_modal.html')
-
-
 
 
 

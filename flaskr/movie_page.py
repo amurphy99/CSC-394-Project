@@ -9,11 +9,46 @@ from flaskr.movieDBapi import api_query
 #@app.route('/home_page/<userID>', methods=('GET', 'POST'))
 def movie_page(movieID):
     
+    # Poster url 
+    BASE_URL    = "http://image.tmdb.org/t/p/"
+    POSTER_SIZE = "w500"
+
+    # api call to get trending movies
     result_movie = api_movie_page(movieID)
 
-    print(result_movie)
+    poster_movie = BASE_URL + POSTER_SIZE + result_movie['poster_path']
+    
+    #  Create genre list
+    genre_list = []
+    for key in result_movie['genres']:
+        genre_list.append(key['name'])
+    # Turn list into string to print in template
+    genre_string = ', '.join(genre_list)
 
-    return render_template('home_page/movie_page.html', movieID = movieID)
+    # prepare movie data for display
+    movieDisplay = [] 
+    movieDisplay.append(result_movie['title'])
+    movieDisplay.append(poster_movie)
+    movieDisplay.append(result_movie['overview'])
+    movieDisplay.append(result_movie['release_date'])
+    movieDisplay.append(result_movie['runtime'])
+    movieDisplay.append(genre_string)
+
+
+    '''
+    movieDisplay[0] = title
+    movieDisplay[1] = poster
+    movieDisplay[2] = overview
+    movieDisplay[3] = release date
+    movieDisplay[4] = runtime
+    movieDisplay[5] = genres (creates a list of genres)
+    
+    
+    '''
+    # print(result_movie['genres'][0]['name'])
+
+    # display page
+    return render_template('home_page/movie_page.html', movieID = movieID, movieDisplay = movieDisplay)
 
 
 

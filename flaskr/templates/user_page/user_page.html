@@ -26,9 +26,7 @@
 
     <!-- User Bio -->
     <div class="user_page_bio">
-        <p>
-            {{ "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et egestas quis ipsum suspendisse ultrices gravida. Nec feugiat in fermentum posuere urna nec tincidunt praesent semper. Tortor dignissim convallis aenean et tortor. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor. Libero justo laoreet sit amet. In ornare quam viverra orci sagittis eu. Auctor urna nunc id cursus metus. Tincidunt augue interdum velit euismod in pellentesque massa placerat. Aliquam malesuada bibendum arcu vitae." }}
-        </p>
+        <p> {{ user_bio }} </p>
     </div>
 
 
@@ -38,6 +36,8 @@
         <p> Friends:   {{ 25 }} </p>
         <p> Followers: {{ 12 }} </p>
         <button type="submit"> Add Friend </button>
+        <button type="submit"> Edit Bio </button>
+        <!-- button for user to edit Bio (No Functionality yet)-->
     </div>
 
 
@@ -127,7 +127,6 @@
                 </script>
             <div class="watch_lists_info">
                 <h3> {{ this_user[1] }}'s Watch Lists </h3>
-
                 <!-- 
                 Only show the edit buttons if the one viewing this user page is logged in as the owner
                     the users id (if logged in):    {{ g.user[0]    }}

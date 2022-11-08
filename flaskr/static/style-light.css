@@ -1,15 +1,15 @@
 
 /* BASE HTML
 --------------------------------------------------------------------------- */
-html { 
+/*html { 
     font-family: sans-serif; 
     background: rgba(238, 238, 238); 
     padding: 1rem; 
-}
+}*/
 
 /* header */
 .base-header {
-    width: 100vw; max-width: 100%;
+    width: 100vw; max-width: 99%;
     position: absolute; left: 0%; top: 0%;
     padding: 0.0rem;
 }
@@ -109,7 +109,7 @@ html {
 /* USER PAGE
 --------------------------------------------------------------------------- */
 .user_page_header {
-    width: 100%;
+    width: 99%;
     display: flex;
     justify-content: flex-start;
     padding: 0 0.5rem;
@@ -359,8 +359,8 @@ html {
 }
 
 .movie-page-overview-container {
-    width: 600px;
-    height: 385px;
+    width: 700px;
+    height: 450px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     flex-direction: column;
@@ -370,7 +370,12 @@ html {
     color: black;
     position: relative;
     left: 325px;
-    bottom: 455px;
+    bottom: 480px;
+}
+
+.movie-page-header {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 

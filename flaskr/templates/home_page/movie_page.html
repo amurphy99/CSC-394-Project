@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1> {% block title %} Movie Title {% endblock %} </h1>
+  <h1 class="movie-page-header"> {% block title %} {{ movieDisplay[0] }} {% endblock %} </h1>
 {% endblock %}
 
 {% block content %}
     <div class="movie-page-img-container">
-        <img src="http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png" alt="image">
+        <img src="{{ movieDisplay[1] }}" alt="image">
     </div>
     <div class="movie-page-overview-container">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, laborum. Eum repellendus temporibus impedit quas vel velit, vero quam reiciendis blanditiis quaerat praesentium voluptates, error autem natus cum numquam omnis distinctio ullam nostrum voluptas quae mollitia! Ipsa inventore ex nihil officia eaque magni maiores praesentium minus! Voluptatum, cupiditate velit? Vitae quas, eveniet error possimus libero amet hic distinctio quae sequi velit ipsum enim accusantium, non voluptates reprehenderit officia fugit officiis inventore, natus voluptatem id voluptas tempora porro quod. Excepturi quibusdam, eveniet sit sunt mollitia at expedita doloremque sequi officiis totam ad incidunt tempora rerum, molestias odit, consectetur deserunt maxime nobis?</p>
+        {{ movieDisplay[5]}}
+        <br>
+        <h3>Overview:</h3>
+        <p>{{ movieDisplay[2] }} </p>
+        <p>Release Date: {{ movieDisplay[3] }} <br>
+        Runtime: {{ movieDisplay[4] }} minutes</p>
     </div>
+    
     
 {% endblock %}
