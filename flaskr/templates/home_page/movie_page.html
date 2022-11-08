@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1 class="movie-page-header"> {% block title %} {{ movieDisplay[0] }} {% endblock %} </h1>
+  <h1 class="movie-page-header"> {% block title %} {{ movieDisplay[0] }} {% endblock %}     
+</h1> 
+
 {% endblock %}
 
 {% block content %}
+    <!-- movie image -->
     <div class="movie-page-img-container">
         <img src="{{ movieDisplay[1] }}" alt="image">
     </div>
+    <!-- movie overview and information -->
     <div class="movie-page-overview-container">
         <p>{{ movieDisplay[5]}}</p>
         <p><em>{{ movieDisplay[6]}}</em></p>
@@ -15,7 +19,17 @@
         <p>{{ movieDisplay[2] }} </p>
         <p>Release Date: {{ movieDisplay[3] }} <br>
         Runtime: {{ movieDisplay[4] }} minutes</p>
+        <br>
+        <h5>About {{ movieDisplay[0] }}</h5>
+        <p> Status: {{ movieDisplay[7] }}
+            &nbsp; | &nbsp; Original Language: {{ movieDisplay[10] }}
+            &nbsp; | &nbsp; Budget: ${{ movieDisplay[8] }}
+            &nbsp; | &nbsp; Revenue: ${{ movieDisplay[9] }}
+        </p>
     </div>
-    
+    <!-- add movie button -->
+    <button type="submit" class="movie-page-add-button">
+        Add Movie
+    </button>
     
 {% endblock %}

@@ -25,6 +25,18 @@ def movie_page(movieID):
     # Turn list into string to print in template
     genre_string = ', '.join(genre_list)
 
+    #conditional if there is no budget provided
+    if result_movie['budget'] == 0:
+        newBudget = '-'
+    else:
+        newBudget = result_movie['budget']
+
+    #conditional if there is no revenue provided
+    if result_movie['revenue'] == 0:
+        newRevenue = '-'
+    else:
+        newRevenue = result_movie['revenue']
+
     # prepare movie data for display
     movieDisplay = [] 
     movieDisplay.append(result_movie['title'])
@@ -34,8 +46,14 @@ def movie_page(movieID):
     movieDisplay.append(result_movie['runtime'])
     movieDisplay.append(genre_string)
     movieDisplay.append(result_movie['tagline'])
+    movieDisplay.append(result_movie['status'])
+    movieDisplay.append(newBudget)
+    movieDisplay.append(newRevenue)
+    movieDisplay.append(result_movie['original_language'])
 
 
+    #for testing    
+    # print(result_movie['budget'])
     '''
     movieDisplay[0] = title
     movieDisplay[1] = poster
@@ -44,6 +62,10 @@ def movie_page(movieID):
     movieDisplay[4] = runtime
     movieDisplay[5] = genres (creates a list of genres)
     movieDisplay[6] = tagline
+    movieDisplay[7] = status
+    movieDisplay[8] = budget
+    movieDisplay[9] = revenue
+    movieDisplay[10] = original language
     
     
     '''
