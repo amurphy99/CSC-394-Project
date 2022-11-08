@@ -1,15 +1,15 @@
 
 /* BASE HTML
 --------------------------------------------------------------------------- */
-html { 
+/*html { 
     font-family: sans-serif; 
     background: rgba(238, 238, 238); 
     padding: 1rem; 
-}
+}*/
 
 /* header */
 .base-header {
-    width: 100vw; max-width: 100%;
+    width: 100vw; max-width: 99%;
     position: absolute; left: 0%; top: 0%;
     padding: 0.0rem;
 }
@@ -109,7 +109,7 @@ html {
 /* USER PAGE
 --------------------------------------------------------------------------- */
 .user_page_header {
-    width: 100%;
+    width: 99%;
     display: flex;
     justify-content: flex-start;
     padding: 0 0.5rem;
