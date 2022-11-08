@@ -33,7 +33,7 @@ a:link { text-decoration: none; } /*gets rid of underlines under links */
 
 
 
-html { font-family: sans-serif; background: #eee; padding: 1rem; } 
+html { font-family: sans-serif; background: #eee; padding: 1rem; }  /*Nav bar adjusments*/   /*test comments*/
  html { font-family: sans-serif; background:rgb(230, 8, 8); padding: 1rem; }
 
 h1 { font-family: serif; color: #377ba8; margin: 1rem 0; }
