@@ -33,6 +33,7 @@ def movie_page(movieID):
     movieDisplay.append(result_movie['release_date'])
     movieDisplay.append(result_movie['runtime'])
     movieDisplay.append(genre_string)
+    movieDisplay.append(result_movie['tagline'])
 
 
     '''
@@ -42,6 +43,7 @@ def movie_page(movieID):
     movieDisplay[3] = release date
     movieDisplay[4] = runtime
     movieDisplay[5] = genres (creates a list of genres)
+    movieDisplay[6] = tagline
     
     
     '''
