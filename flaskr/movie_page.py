@@ -15,7 +15,15 @@ def movie_page(movieID):
 
     # api call to get trending movies
     result_movie = api_movie_page(movieID)
+
     poster_movie = BASE_URL + POSTER_SIZE + result_movie['poster_path']
+    
+    #  Create genre list
+    genre_list = []
+    for key in result_movie['genres']:
+        genre_list.append(key['name'])
+    # Turn list into string to print in template
+    genre_string = ', '.join(genre_list)
 
     # prepare movie data for display
     movieDisplay = [] 
@@ -24,7 +32,8 @@ def movie_page(movieID):
     movieDisplay.append(result_movie['overview'])
     movieDisplay.append(result_movie['release_date'])
     movieDisplay.append(result_movie['runtime'])
-    
+    movieDisplay.append(genre_string)
+
 
     '''
     movieDisplay[0] = title
@@ -32,10 +41,11 @@ def movie_page(movieID):
     movieDisplay[2] = overview
     movieDisplay[3] = release date
     movieDisplay[4] = runtime
+    movieDisplay[5] = genres (creates a list of genres)
     
     
     '''
-    print(result_movie['genres'])
+    # print(result_movie['genres'][0]['name'])
 
     # display page
     return render_template('home_page/movie_page.html', movieID = movieID, movieDisplay = movieDisplay)

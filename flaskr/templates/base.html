@@ -17,6 +17,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav d-flex justify-content-end w-100">
+
         <li class="nav-item">
           <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('home_page', userID=g.user[0]) }}">Home</a>
         </li>
@@ -45,12 +46,13 @@
 
 
 <section class="content container">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
+  
+  <header> {% block header %}{% endblock %} </header>
+
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
+
   {% block content %}{% endblock %}
 </section>
 
