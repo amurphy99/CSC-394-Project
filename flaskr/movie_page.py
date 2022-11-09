@@ -13,10 +13,15 @@ def movie_page(movieID):
     BASE_URL    = "http://image.tmdb.org/t/p/"
     POSTER_SIZE = "w500"
 
+
+    # Backdrop url
+    BACKDROP_SIZE = "w500"
+
     # api call to get trending movies
     result_movie = api_movie_page(movieID)
 
     poster_movie = BASE_URL + POSTER_SIZE + result_movie['poster_path']
+    backdrop_movie = BASE_URL + BACKDROP_SIZE + result_movie['backdrop_path']
     
     #  Create genre list
     genre_list = []
@@ -50,6 +55,7 @@ def movie_page(movieID):
     movieDisplay.append(newBudget)
     movieDisplay.append(newRevenue)
     movieDisplay.append(result_movie['original_language'])
+    movieDisplay.append(backdrop_movie)
 
 
     #for testing    
@@ -66,7 +72,7 @@ def movie_page(movieID):
     movieDisplay[8] = budget
     movieDisplay[9] = revenue
     movieDisplay[10] = original language
-    
+    movieDisplay[11] = backdrop
     
     '''
     # print(result_movie['genres'][0]['name'])
