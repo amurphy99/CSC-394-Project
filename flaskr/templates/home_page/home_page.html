@@ -2,32 +2,45 @@
 
 {% block header %}
   <h1> {% block title %} Home {% endblock %} </h1>
-{% endblock %}
-
-{% block content %}
-<!--
-    includes:
-    ----------
-        * trending movies
-            - from movieDisplay
-
-        * friends list
--->
-
-<div class="home-page-content">
-    
-    <div class="trending-movies">
-    <!-- 
-    each one includes:
-        * poster
-        * title 
-        * link to individual movie page 
-            - which means we also need the movies id
-            - should just be the entire box
-            - so i think that means it should be "a" and not "div"
+  {% endblock %}
+  
+  {% block content %}
+  <!--
+      includes:
+      ----------
+      * trending movies
+      - from movieDisplay
+      
+      * friends list
     -->
-        <p class="trending-list-header"> Trending Movies </p>
+    
+    <div class="home-page-content">
         
+        <div class="trending-movies">
+            <!-- 
+                each one includes:
+                * poster
+                * title 
+                * link to individual movie page 
+                - which means we also need the movies id
+                - should just be the entire box
+                - so i think that means it should be "a" and not "div"
+            -->
+            <p class="trending-list-header"> Trending Movies </p>
+            <div class="home-search-drop">
+                <form id="form">
+                  <input type="text" placeholder="Search" id="search" class="home-search" >
+                </form>
+                <div class="dropdown">
+                    <button class="dropbtn">Filters</button>
+                    <div class="dropdown-content">
+                      <a href="#">Link 1</a>
+                      <a href="#">Link 2</a>
+                      <a href="#">Link 3</a>
+                    </div>
+                  </div>
+            </div>
+            
         <div class="trending-list"> 
             {% for movie in movieDisplay %}
                 <a href="{{ url_for('movie_page', movieID=movie['id']) }}" class="trending-item">
