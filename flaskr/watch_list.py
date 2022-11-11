@@ -130,6 +130,8 @@ def get_movie_cards():
         # append this movies info
         results.append(movie_info)
 
+        print(results)
+
     return render_template('watch_list/get_movie_cards_htmx.html', results = results, api_feedback = (NUMBER_SHOWN, total_results), listID=listID)
 
 
