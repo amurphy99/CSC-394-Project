@@ -1,10 +1,11 @@
 #from lib2to3.pgen2.token import NUMBER
 from flask import Flask, render_template, g, request, flash
 
-from flaskr.db import get_database_connection
+#from flaskr.db import get_database_connection
 from flaskr.db import get_db
 
-from flaskr.movieDBapi import api_query
+from flaskr.movieDBapi import api_query, genre_query
+from flaskr.database.database_functions import add_movie_to_list
 
 
 
@@ -96,7 +97,8 @@ def get_movie_cards():
     # get request info
     listID      = int(request.form["listID"])
     query       = request.form["api_query"]
-    if len(query) < 1: return 
+    if len(query) < 1: 
+        return render_template('watch_list/get_movie_cards_htmx.html', results = [], api_feedback = (0, 0), listID=listID)
 
     # for api request feedback
     api_results = api_query(query)
@@ -104,31 +106,33 @@ def get_movie_cards():
 
     # only showing 3 results for now while testing
     INFO            = ["title", "id", "overview", "release_date"]
-    NUMBER_SHOWN    = 3
+    NUMBER_SHOWN    = 5
     if total_results < NUMBER_SHOWN: NUMBER_SHOWN = total_results
         
     results = []
     for i in range(NUMBER_SHOWN):
         single_movie = api_results["results"][i]
-        
-        movie_info = {}
-        # image -> dict{image source, alt text}
-        BASE_URL    = "http://image.tmdb.org/t/p/"
-        POSTER_SIZE = "w92"
-        image_source = single_movie["poster_path"]
-        movie_info["source"] = BASE_URL + POSTER_SIZE + image_source 
 
-        alt_text = "Poster for: " + single_movie["title"]
-        movie_info["alt_text"]   = alt_text
+        if single_movie["poster_path"] != None:
 
-        # info  -> list of tuples (key, value)
-        results_tuples = []
-        for key in INFO:
-            results_tuples.append( (key, single_movie[key]) )
-        movie_info["info"] = results_tuples
+            movie_info = {}
+            # image -> dict{image source, alt text}
+            BASE_URL    = "http://image.tmdb.org/t/p/"
+            POSTER_SIZE = "w92"
+            image_source = single_movie["poster_path"]
+            movie_info["source"] = BASE_URL + POSTER_SIZE + image_source 
 
-        # append this movies info
-        results.append(movie_info)
+            alt_text = "Poster for: " + single_movie["title"]
+            movie_info["alt_text"]   = alt_text
+
+            # info  -> list of tuples (key, value)
+            results_tuples = []
+            for key in INFO:
+                results_tuples.append( (key, single_movie[key]) )
+            movie_info["info"] = results_tuples
+
+            # append this movies info
+            results.append(movie_info)
 
     return render_template('watch_list/get_movie_cards_htmx.html', results = results, api_feedback = (NUMBER_SHOWN, total_results), listID=listID)
 
@@ -220,3 +224,83 @@ def movie_added():
 
     return "<h1> this should not return </h1>"
 
+
+
+def movie_added2():
+    '''
+    Receiving:
+        * movie info
+        * userID (can use to make sure the user has permissions to modify this list)
+        * completion status
+        * rating
+
+    Sending:
+        * movie info
+        * watch_status
+            0 = Plan to Watch 
+            1 = Currently Watching
+            2 = Finished Watching
+        * rating
+
+    cant do the add/update table syntax how i would like in python:
+    ----------------------------------------------------------------
+    cur.execute(f"
+        IF NOT EXISTS ( SELECT * FROM movies WHERE id = '{f_movie_id}' )
+            /* insert */
+            INSERT INTO movies (id, title, poster) VALUES ('{f_movie_id}', '{f_movie_title}', '{f_movie_source}');
+        ELSE
+            /* update */
+            UPDATE movies SET popularity = popularity + 1 WHERE id = '{f_movie_id}';
+    ")
+    
+    '''
+    # create the new watch list
+    if request.method == 'POST':
+        # get form data
+        movie           = eval(request.form["movie_info"    ])
+        listID          = int (request.form["listID"        ])
+        userID          = int (request.form["userID"        ])
+        watch_status    = int (request.form["watch-status"  ])
+        rating          = int (request.form["rating"        ])
+
+        # prepare sql statements
+        f_movie_id      = movie["info"][1][1]
+        #f_movie_title   = movie["info"][0][1]
+        #f_movie_source  = movie["source"]
+
+        # build dictionary for db function
+        movie_dictionary = {    "list_id"       : listID,
+                                "movie_id"      : f_movie_id,
+                                "rating"        : rating,
+                                "watch_status"  : watch_status  }
+        
+        # call db function
+        add_movie_to_list(movie_dictionary)
+
+        '''
+
+        db = get_db(); cur = db.cursor()
+
+        # first add/update the movie table
+        cur.execute( f"INSERT INTO movies (id, title, poster) VALUES ('{f_movie_id}', '{f_movie_title}', '{f_movie_source}') ON CONFLICT (id) DO UPDATE SET popularity = EXCLUDED.popularity + 1;" )
+        db.commit()
+
+        # add to movies_list table
+        cur.execute(f"INSERT INTO movies_list (movie_id, list_id, status, rating) VALUES ('{f_movie_id}', '{listID}', '{watch_status}', '{rating}');")
+        db.commit()
+        
+        cur.close(); db.close()
+
+        '''
+
+        # convert watch status into a string
+        str_watch_status = ""
+        if      watch_status == 0:  str_watch_status = "Plan to Watch" 
+        elif    watch_status == 1:  str_watch_status = "Currently Watching"
+        elif    watch_status == 2:  str_watch_status = "Finished Watching"
+        else:                       str_watch_status = "(watch status not entered)"
+
+        # return a template with the movie card and users inputs
+        return render_template('watch_list/movie_added_htmx.html', movie=movie, watch_status=str_watch_status, rating=rating)
+
+    return "<h1> this should not return </h1>"

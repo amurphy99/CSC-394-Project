@@ -41,7 +41,7 @@ def index():
             db  = get_db()
             cur = db.cursor()
 
-            cur.execute(f"DELETE FROM all_users WHERE id = '{userID}'")
+            cur.execute(f"DELETE FROM all_users WHERE id = '{userID}';")
             db.commit()
 
             cur.close()
@@ -59,7 +59,7 @@ def index():
                 db  = get_db()
                 cur = db.cursor()
 
-                cur.execute( f"UPDATE all_users set password = '{new_password}' WHERE id = '{userID}'" )
+                cur.execute( f"UPDATE all_users SET password = '{new_password}' WHERE id = '{userID}';" )
                 db.commit()
 
                 cur.close()
@@ -73,7 +73,7 @@ def index():
             db  = get_db()
             cur = db.cursor()
 
-            cur.execute( f"UPDATE all_users SET privileges = {1} WHERE id = '{userID}'" )
+            cur.execute( f"UPDATE all_users SET privileges = {1} WHERE id = '{userID}';" )
             db.commit()
 
             cur.close()
@@ -88,7 +88,7 @@ def index():
             db  = get_db()
             cur = db.cursor()
 
-            cur.execute( f"UPDATE all_users SET privileges = {0} WHERE id = '{userID}'" )
+            cur.execute( f"UPDATE all_users SET privileges = {0} WHERE id = '{userID}';" )
             db.commit()
 
             cur.close()
@@ -111,7 +111,7 @@ def index():
                 if error is None:
                     try:
                         cur = db.cursor()
-                        cur.execute( f"INSERT INTO all_users (username, password) VALUES ('{new_username}', '{new_password}')" )
+                        cur.execute( f"INSERT INTO all_users (username, password) VALUES ('{new_username}', '{new_password}');" )
                         db.commit()
                         cur.close()
                     except db.IntegrityError:
