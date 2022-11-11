@@ -67,9 +67,14 @@ def user_page(userID):
     user_bio            = general_list_info[4]
     total_movies        = int(general_list_statistics[1])
     total_watch_time    = format_time(general_list_statistics[2])
-    average_watch_time  = format_time((round((general_list_statistics[2]/total_movies),2)))
     total_budget        = f"${general_list_statistics[3]:,}"
-    average_budget      = f"${round((general_list_statistics[3]/total_movies),2):,}"
+
+    if total_movies == 0:
+        average_watch_time  = "--"
+        average_budget      = "--"
+    else:
+        average_watch_time  = format_time((round((general_list_statistics[2]/total_movies),2)))
+        average_budget      = f"${round((general_list_statistics[3]/total_movies),2):,}"
 
     # prepare stats
     # --------------
