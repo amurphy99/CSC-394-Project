@@ -110,3 +110,20 @@ def api_movie_page(movieID):
     response_list = first_response.json()
 
     return response_list
+
+def home_search():
+
+    if request.method == "POST":
+        
+        search_term = request.form["searched"]
+
+        base        = "https://api.themoviedb.org/3/search/movie?api_key="
+        api_key     = "f059b4ab8738e8777362529e74ffb62a"
+        search_url  = base + api_key
+
+        endpoint = search_url + '&query=' + search_term
+
+        first_response = requests.get(endpoint)
+        response_list = first_response.json()
+
+        return response_list
