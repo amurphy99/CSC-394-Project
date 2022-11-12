@@ -111,6 +111,7 @@ def api_movie_page(movieID):
 
     return response_list
 
+
 def home_search():
 
     if request.method == "POST":
@@ -127,3 +128,12 @@ def home_search():
         response_list = first_response.json()
 
         return response_list
+
+def home_genres():
+
+    if request.method == "POST":
+
+        genre_list = request.form.getlist['myCheckbox']
+
+        return genre_list
+    
