@@ -3,6 +3,7 @@ from flaskr.db import get_db
 from flaskr.movieDBapi import api_home
 from flaskr.movieDBapi import api_query
 from flaskr.movieDBapi import home_search
+# from flaskr.movieDBapi import home_genres
 
 
 
@@ -101,7 +102,11 @@ def home_page():
         trending = home_search()["results"][:9]
     else:
         trending = api_home()["results"][:9]
-        
+
+
+    #select genre
+   #  genre_list = home_genres()
+   #  print(genre_list)
         
     # prepare movie data for display
     movieDisplay = []
