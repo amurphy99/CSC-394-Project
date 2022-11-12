@@ -407,6 +407,14 @@
     text-decoration: none;
     display: block;
   }
+
+  #tags {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
   
   /* Change color of dropdown links on hover */
   .dropdown-content a:hover {background-color: #ddd;}
