@@ -1,11 +1,18 @@
-DROP TABLE IF EXISTS movies_list;
-DROP TABLE IF EXISTS movies_list_info;
-DROP TABLE IF EXISTS movies     CASCADE;
-DROP TABLE IF EXISTS test_user  CASCADE;
-DROP TABLE IF EXISTS all_users  CASCADE;
+DROP TABLE IF EXISTS genre_counts           CASCADE;
+DROP TABLE IF EXISTS genres                 CASCADE;
+
+DROP TABLE IF EXISTS friend_requests        CASCADE;
+DROP TABLE IF EXISTS friends                CASCADE;
+
+DROP TABLE IF EXISTS movies_list            CASCADE;
+DROP TABLE IF EXISTS movies_list_statistics CASCADE;
+DROP TABLE IF EXISTS movies_list_info       CASCADE;
+DROP TABLE IF EXISTS movies                 CASCADE;
+
+DROP TABLE IF EXISTS all_users              CASCADE;
 
 
-/* test_user:
+/* all_users:
 --------------
   * should probably rename at some point
   * on user creation:
@@ -20,9 +27,9 @@ CREATE TABLE all_users (
   id            serial 	  PRIMARY KEY,
   username      TEXT      UNIQUE NOT NULL,
   password      TEXT      NOT NULL,
-  privileges    int       DEFAULT             0,
-  date_joined   timestamp DEFAULT             CURRENT_TIMESTAMP,
-  style_mode    int       DEFAULT             0
+  privileges    INTEGER   DEFAULT             0,
+  date_joined   TIMESTAMP DEFAULT             CURRENT_TIMESTAMP,
+  style_mode    INTEGER   DEFAULT             0
 );
 
 
@@ -39,34 +46,16 @@ CREATE TABLE all_users (
         - could probably just calculate this on the fly whenever a movie is added
 */
 CREATE TABLE movies (
-    id 		      int     PRIMARY KEY,
+    id 		    INTEGER PRIMARY KEY,
     title 	    TEXT,
     poster      TEXT,
-    popularity  int     DEFAULT 1
+    popularity  INTEGER DEFAULT 1
 );
 
 
 
 /* movies_list_info:
 ---------------------
-    Future Functionality:
-      * each user has a "general" list
-        - automatically created
-        - cant be deleted
-        - when a movie is added to any other list, it is automatically added to this one as well
-        - (if doing this, then the statistics data is only needed for lists, not users, since user stats would be equal to their general list)
-
-    Possible Additions:
-      * background image
-        - select a movie from the list for which picture to use
-        - defaults to white for empty lists
-        - defaults to first movie added for other
-      * various statistic
-        - total watch time
-        - genre counts
-        - average release date
-        - etc...
-
     AUTOMATICALLY UPDATED:
       * list length
       * watch counts
@@ -74,8 +63,7 @@ CREATE TABLE movies (
         - currently watching
         - finished
       * average rating
-      * average release date
-  
+
 */
 CREATE TABLE movies_list_info (
   id                SERIAL        PRIMARY KEY,
@@ -91,18 +79,47 @@ CREATE TABLE movies_list_info (
   average_rating    NUMERIC(10,2) DEFAULT 0.00,
   total_movies      INTEGER       DEFAULT 0,
   plan_to_watch     INTEGER       DEFAULT 0,
-  finished          INTEGER       DEFAULT 0
+  finished          INTEGER       DEFAULT 0,
+  UNIQUE(owner_id, list_name) -- two lists from same user cant have same name?
 );
 
 
+/* statistics table:
+-----------------------------------  */
+CREATE TABLE movies_list_statistics (
+  list_id         INTEGER       REFERENCES  movies_list_info(id),
+  total_movies    INTEGER       DEFAULT     0,
+  total_runtime   INTEGER       DEFAULT     0,
+  total_budget    INTEGER       DEFAULT     0,
+  CONSTRAINT pk_movies_list_statistics PRIMARY KEY (list_id)
+);
+
+
+/* friend requests table:
+-----------------------------------  */
+CREATE TABLE friend_requests (
+  sender_id     INTEGER   REFERENCES  all_users(id),
+  receiver_id   INTEGER   REFERENCES  all_users(id),
+  date_created  TIMESTAMP DEFAULT     CURRENT_TIMESTAMP,
+  constraint pk_friend_requests primary key (sender_id, receiver_id)
+);
+
+
+/* friends table:
+-----------------------------------  */
+CREATE TABLE friends (
+  friend_1_id   INTEGER   REFERENCES  all_users(id),
+  friend_2_id   INTEGER   REFERENCES  all_users(id),
+  date_created  TIMESTAMP DEFAULT     CURRENT_TIMESTAMP,
+  constraint pk_friends primary key (friend_1_id, friend_2_id)
+);
+
 
 /* movies_list:
-----------------
-    Possible Additions:
-*/
+---------------- */
 CREATE TABLE movies_list (
-  movie_id 	  INTEGER   references  movies(id),
-  list_id 	  INTEGER   references  movies_list_info(id),
+  movie_id 	  INTEGER   REFERENCES  movies(id),
+  list_id 	  INTEGER   REFERENCES  movies_list_info(id),
   status 	    INTEGER   DEFAULT     0,
   rating 	    INTEGER   DEFAULT     -1,
   date_added  TIMESTAMP DEFAULT     CURRENT_TIMESTAMP,
@@ -111,25 +128,20 @@ CREATE TABLE movies_list (
 
 
 
-
 /* genres: (automatically updated)
------------------------------------ 
+----------------------------------- */
 CREATE TABLE genres (
   genre_id    INT   PRIMARY KEY,
   genre_name  TEXT  NOT NULL,
   popularity  INT   DEFAULT       0
 );
-*/
-
 
 /* genre counts: (automatically updated)
------------------------------------------ 
+----------------------------------------- */
 CREATE TABLE genre_counts (
   list_id   INT REFERENCES  movies_list_info(id),
   genre_id  INT REFERENCES  genres(genre_id),
-  count     INT DEFAULT     0
+  count     INT DEFAULT     0,
+  constraint pk_genre_counts primary key (list_id, genre_id)
 );
-*/
-
-
 

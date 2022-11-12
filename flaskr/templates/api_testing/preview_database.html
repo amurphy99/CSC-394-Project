@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1> {% block title %} Database Preview {% endblock %} </h1>
+{% endblock %}
+
+{% block content %}
+
+<!-- movies_list_info -->
+<h4> movies_list_info </h4>
+<table class="table table-bordered table-striped table-secondary text-center align-middle shadow">
+    <!-- Table Headers 
+    ------------------- -->
+    <tr>
+        {% for header in headers['movies_list_info'] %}
+        <th> {{ header }} </th>
+        {% endfor %}
+    </tr>
+
+    <!-- Table Data
+    ---------------- -->
+    {% for row in movies_list_infos %}
+    <tr>
+        {% for i in movies_list_info_reduced %}
+        <td> {{ row[i] }} </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+<!-- movies_list_statistics 
+---------------------------- -->
+<h4> movies_list_statistics </h4>
+<table class="table table-bordered table-striped table-secondary text-center align-middle shadow">
+    <!-- Table Headers 
+    ------------------- -->
+    <tr>
+        {% for header in headers['movies_list_statistics'] %}
+        <th> {{ header }} </th>
+        {% endfor %}
+    </tr>
+
+    <!-- Table Data
+    ---------------- -->
+    {% for row in movies_list_statistics %}
+    <tr>
+        {% for data in row %}
+        <td> {{ data }} </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+<!-- genres 
+------------ -->
+<h4> genres </h4>
+<table class="table table-bordered table-striped table-secondary text-center align-middle shadow">
+    <!-- Table Headers 
+    ------------------- -->
+    <tr>
+        {% for header in headers['genres'] %}
+        <th> {{ header }} </th>
+        {% endfor %}
+    </tr>
+
+    <!-- Table Data
+    ---------------- -->
+    {% for row in genres %}
+    <tr>
+        {% for data in row %}
+        <td> {{ data }} </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}

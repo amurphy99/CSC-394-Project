@@ -30,6 +30,13 @@
           <li class="nav-item">
             <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.logout') }}">Log Out</a>
           </li>
+          <!-- preview_database -->
+          {% if g.user[3] == 1 %}
+          <li class="nav-item">
+            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('preview_database') }}">Database</a>
+          </li>
+          {% endif %}
+
         {% else %}
           <li class="nav-item">
             <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.register') }}">Register</a>
