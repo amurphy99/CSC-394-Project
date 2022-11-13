@@ -180,6 +180,57 @@ def home_filter_tags():
     return render_template("home_page/filter_tags_htmx.html", tags=tags, placeholder=test, selected_genre = selected_genre)
 
 
+def new_trending_list():
+
+   BASE_URL    = "http://image.tmdb.org/t/p/"
+   POSTER_SIZE = "w500"
+
+   if request.method != 'POST': return "<h1> non-POST request to 'get_move_cards()' </h1>"
+
+   tags = request.form.getlist("genre-tag")
+   query = request.form("searched")
+
+   if query != None:
+      results = api_query(query)["results"]
+      matches = []
+      for movie in results:
+         match = True
+         for id in tags:
+            if int(id) not in movie['genre_ids']:
+               match = False
+         if match:
+            matches.append(movie)
+
+
+      movieDisplay = []
+      for movie in matches:
+        temp = {    "title"     : movie["title"],
+                    "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
+                    "id"        : movie["id"] }
+
+        movieDisplay.append(temp)
+      return render_template('home_page/new_trending_list_htmx.html', movieDisplay = movieDisplay)
+
+
+
+   # genre_ids = []
+   # for e in genres:
+   #    genre_ids.append(e['id'])
+
+   # list_genres = [str(x) for x in genre_ids]
+
+   # selected_genre = []
+   # for e in tags:
+   #    if e in list_genres:
+   #       selected_genre.append(e)
+
+   # api_key = "api_key=f059b4ab8738e8777362529e74ffb62a"
+   # api_url = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&' + api_key
+   # x = ",".join(selected_genre)
+
+   # genre_key = api_url + '&with_genres=' + x
+
+   return render_template('home_page/new_trending_list_htmx.html')
 
 
 
