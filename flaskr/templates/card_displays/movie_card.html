@@ -20,13 +20,13 @@
         margin: auto;
     }
 </style>
+
 <a  class="trending-item"
-    href="{{ url_for('movie_page', movieID=movie['id']) }}" >
+    href="{{ url_for('movie_page', movieID=movie['id']) }}" 
+>
 
     <img class="movie-card-img" src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
 
-    <div class="movie-card-title">
-        <h3> {{ movie['title'] }} </h3>
-    </div>
-    
+    <div class="movie-card-title"> <h3> {{ movie['title'] }} </h3> </div>
+
 </a>

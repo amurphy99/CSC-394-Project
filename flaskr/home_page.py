@@ -1,6 +1,6 @@
 from flask import Flask, render_template, g, request, flash
 from flaskr.db import get_db
-from flaskr.movieDBapi import trending_movies, popular_movies, api_query, filtered_search
+from flaskr.movieDBapi import trending_movies, filtered_search
 
 
 
@@ -45,11 +45,16 @@ def home_filter_tags():
 
     tags = request.form.getlist("myCheckbox")
 
-    test = "Searching for "
+    placeholder = "Searching for: "
+    safe_tags   = []
     for tag in tags:
-        test += str(tag) + ", "
+        if tag != '':
+            safe_tags.append(tag)
+            placeholder += str(tag) + ", "
 
-    return render_template("home_page/filter_tags_htmx.html", tags=tags, placeholder=test)
+    placeholder = placeholder[:-2] + "..."
+
+    return render_template("home_page/filter_tags_htmx.html", tags=safe_tags, placeholder=placeholder)
 
 
 

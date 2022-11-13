@@ -149,8 +149,6 @@ def popular_movies(page_number=1):
 
 
 
-
-
 def filtered_search(tags, method, query="", num_results=9, range=None):
     # constants:
     # -----------
@@ -191,6 +189,7 @@ def filtered_search(tags, method, query="", num_results=9, range=None):
             # release year (not implemented)
 
             # genres
+            print(tags)
             for id in tags:
                 if int(id) not in movie['genre_ids']: match = False
 
