@@ -48,7 +48,7 @@
                             class="drop-form"
                             hx-post="{{ url_for('home_filter_tags') }}"
                             hx-target="#filter-tags" 
-                            hx-swap="innerHTML" 
+                            hx-swap="outerHTML" 
                         >
                             <div id="tags">
                                 <p><input type="checkbox" name="myCheckbox" value="28" class="tag"><label for="action">Action</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>

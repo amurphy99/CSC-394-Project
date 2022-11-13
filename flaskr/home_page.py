@@ -1,9 +1,6 @@
 from flask import Flask, render_template, g, request, flash
 from flaskr.db import get_db
-from flaskr.movieDBapi import api_home
-from flaskr.movieDBapi import api_query
-from flaskr.movieDBapi import home_search
-# from flaskr.movieDBapi import home_genres
+from flaskr.movieDBapi import trending_movies, popular_movies, api_query, filtered_search
 
 
 
@@ -17,7 +14,7 @@ def home_page():
     BASE_URL    = "http://image.tmdb.org/t/p/"
     POSTER_SIZE = "w500"
 
-    trending = api_home()["results"][:9]
+    trending = trending_movies()["results"][:9]
 
     # prepare movie data for display
     movieDisplay = []
@@ -56,38 +53,30 @@ def home_filter_tags():
 
 
 
+
 def new_trending_list():
-    # protection
     if request.method != 'POST': return "<h1> non-POST request to 'get_move_cards()' </h1>"
 
-    # constant
+    # constants:
+    # -----------
     BASE_URL    = "http://image.tmdb.org/t/p/"
     POSTER_SIZE = "w500"
 
-    # get inputs
+
+    # user inputs:
+    # -------------
     tags    = request.form.getlist("genre-tag")
+    method  = int(request.form["sort-by"])
     query   = request.form["searched"]
-    print(f"query: {query}")
 
+    # get results:
+    # -------------
+    results = filtered_search(tags, method, query, num_results=9)
+    matches = results["matches"]
 
-    # choose which results to use
-    # ----------------------------
-    if query != None and len(query) > 0:
-        results1 = api_query(query)
-        print(results1)
-        results = results1["results"]
-    else:
-        results = api_home()["results"]
-
-
-    # filter movies to only correct genres
-    # -------------------------------------
-    matches = []
-    for movie in results:
-        match = True
-        for id in tags:
-            if int(id) not in movie['genre_ids']: match = False
-        if match: matches.append(movie)
+    keys = list(results.keys())
+    for key in keys[1:]:
+        print(f"{key} : {results[key]}")
 
 
     # prepare movies for display
@@ -97,11 +86,20 @@ def new_trending_list():
         temp = {    "title"     : movie["title"],
                     "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
                     "id"        : movie["id"] }
-
         movieDisplay.append(temp)
 
     # return
     return render_template('home_page/new_trending_list_htmx.html', movieDisplay = movieDisplay)
+
+
+
+
+
+
+
+
+
+
 
 
 
