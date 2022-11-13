@@ -65,13 +65,7 @@
 
         <div class="trending-list"> 
             {% for movie in movieDisplay %}
-                <a href="{{ url_for('movie_page', movieID=movie['id']) }}" class="trending-item">
-        
-                    <img src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
-                    <h3> {{ movie['title'] }} </h3>
-                    <!-- the link includes {{ movie['id'] }}-->
-            
-                </a>
+                {{ movie_card(movie) | safe }}
             {% endfor %}
         </div>
     </div>

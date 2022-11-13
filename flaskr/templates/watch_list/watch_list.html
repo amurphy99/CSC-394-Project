@@ -126,8 +126,6 @@
     </div>
 
 
-
-
         <!-- "Add Movie" Modal -->
         <div class="watch_lists_info">
             <h3> {{ "this_user[1]" }}'s Watch Lists</h3>
@@ -157,38 +155,17 @@
 
         <!-- Movies List Table -->
         <table class="test4">
-    
-            <tr>
-                <th> Movie Poster   </th>
-                <th> Movie Info     </th>
-                <th> User Review    </th>
-            </tr>
-            
+
+            <tr> <th> Watch List Movie Card                     </th> </tr>
+
             {% for movie in movies_list %}
-            <tr>
-                <!-- Movie Poster -->
-                <td> <img src="{{ movie['poster'] }}" alt="Poster for {{ movie['title'] }}"> </td>
-                
-                <!-- Movies Info -->
-                <td> 
-                    <h3>    {{ movie['title']   }} </h2>
-                    <p>    #{{ movie['id']      }} </p>
-                </td>
-
-                <!-- User Review -->
-                <td> 
-                    <h4> Status: </h4>
-                    <p> {{ movie['status'] }} </p>
-
-                    <h4> Rating: </h4>
-                    <p> {{ movie['rating'] }}/5 </p>
-                </td>
-
-            </tr>
+            <tr> <td> {{ watch_list_movie_card(movie) | safe }} </td> </tr>
             {% endfor %}
-
+            
         </table>
         
+
+
     </div>
 
     <div id="modals-here"> </div>

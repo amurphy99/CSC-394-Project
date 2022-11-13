@@ -1,0 +1,7 @@
+<a  class="trending-item"
+    href="{{ url_for('movie_page', movieID=movie['id']) }}" >
+
+    <img src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
+    <h3> {{ movie['title'] }} </h3>
+    
+</a>

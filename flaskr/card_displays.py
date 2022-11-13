@@ -7,6 +7,7 @@ from flaskr.movieDBapi import api_query, genre_query
 from flaskr.database.database_functions import get_watch_list_statistics, get_poster
 from flaskr.user_page import format_time
 
+
 def watch_list_card(list_id):
     '''
         0 id                SERIAL
@@ -40,3 +41,47 @@ def watch_list_card(list_id):
                     "total_runtime"     : formatted_runtime }
 
     return render_template("card_displays/watch_list_card.html", card_info=card_info)
+
+
+def movie_card(movie):
+    '''
+    movie = dict
+        * "id"      = movieDB id
+        * "title"   = movie title
+        * "poster"  = url for the movies poster image
+
+    '''
+    return render_template("card_displays/movie_card.html", movie=movie)
+
+
+
+def watch_list_movie_card(movie_info):
+    '''
+    Receive:
+    ---------
+        movie_display = {   "id"            : movie[0],
+                            "status"        : str_watch_status,
+                            "rating"        : movie[3],
+                            "title"         : movie_info[1],
+                            "poster"        : BASE_URL + POSTER_SIZE + movie_info[2],
+                            "popularity"    : movie_info[3]     }
+    Return:
+    --------
+        card_info = {   "status"    : "user watch status",
+                        "rating"    : "user rating",
+                        "movie"     : "dict with: id, title, poster" }
+    '''
+
+    movie = { "id": movie_info["id"], "title": movie_info["title"], "poster": movie_info["poster"] }
+
+
+    card_info = {   "status"    : movie_info["status"],
+                    "rating"    : movie_info["rating"],
+                    "movie"     : movie }
+
+
+
+    return render_template("card_displays/watch_list_movie_card.html", card_info=card_info)
+
+
+
