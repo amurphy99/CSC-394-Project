@@ -11,41 +11,48 @@
         flex: 1 1 30%;
         justify-self: stretch;
         padding: 1.0rem 0.0rem 1.0rem 0.0rem;
+
+        inline-block
+
+        style="background:red"
+        style=""
+
 -->
 <style>
     .watch-list-movie-card {
-        border: 1px solid black;
-
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start;
 
         padding: 0.0rem;
-        gap: 1.0rem;
+        gap: 0.0rem;
     }
 
     .watch-list-movie-card-info {
-        
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        padding: 0.0rem 0.5rem 0.0rem 0.0rem;
     }
-    .watch-list-movie-card-info > h3 { font-size: 1em; }
+    .watch-list-p  { align-self: center; font-size: 0.9em; }
+    .watch-list-h3 { align-self: center; font-size: 1.2em; font-weight: bold;}
 
     .watch-list-movie-card-movie { height: 90%; }
     .watch-list-movie-card-movie > .trending-item { height: 100%; }
     .watch-list-movie-card-movie > .trending-item > .movie-card-title > h3 { font-size: 1em; }
 
-    
 </style>
 
 <div class="watch-list-movie-card"> 
 
-    <div class="watch-list-movie-card-movie">
-        {{ movie_card(card_info["movie"]) | safe }}
+    <div class="watch-list-movie-card-info">
+        <div class="watch-list-p" > {{ card_info["status"] }}   </div>
+        <div class="watch-list-h3"> {{ card_info["rating"] }}/5 </div>
     </div>
 
-    <!-- HStack with spacer in the middle -->
-    <div class="watch-list-movie-card-info">
-        <h3> {{ card_info["status"] }}      </h3>
-        <h3> {{ card_info["rating"] }}/5    </h3>
+    <div class="watch-list-movie-card-movie">
+        {{ movie_card(card_info["movie"]) | safe }}
     </div>
 
 

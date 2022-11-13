@@ -128,8 +128,7 @@
 
         <!-- "Add Movie" Modal -->
         <div class="watch_lists_info">
-            <h3> {{ "this_user[1]" }}'s Watch Lists</h3>
-
+            
             <!-- 
             Only show the edit buttons if the one viewing this user page is logged in as the owner or an editor
                 the users id (if logged in):    {{ g.user[0]    }}
@@ -171,11 +170,13 @@
         -->
         <style>
             .watch-list-movies{
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+
                 display: grid;
                 grid-template-columns: repeat(5, 1fr);
 
-                row-gap: 1.0rem;
-                column-gap: 1.0rem;
+                gap: 1.0rem;
+                padding: 1.0rem;
             }
         </style>
         <!-- Movies List Table -->
