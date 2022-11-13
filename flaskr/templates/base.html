@@ -12,43 +12,33 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background: #1f6cf2; height: 80px;">
   <div class="container-fluid">
-    <a class="navbar-brand" style="margin-left: 35px;"  href="#">CinemUs</a>
+    <a class="navbar-brand" style="margin-left: 35px;"  href="{{ url_for('home_page') }}">CinemUs</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav d-flex justify-content-end w-100">
 
-        <li class="nav-item">
-          <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('home_page', userID=g.user[0]) }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('index') }}">Users</a>
-        </li>
+        <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('home_page') }}"                      > Home              </a></li>
         {% if g.user %}
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('user_page', userID=g.user[0]) }}">{{ g.user[1] }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.logout') }}">Log Out</a>
-          </li>
-          <!-- preview_database -->
-          {% if g.user[3] == 1 %}
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('preview_database') }}">Database</a>
-          </li>
-          {% endif %}
-
+            <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('user_page', userID=g.user[0]) }}"> {{ g.user[1] }}   </a></li>
+            <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.logout') }}"                > Log Out           </a></li>
+            {% if g.user[3] == 1 %} <!-- preview_database and users index -->
+                <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('index') }}"                  > Users             </a> </li>
+                <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('preview_database') }}"       > Database          </a> </li>
+            {% endif %}
         {% else %}
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.register') }}">Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.login') }}">Log In</a>
-          </li>
+            <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.register') }}"              > Register          </a></li>
+            <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.login') }}"                 > Log In            </a></li>
         {% endif %}
+
       </ul>
     </div>
+
+    
   </div>
 </nav>
 

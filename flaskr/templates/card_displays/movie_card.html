@@ -1,7 +1,32 @@
-<a  class="trending-item"
-    href="{{ url_for('movie_page', movieID=movie['id']) }}" >
+<style>
+    .trending-item {
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
-    <img src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
-    <h3> {{ movie['title'] }} </h3>
-    
+        padding: 1.0rem 1.0rem 0.0rem 1.0rem;
+
+        text-decoration: none;
+        color: black;
+    }
+    .movie-card-img {
+        max-width: 100%;
+        max-height: 90%;
+        width: auto;
+    }
+    .movie-card-title {
+        padding: 1.0rem 0.0rem 1.0rem 0.0rem;
+        margin: auto;
+    }
+</style>
+
+<a  class="trending-item"
+    href="{{ url_for('movie_page', movieID=movie['id']) }}" 
+>
+
+    <img class="movie-card-img" src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
+
+    <div class="movie-card-title"> <h3> {{ movie['title'] }} </h3> </div>
+
 </a>

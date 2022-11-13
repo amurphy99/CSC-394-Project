@@ -1,7 +1,7 @@
 
 import requests
-#import pandas as pd
 import json
+import time
 
 from flask import Flask, render_template, g, request, flash
 
@@ -81,9 +81,8 @@ def get_results():
 
 def api_home():
     # build api request url
-
-    base = "https://api.themoviedb.org/3/trending"
-    optionals = "/movie/day?api_key="
+    base        = "https://api.themoviedb.org/3/trending"
+    optionals   = "/movie/day?api_key="
     api_key     = "f059b4ab8738e8777362529e74ffb62a"
 
     endpoint = base + optionals + api_key
@@ -95,6 +94,131 @@ def api_home():
     #print(response_list)
 
     return response_list
+
+
+
+
+def trending_movies(time_window = "day", page_number = 1):
+    # constant api args:
+    # -------------------
+    API_KEY     = "f059b4ab8738e8777362529e74ffb62a"
+    LANG        = "en-US"
+
+    # build api request url:
+    # -----------------------
+    base =  "https://api.themoviedb.org/3/trending/movie"
+    time = f"/{time_window}?api_key={API_KEY}"
+    lang = f"&language={LANG}"
+    page = f"&page={page_number}"
+
+    endpoint = base + time + lang + page
+
+    # returns a dictionary:
+    # ----------------------
+    first_response  = requests.get(endpoint)
+    response_list   = first_response.json()
+
+    # return results:
+    # ----------------
+    return response_list
+
+
+
+def popular_movies(page_number=1):
+    # constant api args:
+    # -------------------
+    API_KEY = "f059b4ab8738e8777362529e74ffb62a"
+    LANG    = "en-US"
+
+    # build api request url:
+    # -----------------------
+    base = f"https://api.themoviedb.org/3/movie/popular?api_key={API_KEY}"
+    lang = f"&language={LANG}"
+    page = f"&page={page_number}"
+
+    endpoint = base + lang + page
+
+    # returns a dictionary:
+    # ----------------------
+    first_response  = requests.get(endpoint)
+    response_list   = first_response.json()
+
+    # return results:
+    # ----------------
+    return response_list
+
+
+
+def filtered_search(tags, method, query="", num_results=9, range=None):
+    # constants:
+    # -----------
+    MAX_SEARCH_TIME = 10
+
+    # api_feedback:
+    # --------------
+    total_pages         = 1
+    total_results       = -1
+    pages_searched      = 0
+    results_searched    = 0
+    matches             = []
+    start_time          = time.time()
+    
+    # filter movies and get the number requested:
+    # --------------------------------------------
+    while len(matches) < num_results and pages_searched < total_pages and (time.time()-start_time) < MAX_SEARCH_TIME:
+        pages_searched += 1
+
+        # get the results here
+        # ---------------------
+        if   len(query)  > 0: response = api_query(query)             
+        elif method     == 0: response = trending_movies(page_number=pages_searched, time_window="day"  )
+        elif method     == 1: response = trending_movies(page_number=pages_searched, time_window="week" )
+        elif method     == 2: response = popular_movies (page_number=pages_searched                     )
+        else: response = {"total_pages": 0, "total_results": 0, "results": []} # something went wrong
+
+        total_pages     = response["total_pages"]
+        total_results   = response["total_results"]
+        results         = response["results"]
+
+        # filter through the results
+        # ---------------------------
+        for movie in results:
+            results_searched += 1
+            match = True
+
+            # release year (not implemented)
+
+            # genres
+            for id in tags:
+                if int(id) not in movie['genre_ids']: match = False
+
+            if match: matches.append(movie)
+
+
+    # return dict with matches and api feedback
+    api_feedback = {
+        "matches"           : matches,
+        "total_pages"       : total_pages, 
+        "total_results"     : total_results,
+        "pages_searched"    : pages_searched, 
+        "results_searched"  : results_searched,
+        "matches_found"     : len(matches), 
+        "time_taken"        : (time.time()-start_time)
+    }
+
+    return api_feedback
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -129,11 +253,4 @@ def home_search():
 
         return response_list
 
-def home_genres():
-
-    if request.method == "POST":
-
-        genre_list = request.form.getlist['myCheckbox']
-
-        return genre_list
     
