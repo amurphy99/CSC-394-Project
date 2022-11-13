@@ -17,30 +17,15 @@ def home_page():
     BASE_URL    = "http://image.tmdb.org/t/p/"
     POSTER_SIZE = "w500"
 
+    trending = api_home()["results"][:9]
 
-    # api call to get trending movies
-    if request.method == "POST":
-        trending = home_search()["results"][:9]
-        
-    else:
-        trending = api_home()["results"][:9]
-
-
-    #select genre
-   #  genre_list = home_genres()
-   #  print(genre_list)
-        
     # prepare movie data for display
     movieDisplay = []
     for movie in trending:
         temp = {    "title"     : movie["title"],
                     "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
                     "id"        : movie["id"] }
-
         movieDisplay.append(temp)
-
-    # prepare movie data dor display IF SEARCHED
-    
 
     # prepare friends list for display [id, username]
     user_friends = [    ["admin",   1], 
@@ -51,10 +36,6 @@ def home_page():
                         ["Derrick", 6],
                         ["Benas",   7]  ]
 
-
-    # print(movieDisplay)
-
-    
     # display page
     return render_template('home_page/home_page.html', movieDisplay=movieDisplay, user_friends=user_friends)
     
@@ -66,173 +47,61 @@ def home_filter_tags():
     if request.method != 'POST': return "<h1> non-POST request to 'get_move_cards()' </h1>"
 
     tags = request.form.getlist("myCheckbox")
-   #  print(tags)
-    
+
     test = "Searching for "
     for tag in tags:
         test += str(tag) + ", "
 
-    genres = [
-      {
-         "id":28,
-         "name":"Action"
-      },
-      {
-         "id":12,
-         "name":"Adventure"
-      },
-      {
-         "id":16,
-         "name":"Animation"
-      },
-      {
-         "id":35,
-         "name":"Comedy"
-      },
-      {
-         "id":80,
-         "name":"Crime"
-      },
-      {
-         "id":99,
-         "name":"Documentary"
-      },
-      {
-         "id":18,
-         "name":"Drama"
-      },
-      {
-         "id":10751,
-         "name":"Family"
-      },
-      {
-         "id":14,
-         "name":"Fantasy"
-      },
-      {
-         "id":36,
-         "name":"History"
-      },
-      {
-         "id":27,
-         "name":"Horror"
-      },
-      {
-         "id":10402,
-         "name":"Music"
-      },
-      {
-         "id":9648,
-         "name":"Mystery"
-      },
-      {
-         "id":10749,
-         "name":"Romance"
-      },
-      {
-         "id":878,
-         "name":"Science Fiction"
-      },
-      {
-         "id":10770,
-         "name":"TV Movie"
-      },
-      {
-         "id":53,
-         "name":"Thriller"
-      },
-      {
-         "id":10752,
-         "name":"War"
-      },
-      {
-         "id":37,
-         "name":"Western"
-      }
-   ]
+    return render_template("home_page/filter_tags_htmx.html", tags=tags, placeholder=test)
 
-    genre_ids = []
-    for e in genres:
-      genre_ids.append(e['id'])
-
-    list_genres = [str(x) for x in genre_ids]
-
-    selected_genre = []
-    for e in tags:
-      if e in list_genres:
-         selected_genre.append(e)
-
-    api_key = "api_key=f059b4ab8738e8777362529e74ffb62a"
-    api_url = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&' + api_key
-    x = ",".join(selected_genre)
-
-    genre_key = api_url + '&with_genres=' + x
-
-
-   # print(genre_ids)
-   # print(int_tags)
-   #  print(genres)
-   #  print('---------')
-    print(genre_key)
-
-    # selected_genre = endpoint key
-
-    return render_template("home_page/filter_tags_htmx.html", tags=tags, placeholder=test, selected_genre = selected_genre)
 
 
 def new_trending_list():
+    # protection
+    if request.method != 'POST': return "<h1> non-POST request to 'get_move_cards()' </h1>"
 
-   BASE_URL    = "http://image.tmdb.org/t/p/"
-   POSTER_SIZE = "w500"
+    # constant
+    BASE_URL    = "http://image.tmdb.org/t/p/"
+    POSTER_SIZE = "w500"
 
-   if request.method != 'POST': return "<h1> non-POST request to 'get_move_cards()' </h1>"
-
-   tags = request.form.getlist("genre-tag")
-   query = request.form["searched"]
-
-   if query != None or len(query) > 1:
-      results1 = api_query(query)
-      print(results1)
-      results = results1["result"]
-      matches = []
-      for movie in results:
-         match = True
-         for id in tags:
-            if int(id) not in movie['genre_ids']:
-               match = False
-         if match:
-            matches.append(movie)
-   else:
-      results = api_home()["result"]
-      matches = []
-      for movie in results:
-         match = True
-         for id in tags:
-            if int(id) not in movie['genre_ids']:
-               match = False
-         if match:
-            matches.append(movie)
+    # get inputs
+    tags    = request.form.getlist("genre-tag")
+    query   = request.form["searched"]
+    print(f"query: {query}")
 
 
-   # matches = []
-   # for movie in results:
-   #    match = True
-   #    for id in tags:
-   #       if int(id) not in movie['genre_ids']:
-   #          match = False
-   #    if match:
-   #       matches.append(movie)
+    # choose which results to use
+    # ----------------------------
+    if query != None and len(query) > 0:
+        results1 = api_query(query)
+        print(results1)
+        results = results1["results"]
+    else:
+        results = api_home()["results"]
 
 
+    # filter movies to only correct genres
+    # -------------------------------------
+    matches = []
+    for movie in results:
+        match = True
+        for id in tags:
+            if int(id) not in movie['genre_ids']: match = False
+        if match: matches.append(movie)
 
-   movieDisplay = []
-   for movie in matches:
-      temp = {    "title"     : movie["title"],
-                  "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
-                  "id"        : movie["id"] }
 
-      movieDisplay.append(temp)
-   return render_template('home_page/new_trending_list_htmx.html', movieDisplay = movieDisplay)
+    # prepare movies for display
+    # ---------------------------
+    movieDisplay = []
+    for movie in matches:
+        temp = {    "title"     : movie["title"],
+                    "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
+                    "id"        : movie["id"] }
+
+        movieDisplay.append(temp)
+
+    # return
+    return render_template('home_page/new_trending_list_htmx.html', movieDisplay = movieDisplay)
 
 
 
@@ -253,7 +122,21 @@ def new_trending_list():
 
    # genre_key = api_url + '&with_genres=' + x
 
-   return render_template('home_page/new_trending_list_htmx.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

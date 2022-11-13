@@ -1,7 +1,5 @@
-<div id="filter-tags">
-    <input type="text" placeholder="{{ placeholder }}" id="search" name="searched" class="home-search" >
-    {% for tag in tags %}
-    <input type="hidden" name="genre-tag"  value="{{ tag }}">
-    {% endfor %}
+<input type="text" placeholder="{{ placeholder }}" id="search" name="searched" class="home-search" >
 
-</div>
+{% for tag in tags %}
+<input type="hidden" name="genre-tag"  value="{{ tag }}">
+{% endfor %}

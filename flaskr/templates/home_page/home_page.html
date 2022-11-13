@@ -30,15 +30,13 @@
 
             <div class="home-search-drop">
 
-                <form id="form"
-                    hx-post="{{ url_for('new_trending_list') }}"
-                    hx-target="#trending-list"
-                    hx-trigger="click" 
-                    hx-swap="outerHTML" >
-                    <div id="filter-tags">  
-                        <input type="text" placeholder="Search" id="search" name="searched" class="home-search" >
-                        <!-- tags will be here -->  
-                    </div>
+                <form   id="filter-tags"
+                        hx-post="{{ url_for('new_trending_list') }}"
+                        hx-target="#trending-list"
+                        hx-swap="outerHTML" 
+                >
+                    <input type="text" placeholder="Search" id="search" name="searched" class="home-search" >
+                    <!-- tags will be here -->  
                 </form>
 
                 <div class="dropdown" >
@@ -50,7 +48,7 @@
                             class="drop-form"
                             hx-post="{{ url_for('home_filter_tags') }}"
                             hx-target="#filter-tags" 
-                            hx-swap="outerHTML" 
+                            hx-swap="innerHTML" 
                         >
                             <div id="tags">
                                 <p><input type="checkbox" name="myCheckbox" value="28" class="tag"><label for="action">Action</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -74,11 +72,11 @@
                                 <p><input type="checkbox" name="myCheckbox" value="37" class="tag"><label for="western">Western</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                 <input type="submit" name="myCheckbox">
                             </div>
+
                         </form>
-
-
                     </div>
                 </div>
+
             </div>
             
 

@@ -129,11 +129,4 @@ def home_search():
 
         return response_list
 
-def home_genres():
-
-    if request.method == "POST":
-
-        genre_list = request.form.getlist['myCheckbox']
-
-        return genre_list
     
