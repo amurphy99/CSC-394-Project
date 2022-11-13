@@ -50,15 +50,67 @@
 
 /* footer */
 .my-footer {
-    background: #eee;
+    background: linear-gradient(to right, #00093c, rgba(0,122,255));
+    color: #fff;
     left: 0px;
     right: 0px;
     bottom: 0px;
     width: 100%;
     height: 200px;
+    font-size: 13px;
+    line-height: 20px;
+    padding-top: 10px;
+    padding-left: 20px;
 }
 
+.row {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
 
+.col {
+    flex-basis: 25%;
+    padding: 10px;
+}
+
+.my-footer img{
+    width: 40%;
+    margin-bottom: 10px;
+    position: relative;
+    bottom: 50%;
+
+}
+
+ul li {
+    list-style: none;
+    margin-bottom: 12px;
+    /* position: relative;
+    right: 10%; */
+}
+
+ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.github-icon .fa-brands{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    color: #000;
+    background: #fff;
+    margin-right: 15px;
+    cursor: pointer;
+    /* position: relative;    
+    left: 20%; */
+}
 
 /* MODAL STYLE
 --------------------------------------------------------------------------- */
