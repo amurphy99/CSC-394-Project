@@ -42,8 +42,9 @@ def create_app(test_config=None):
     # CARD DISPLAYS
     # ---------------------------------------------
     from . import card_displays
-    app.jinja_env.globals.update(watch_list_card    = card_displays.watch_list_card )
-    app.jinja_env.globals.update(movie_card         = card_displays.movie_card      )
+    app.jinja_env.globals.update(movie_card             = card_displays.movie_card              )
+    app.jinja_env.globals.update(watch_list_card        = card_displays.watch_list_card         )
+    app.jinja_env.globals.update(watch_list_movie_card  = card_displays.watch_list_movie_card   )
 
 
     # ALL OFFICIAL PAGES

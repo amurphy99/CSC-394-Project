@@ -6,31 +6,47 @@
 
         make a second version of this:
         "edit_watch_list_movie_card.html"
+
+
+        flex: 1 1 30%;
+        justify-self: stretch;
+        padding: 1.0rem 0.0rem 1.0rem 0.0rem;
 -->
 <style>
     .watch-list-movie-card {
-        
+        border: 1px solid black;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        padding: 0.0rem;
+        gap: 1.0rem;
     }
 
     .watch-list-movie-card-info {
-
+        
     }
+    .watch-list-movie-card-info > h3 { font-size: 1em; }
 
-    .watch-list-movie-card-movie {
+    .watch-list-movie-card-movie { height: 90%; }
+    .watch-list-movie-card-movie > .trending-item { height: 100%; }
+    .watch-list-movie-card-movie > .trending-item > .movie-card-title > h3 { font-size: 1em; }
 
-    }
-
+    
 </style>
 
 <div class="watch-list-movie-card"> 
+
+    <div class="watch-list-movie-card-movie">
+        {{ movie_card(card_info["movie"]) | safe }}
+    </div>
+
     <!-- HStack with spacer in the middle -->
     <div class="watch-list-movie-card-info">
         <h3> {{ card_info["status"] }}      </h3>
         <h3> {{ card_info["rating"] }}/5    </h3>
     </div>
 
-    <div class="watch-list-movie-card-movie">
-        {{ movie_card(card_info["movie"]) | safe }}
-    </div>
 
 </div>

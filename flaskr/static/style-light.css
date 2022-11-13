@@ -255,53 +255,46 @@
     column-gap: 1.0rem;
     padding: 1.0rem 0;
 }
+
 .trending-movies {
+    flex: 3 1 75%;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     display: flex;
-    flex-grow: 3;
     flex-direction: column;
-    padding: 0 1.0rem 1.0rem 1.0rem;
+    padding: 0.0rem 1.0rem 1.0rem 1.0rem;
 }
 .trending-list-header  { 
-    height: 1.5rem;
     font-size: large; 
     font-weight: bold; 
     border-bottom: 1px solid #ddd;
+    padding: 1.0rem 0.0rem 0.0rem 0.0rem;
 }
 .trending-list {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    row-gap: 1.0rem;
-    column-gap: 1.0rem;
-    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    row-gap: 2.0rem;
+    column-gap: 2.0rem;
+    padding: 1.0rem 1.0rem 1.0rem 1.0rem;
+
     text-decoration: none;
-}
-.trending-item {
-    width: 25%;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-    display: flex;
-    flex-direction: column;
-    padding: 1.0rem 1.0rem 0.0rem 1.0rem;
-    text-decoration: none;
-    color: black;
 }
 
 
 .friends-list {
-    min-width: 15%;
+    min-width: 10%;
+    flex: 1 1 12%;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     display: flex;
-    flex-grow: 1;
     flex-direction: column;
     justify-content: flex-start;
     padding: 0 1.0rem;
 }
 .friends-list-header  { 
-    height: 1.5rem;
     font-size: large; 
     font-weight: bold; 
     border-bottom: 1px solid #ddd;
+    padding: 1.0rem 0.0rem 0.0rem 0.0rem;
 }
 .user-friends-list {
     display: flex;
@@ -539,7 +532,10 @@
 }
 
 
+.watch-list-movies{
+    display: flex;
 
+}
 
 
 

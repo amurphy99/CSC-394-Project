@@ -153,17 +153,41 @@
         </div>
 
 
+
+
+
+
+
+
+        <!-- 
+            .trending-list {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                row-gap: 1.0rem;
+                column-gap: 1.0rem;
+                padding: 0;
+                text-decoration: none;
+            }
+        -->
+        <style>
+            .watch-list-movies{
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+
+                row-gap: 1.0rem;
+                column-gap: 1.0rem;
+            }
+        </style>
         <!-- Movies List Table -->
-        <table class="test4">
-
-            <tr> <th> Watch List Movie Card                     </th> </tr>
-
+        <div class="watch-list-movies">
             {% for movie in movies_list %}
-            <tr> <td> {{ watch_list_movie_card(movie) | safe }} </td> </tr>
+                {{ watch_list_movie_card(movie) | safe }}
             {% endfor %}
-            
-        </table>
+        </div>
         
+
+
+
 
 
     </div>
