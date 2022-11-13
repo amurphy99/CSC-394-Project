@@ -50,9 +50,24 @@
                         >
                             <div id="tags">
                                 <p><input type="checkbox" name="myCheckbox" value="28" class="tag"><label for="action">Action</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p><input type="checkbox" name="myCheckbox" value="12" class="tag"><label for="action">Adventure</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p><input type="checkbox" name="myCheckbox" value="35" class="tag"><label for="action">Comedy</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                                <p><input type="checkbox" name="myCheckbox" value="18" class="tag"><label for="action">Drama</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="12" class="tag"><label for="Adventure">Adventure</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="16" class="tag"><label for="animation">Animation</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="35" class="tag"><label for="comedy">Comedy</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="80" class="tag"><label for="crime">Crime</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="99" class="tag"><label for="documentary">Documentary</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="18" class="tag"><label for="drama">Drama</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="10751" class="tag"><label for="family">Family</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="14" class="tag"><label for="fantasy">Fantasy</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="36" class="tag"><label for="history">History</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="27" class="tag"><label for="horror">Horror</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="10402" class="tag"><label for="music">Music</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="9648" class="tag"><label for="mystery">Mystery</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="10749" class="tag"><label for="romance">Romance</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="878" class="tag"><label for="science_fiction">Science Fiction</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="10770" class="tag"><label for="tv_movie">TV Movie</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="53" class="tag"><label for="thriller">Thriller</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="10752" class="tag"><label for="war">War</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="37" class="tag"><label for="western">Western</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                 <input type="submit" name="myCheckbox">
                             </div>
                         </form>
@@ -63,7 +78,10 @@
             </div>
             
 
-        <div class="trending-list"> 
+        <div class="trending-list" id="filter-movies" 
+        hx-post="{{ url_for('home_filter_tags') }}"
+        hx-target="#filter-tags" 
+        hx-swap="outerHTML"> 
             {% for movie in movieDisplay %}
                 <a href="{{ url_for('movie_page', movieID=movie['id']) }}" class="trending-item">
         
