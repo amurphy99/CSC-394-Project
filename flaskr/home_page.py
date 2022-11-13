@@ -17,7 +17,61 @@ def home_page():
     BASE_URL    = "http://image.tmdb.org/t/p/"
     POSTER_SIZE = "w500"
 
-    # Genres
+
+    # api call to get trending movies
+    if request.method == "POST":
+        trending = home_search()["results"][:9]
+        
+    else:
+        trending = api_home()["results"][:9]
+
+
+    #select genre
+   #  genre_list = home_genres()
+   #  print(genre_list)
+        
+    # prepare movie data for display
+    movieDisplay = []
+    for movie in trending:
+        temp = {    "title"     : movie["title"],
+                    "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
+                    "id"        : movie["id"] }
+
+        movieDisplay.append(temp)
+
+    # prepare movie data dor display IF SEARCHED
+    
+
+    # prepare friends list for display [id, username]
+    user_friends = [    ["admin",   1], 
+                        ["Andrew",  2],
+                        ["Calvin",  3],
+                        ["Joseph",  4],
+                        ["Brenden", 5],
+                        ["Derrick", 6],
+                        ["Benas",   7]  ]
+
+
+    # print(movieDisplay)
+
+    
+    # display page
+    return render_template('home_page/home_page.html', movieDisplay=movieDisplay, user_friends=user_friends)
+    
+
+
+
+#/home_page/home_page_search
+def home_filter_tags():
+    if request.method != 'POST': return "<h1> non-POST request to 'get_move_cards()' </h1>"
+
+    tags = request.form.getlist("myCheckbox")
+   #  print(tags)
+    
+    test = "Searching for "
+    for tag in tags:
+        test += str(tag) + ", "
+
     genres = [
       {
          "id":28,
@@ -97,61 +151,33 @@ def home_page():
       }
    ]
 
-    # api call to get trending movies
-    if request.method == "POST":
-        trending = home_search()["results"][:9]
-    else:
-        trending = api_home()["results"][:9]
+    genre_ids = []
+    for e in genres:
+      genre_ids.append(e['id'])
+
+    list_genres = [str(x) for x in genre_ids]
+
+    selected_genre = []
+    for e in tags:
+      if e in list_genres:
+         selected_genre.append(e)
+
+    api_key = "api_key=f059b4ab8738e8777362529e74ffb62a"
+    api_url = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&' + api_key
+    x = ",".join(selected_genre)
+
+    genre_key = api_url + '&with_genres=' + x
 
 
-    #select genre
-   #  genre_list = home_genres()
-   #  print(genre_list)
-        
-    # prepare movie data for display
-    movieDisplay = []
-    for movie in trending:
-        temp = {    "title"     : movie["title"],
-                    "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
-                    "id"        : movie["id"] }
+   # print(genre_ids)
+   # print(int_tags)
+   #  print(genres)
+   #  print('---------')
+    print(genre_key)
 
-        movieDisplay.append(temp)
+    # selected_genre = endpoint key
 
-    # prepare movie data dor display IF SEARCHED
-    
-
-    # prepare friends list for display [id, username]
-    user_friends = [    ["admin",   1], 
-                        ["Andrew",  2],
-                        ["Calvin",  3],
-                        ["Joseph",  4],
-                        ["Brenden", 5],
-                        ["Derrick", 6],
-                        ["Benas",   7]  ]
-
-
-    # print(movieDisplay)
-
-    
-    # display page
-    return render_template('home_page/home_page.html', movieDisplay=movieDisplay, user_friends=user_friends)
-    
-
-
-
-#/home_page/home_page_search
-def home_filter_tags():
-    if request.method != 'POST': return "<h1> non-POST request to 'get_move_cards()' </h1>"
-
-    tags = request.form.getlist("myCheckbox")
-    print(tags)
-    
-    test = "Searching for "
-    for tag in tags:
-        test += str(tag) + ", "
-    
-
-    return render_template("home_page/filter_tags_htmx.html", tags=tags, placeholder=test)
+    return render_template("home_page/filter_tags_htmx.html", tags=tags, placeholder=test, selected_genre = selected_genre)
 
 
 
