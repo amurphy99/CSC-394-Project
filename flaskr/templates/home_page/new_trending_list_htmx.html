@@ -1,0 +1,5 @@
+<div class="trending-list" id="trending-list"> 
+    {% for movie in movieDisplay %}
+        {{ movie_card(movie) | safe }}
+    {% endfor %}
+</div>

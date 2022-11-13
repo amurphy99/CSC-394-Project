@@ -30,7 +30,11 @@
 
             <div class="home-search-drop">
 
-                <form id="form" method="post" action="#">
+                <form id="form"
+                    hx-post="{{ url_for('new_trending_list') }}"
+                    hx-target="#trending-list"
+                    hx-trigger="click" 
+                    hx-swap="outerHTML" >
                     <div id="filter-tags">  
                         <input type="text" placeholder="Search" id="search" name="searched" class="home-search" >
                         <!-- tags will be here -->  
@@ -78,10 +82,7 @@
             </div>
             
 
-        <div class="trending-list" id="filter-movies" 
-        hx-post="{{ url_for('home_filter_tags') }}"
-        hx-target="#filter-tags" 
-        hx-swap="outerHTML"> 
+        <div class="trending-list" id="trending-list"> 
             {% for movie in movieDisplay %}
                 {{ movie_card(movie) | safe }}
             {% endfor %}

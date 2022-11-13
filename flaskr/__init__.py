@@ -54,6 +54,7 @@ def create_app(test_config=None):
     from . import home_page
     app.add_url_rule('/',                   methods=('GET', 'POST'), view_func=home_page.home_page)
     app.add_url_rule('/home_page_search',   methods=('GET', 'POST'), view_func=home_page.home_filter_tags)
+    app.add_url_rule('/new_trending_list',  methods=('GET', 'POST'), view_func=home_page.new_trending_list)
     
 
     from . import movie_page
