@@ -1,0 +1,36 @@
+<!-- 
+
+        card_info["status"]
+        card_info["rating"]
+        card_info["movie"] = dict with: id, title, poster
+
+        make a second version of this:
+        "edit_watch_list_movie_card.html"
+-->
+<style>
+    .watch-list-movie-card {
+        
+    }
+
+    .watch-list-movie-card-info {
+
+    }
+
+    .watch-list-movie-card-movie {
+
+    }
+
+</style>
+
+<div class="watch-list-movie-card"> 
+    <!-- HStack with spacer in the middle -->
+    <div class="watch-list-movie-card-info">
+        <h3> {{ card_info["status"] }}      </h3>
+        <h3> {{ card_info["rating"] }}/5    </h3>
+    </div>
+
+    <div class="watch-list-movie-card-movie">
+        {{ movie_card(card_info["movie"]) | safe }}
+    </div>
+
+</div>
