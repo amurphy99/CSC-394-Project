@@ -188,10 +188,22 @@ def new_trending_list():
    if request.method != 'POST': return "<h1> non-POST request to 'get_move_cards()' </h1>"
 
    tags = request.form.getlist("genre-tag")
-   query = request.form("searched")
+   query = request.form["searched"]
 
-   if query != None:
-      results = api_query(query)["results"]
+   if query != None or len(query) > 1:
+      results1 = api_query(query)
+      print(results1)
+      results = results1["result"]
+      matches = []
+      for movie in results:
+         match = True
+         for id in tags:
+            if int(id) not in movie['genre_ids']:
+               match = False
+         if match:
+            matches.append(movie)
+   else:
+      results = api_home()["result"]
       matches = []
       for movie in results:
          match = True
@@ -202,14 +214,25 @@ def new_trending_list():
             matches.append(movie)
 
 
-      movieDisplay = []
-      for movie in matches:
-        temp = {    "title"     : movie["title"],
-                    "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
-                    "id"        : movie["id"] }
+   # matches = []
+   # for movie in results:
+   #    match = True
+   #    for id in tags:
+   #       if int(id) not in movie['genre_ids']:
+   #          match = False
+   #    if match:
+   #       matches.append(movie)
 
-        movieDisplay.append(temp)
-      return render_template('home_page/new_trending_list_htmx.html', movieDisplay = movieDisplay)
+
+
+   movieDisplay = []
+   for movie in matches:
+      temp = {    "title"     : movie["title"],
+                  "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
+                  "id"        : movie["id"] }
+
+      movieDisplay.append(temp)
+   return render_template('home_page/new_trending_list_htmx.html', movieDisplay = movieDisplay)
 
 
 
