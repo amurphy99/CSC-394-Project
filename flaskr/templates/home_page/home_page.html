@@ -27,41 +27,42 @@
                 - so i think that means it should be "a" and not "div"
             -->
             <p class="trending-list-header"> Trending Movies </p>
+
             <div class="home-search-drop">
+
                 <form id="form" method="post" action="#">
-                  <input type="text" placeholder="Search" id="search" name="searched" class="home-search" >
+                    <div id="filter-tags">  
+                        <input type="text" placeholder="Search" id="search" name="searched" class="home-search" >
+                        <!-- tags will be here -->  
+                    </div>
                 </form>
+
                 <div class="dropdown" >
                     <button class="dropbtn">Filters</button>
                     <div class="dropdown-content">
                         <h6 style="align-items: center;">Genres</h6>
-                        <form class="drop-form" method="post" action="#">
-                          <div id="tags">
-                            <!-- <ul>
-                                <li class="tag" data-value="28">
-                                    Action
-                                </li>
-                                <li class="tag" data-value="12">
-                                    Adventure
-                                </li>
-                                <li class="tag" data-value="35">
-                                    Comedy
-                                </li>
-                                <li class="tag" data-value="18">
-                                    Drama
-                                </li>
-                            </ul> -->
-                            <p><input type="checkbox" name="myCheckbox" id="28" class="tag"><label for="action">Action</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                            <p><input type="checkbox" name="myCheckbox" id="12" class="tag"><label for="action">Adventure</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                            <p><input type="checkbox" name="myCheckbox" id="35" class="tag"><label for="action">Comedy</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                            <p><input type="checkbox" name="myCheckbox" id="18" class="tag"><label for="action">Drama</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                            <input type="submit" name="myCheckbox">
-                          </div>
-                        </div>
-                      </div>
-                </form>
+
+                        <form 
+                            class="drop-form"
+                            hx-post="{{ url_for('home_filter_tags') }}"
+                            hx-target="#filter-tags" 
+                            hx-swap="outerHTML" 
+                        >
+                            <div id="tags">
+                                <p><input type="checkbox" name="myCheckbox" value="28" class="tag"><label for="action">Action</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="12" class="tag"><label for="action">Adventure</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="35" class="tag"><label for="action">Comedy</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <p><input type="checkbox" name="myCheckbox" value="18" class="tag"><label for="action">Drama</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                <input type="submit" name="myCheckbox">
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
             </div>
             
+
         <div class="trending-list"> 
             {% for movie in movieDisplay %}
                 <a href="{{ url_for('movie_page', movieID=movie['id']) }}" class="trending-item">

@@ -138,6 +138,25 @@ def home_page():
     
 
 
+
+#/home_page/home_page_search
+def home_filter_tags():
+    if request.method != 'POST': return "<h1> non-POST request to 'get_move_cards()' </h1>"
+
+    tags = request.form.getlist("myCheckbox")
+    print(tags)
+    
+    test = "Searching for "
+    for tag in tags:
+        test += str(tag) + ", "
+    
+
+    return render_template("home_page/filter_tags_htmx.html", tags=tags, placeholder=test)
+
+
+
+
+
 '''      
 sample api output:
 -------------------
