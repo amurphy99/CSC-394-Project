@@ -1,10 +1,12 @@
 <!-- 
+
     card_info["status"]
     card_info["rating"]
     card_info["movie"] = dict with: id, title, poster
 
     make a second version of this:
     "edit_watch_list_movie_card.html"
+
 
     need color argument in the watch list movie card
         finished = light gray
@@ -34,7 +36,7 @@
     .watch-list-p  { align-self: center; font-size: 0.9em; }
     .watch-list-h3 { align-self: center; font-size: 1.2em; font-weight: bold;}
 
-    .watch-list-movie-card-movie { height: 90%; }
+    .watch-list-movie-card-movie { height: 80%; }
     .watch-list-movie-card-movie > .trending-item { height: 100%; }
     .watch-list-movie-card-movie > .trending-item > .movie-card-title > h3 { font-size: 1em; }
 
@@ -51,5 +53,15 @@
         {{ movie_card(card_info["movie"]) | safe }}
     </div>
 
+    <form
+            hx-post="{{ url_for('watch_list_edit_movie_htmx') }}"
+            hx-target="#modals-here" 
+            hx-swap="outerHTML" 
+    >
+        <input type="hidden" name="list_id"     value="{{ listID    }}">
+        <input type="hidden" name="card_info"   value="{{ card_info }}">
+        <button type="submit"> Edit </button>
+
+    </div>
 
 </div>
