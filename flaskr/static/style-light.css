@@ -6,6 +6,7 @@
     background: rgba(238, 238, 238); 
     padding: 1rem; 
 }*/
+/* top function could be deleted later after demo*/
 
 /* header */
 .base-header {
@@ -406,31 +407,6 @@
     color: black;
     font-family: Arial, Helvetica, sans-serif;
 }
-
-
-
-
-
-/* Watch List Page
--------------------------------------------------------------------------------------- */
-.watch-list-info {
-    display: flex;
-    justify-content: space-between;
-    column-gap: 1.0rem;
-    padding: 1.0rem;
-}
-.watch-list-description {
-    flex-grow: 4;
-}
-.watch_list_pie_chart {
-    flex-grow: 1;
-}
-
-
-
-
-
-
 
 
 
