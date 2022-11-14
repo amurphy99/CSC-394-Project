@@ -6,6 +6,7 @@
     background: rgba(238, 238, 238); 
     padding: 1rem; 
 }*/
+/* top function could be deleted later after demo*/
 
 /* header */
 .base-header {
@@ -584,10 +585,7 @@ ul li a {
 }
 
 
-.watch-list-movies{
-    display: flex;
 
-}
 
 
 
