@@ -7,29 +7,46 @@
 {% endblock %}
 
 {% block content %}
-    <!-- movie image -->
-    <div class="movie-page-img-container">
-        <img src="{{ movieDisplay[1] }}" alt="image">
+    <!-- Backdrop div (behind the overview and movie poster) -->
+    <div style="
+        position: absolute;
+        height: 600px;
+        width: 1300px;
+        margin-top: 0%;
+        background-image: url({{movieDisplay[11]}});
+        background-size: 100%;
+        filter: blur(5px);
+        opacity: .75;">
     </div>
-    <!-- movie overview and information -->
-    <div class="movie-page-overview-container">
-        <p>{{ movieDisplay[5]}}</p>
-        <p><em>{{ movieDisplay[6]}}</em></p>
-        <h4>Overview:</h4>
-        <p>{{ movieDisplay[2] }} </p>
-        <p>Release Date: {{ movieDisplay[3] }} <br>
-        Runtime: {{ movieDisplay[4] }} minutes</p>
-        <br>
-        <h5>About {{ movieDisplay[0] }}</h5>
-        <p> Status: {{ movieDisplay[7] }}
-            &nbsp; | &nbsp; Original Language: {{ movieDisplay[10] }}
-            &nbsp; | &nbsp; Budget: ${{ movieDisplay[8] }}
-            &nbsp; | &nbsp; Revenue: ${{ movieDisplay[9] }}
-        </p>
+
+    <div class="movie-page-content-container">
+        <!-- movie image -->
+        <div class="movie-page-img-container">
+            <img src="{{ movieDisplay[1] }}" alt="image">
+        </div>
+        <!-- movie overview and information -->
+        <div class="movie-page-overview-container">
+            <p>{{ movieDisplay[5]}}</p>
+            <p><em>{{ movieDisplay[6]}}</em></p>
+            <h4>Overview:</h4>
+            <p>{{ movieDisplay[2] }} </p>
+            <p>Release Date: {{ movieDisplay[3] }} <br>
+            Runtime: {{ movieDisplay[4] }} minutes</p>
+            <br>
+            <h5>About {{ movieDisplay[0] }}</h5>
+            <p> Status: {{ movieDisplay[7] }}
+                &nbsp; | &nbsp; Original Language: {{ movieDisplay[10] }}
+                &nbsp; | &nbsp; Budget: ${{ movieDisplay[8] }}
+                &nbsp; | &nbsp; Revenue: ${{ movieDisplay[9] }}
+            </p>
+        </div> 
+        <!-- add movie button -->
+        <button type="submit" class="movie-page-add-button">
+            Add Movie
+        </button>
     </div>
-    <!-- add movie button -->
-    <button type="submit" class="movie-page-add-button">
-        Add Movie
-    </button>
+    <div class="movie-page-extra-container">
+
+    </div>
     
 {% endblock %}

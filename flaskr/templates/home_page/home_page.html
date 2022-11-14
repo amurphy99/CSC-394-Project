@@ -1,66 +1,115 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1> {% block title %} Home {% endblock %} </h1>
+<h1> {% block title %} Home {% endblock %} </h1>
 {% endblock %}
-
+  
 {% block content %}
 <!--
     includes:
     ----------
-        * trending movies
-            - from movieDisplay
-
-        * friends list
+    * trending movies
+    - from movieDisplay
+    
+    * friends list
 -->
 
 <div class="home-page-content">
     
     <div class="trending-movies">
-    <!-- 
-    each one includes:
-        * poster
-        * title 
-        * link to individual movie page 
+        <!-- 
+            each one includes:
+            * poster
+            * title 
+            * link to individual movie page 
             - which means we also need the movies id
             - should just be the entire box
             - so i think that means it should be "a" and not "div"
-    -->
+        -->
         <p class="trending-list-header"> Trending Movies </p>
+
+        <div class="home-search-drop">
+
+            <form   id="filter-tags"
+                    hx-post="{{ url_for('new_trending_list') }}"
+                    hx-target="#trending-list"
+                    hx-swap="outerHTML" 
+            >
+                <input type="text" placeholder="Search" id="search" name="searched" class="home-search" >
+                <input type="hidden" name="sort-by"  value="{{ 2 }}">
+                <!-- tags will be here -->  
+            </form>
+
+            <div class="dropdown" >
+                <button class="dropbtn">Filters</button>
+                <div class="dropdown-content">
+                    <h6 style="align-items: center;">Genres</h6>
+
+                    <form 
+                        class="drop-form"
+                        hx-post="{{ url_for('home_filter_tags') }}"
+                        hx-target="#filter-tags" 
+                        hx-swap="outerHTML" 
+                    >
+                        <div id="tags">
+                            <p><input type="checkbox" name="myCheckbox" value="28" class="tag"><label for="action">Action</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="12" class="tag"><label for="Adventure">Adventure</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="16" class="tag"><label for="animation">Animation</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="35" class="tag"><label for="comedy">Comedy</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="80" class="tag"><label for="crime">Crime</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="99" class="tag"><label for="documentary">Documentary</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="18" class="tag"><label for="drama">Drama</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="10751" class="tag"><label for="family">Family</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="14" class="tag"><label for="fantasy">Fantasy</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="36" class="tag"><label for="history">History</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="27" class="tag"><label for="horror">Horror</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="10402" class="tag"><label for="music">Music</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="9648" class="tag"><label for="mystery">Mystery</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="10749" class="tag"><label for="romance">Romance</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="878" class="tag"><label for="science_fiction">Science Fiction</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="10770" class="tag"><label for="tv_movie">TV Movie</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="53" class="tag"><label for="thriller">Thriller</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="10752" class="tag"><label for="war">War</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <p><input type="checkbox" name="myCheckbox" value="37" class="tag"><label for="western">Western</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            <input type="submit" name="myCheckbox">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
         
-        <div class="trending-list"> 
+        <div class="trending-list" id="trending-list"> 
             {% for movie in movieDisplay %}
-                <a href="{{ url_for('movie_page', movieID=movie['id']) }}" class="trending-item">
-        
-                    <img src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
-                    <h3> {{ movie['title'] }} </h3>
-                    <!-- the link includes {{ movie['id'] }}-->
-            
-                </a>
+                {{ movie_card(movie) | safe }}
             {% endfor %}
         </div>
+
     </div>
 
 
     <div class="friends-list">
-    <!-- 
-    includes:
-        * users name
-        * link to individual movie page 
-            - which means we also need the users id
-    -->
+        <!-- 
+        includes:
+            * users name
+            * link to individual movie page 
+                - which means we also need the users id
+        -->
         <p class="friends-list-header"> Friends </p>
 
         <ul class="user-friends-list">
             {% for friend in user_friends %}
-            
-            <li class="friend-username"> <a href="{{ url_for('user_page', userID=friend[1]) }}"> {{ friend[0] }} </a> </li>
+                <li class="friend-username"> 
+                    <a href="{{ url_for('user_page', userID=friend[1]) }}"> {{ friend[0] }} </a> 
+                </li>
             {% endfor %}
         </ul>
 
     </div>
 
+
 </div>
 
-    
+
 {% endblock %}

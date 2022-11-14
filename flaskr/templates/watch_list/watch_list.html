@@ -126,12 +126,9 @@
     </div>
 
 
-
-
         <!-- "Add Movie" Modal -->
         <div class="watch_lists_info">
-            <h3> {{ "this_user[1]" }}'s Watch Lists</h3>
-
+            
             <!-- 
             Only show the edit buttons if the one viewing this user page is logged in as the owner or an editor
                 the users id (if logged in):    {{ g.user[0]    }}
@@ -155,40 +152,45 @@
         </div>
 
 
+
+
+
+
+
+
+        <!-- 
+            .trending-list {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                row-gap: 1.0rem;
+                column-gap: 1.0rem;
+                padding: 0;
+                text-decoration: none;
+            }
+        -->
+        <style>
+            .watch-list-movies{
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+
+                gap: 1.0rem;
+                padding: 1.0rem;
+            }
+        </style>
         <!-- Movies List Table -->
-        <table class="test4">
-    
-            <tr>
-                <th> Movie Poster   </th>
-                <th> Movie Info     </th>
-                <th> User Review    </th>
-            </tr>
-            
+        <div class="watch-list-movies">
             {% for movie in movies_list %}
-            <tr>
-                <!-- Movie Poster -->
-                <td> <img src="{{ movie['poster'] }}" alt="Poster for {{ movie['title'] }}"> </td>
-                
-                <!-- Movies Info -->
-                <td> 
-                    <h3>    {{ movie['title']   }} </h2>
-                    <p>    #{{ movie['id']      }} </p>
-                </td>
-
-                <!-- User Review -->
-                <td> 
-                    <h4> Status: </h4>
-                    <p> {{ movie['status'] }} </p>
-
-                    <h4> Rating: </h4>
-                    <p> {{ movie['rating'] }}/5 </p>
-                </td>
-
-            </tr>
+                {{ watch_list_movie_card(movie) | safe }}
             {% endfor %}
-
-        </table>
+        </div>
         
+
+
+
+
+
     </div>
 
     <div id="modals-here"> </div>

@@ -1,0 +1,15 @@
+<form   id="filter-tags"
+        hx-post="{{ url_for('new_trending_list') }}"
+        hx-target="#trending-list"
+        hx-swap="outerHTML" 
+>
+    <input type="text" placeholder="{{ placeholder }}" id="search" name="searched" class="home-search" >
+    <!-- preview for what filters are selected goes here -->
+
+    <input type="hidden" name="sort-by"  value="{{ 2 }}">
+
+    {% for tag in tags %}
+        <input type="hidden" name="genre-tag"  value="{{ tag }}">
+    {% endfor %}
+
+</form>

@@ -43,17 +43,41 @@ VALUES (228165, 'The SpongeBob Movie: Sponge Out of Water', '/2WDmjUlSAPlA27i2Ow
 ON CONFLICT (id) DO UPDATE SET popularity = EXCLUDED.popularity + 1;
 
 
+/* GENRES
+------------- */
+INSERT INTO genres (genre_id, genre_name)
+VALUES
+    (28, 'Action'), 
+    (12, 'Adventure'), 
+    (16, 'Animation'), 
+    (35, 'Comedy'), 
+    (80, 'Crime'), 
+    (99, 'Documentary'), 
+    (18, 'Drama'), 
+    (10751, 'Family'), 
+    (14, 'Fantasy'), 
+    (36, 'History'), 
+    (27, 'Horror'), 
+    (10402, 'Music'), 
+    (9648, 'Mystery'), 
+    (10749, 'Romance'), 
+    (878, 'Science Fiction'), 
+    (10770, 'TV Movie'), 
+    (53, 'Thriller'), 
+    (10752, 'War'), 
+    (37, 'Western');
+
 
 /* MOVIES LIST INFO 
------------------------- */
+------------------------ 
 INSERT INTO movies_list_info (owner_id, list_name, list_description) 
 VALUES 
     (1, 'test list 1', 'testing movie list 1'),
     (2, 'test list 2', 'testing movie list 2');
-
+*/
 
 /* MOVIES LIST
------------------------- */
+------------------------ 
 INSERT INTO movies_list (movie_id, list_id, status, rating) 
 VALUES 
     -- list 1
@@ -64,7 +88,7 @@ VALUES
     (11836,  9, 0, 0),
     (400160, 9, 1, 5);
 
-
+*/
 
 
 

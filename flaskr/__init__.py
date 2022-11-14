@@ -39,13 +39,24 @@ def create_app(test_config=None):
     app.register_blueprint(auth.bp)
 
 
+    # CARD DISPLAYS
+    # ---------------------------------------------
+    from . import card_displays
+    app.jinja_env.globals.update(movie_card             = card_displays.movie_card              )
+    app.jinja_env.globals.update(watch_list_card        = card_displays.watch_list_card         )
+    app.jinja_env.globals.update(watch_list_movie_card  = card_displays.watch_list_movie_card   )
+
+
     # ALL OFFICIAL PAGES
     # ---------------------------------------------
     from . import index
     app.add_url_rule('/index', methods=('GET', 'POST'), view_func=index.index)
 
     from . import home_page
-    app.add_url_rule('/', methods=('GET', 'POST'), view_func=home_page.home_page)
+    app.add_url_rule('/',                   methods=('GET', 'POST'), view_func=home_page.home_page)
+    app.add_url_rule('/home_page_search',   methods=('GET', 'POST'), view_func=home_page.home_filter_tags)
+    app.add_url_rule('/new_trending_list',  methods=('GET', 'POST'), view_func=home_page.new_trending_list)
+    
 
     from . import movie_page
     app.add_url_rule('/movie_page/<movieID>', methods=('GET', 'POST'), view_func=movie_page.movie_page)
@@ -61,7 +72,10 @@ def create_app(test_config=None):
     app.add_url_rule('/watch_list/modal',                   methods=('GET', 'POST'), view_func=watch_list.add_movie_modal)
     app.add_url_rule('/watch_list/get_movie_cards',         methods=('GET', 'POST'), view_func=watch_list.get_movie_cards)
     app.add_url_rule('/watch_list/show_user_input_form',    methods=('GET', 'POST'), view_func=watch_list.show_user_input_form)
-    app.add_url_rule('/watch_list/movie_added_htmx',        methods=('GET', 'POST'), view_func=watch_list.movie_added)
+    app.add_url_rule('/watch_list/movie_added_htmx',        methods=('GET', 'POST'), view_func=watch_list.movie_added2)
+
+    from . import view_database
+    app.add_url_rule('/api_testing/preview_database',        methods=('GET', 'POST'), view_func=view_database.preview_database)
 
 
     # ALL TESTING PAGES

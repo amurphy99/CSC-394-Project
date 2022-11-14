@@ -188,3 +188,41 @@ CREATE TRIGGER update_general_movies_list_trigger
     FOR EACH ROW -- could you do ROW.id instead ? "postgresql create trigger for each row value of a specific column"
     EXECUTE PROCEDURE update_general_movies_list();
 
+
+
+
+/* trigger for creating movies_list_statistics
+----------------------------------------------
+    * if a user adds a movie to another list and it isn't in their general list yet, add it to their general list
+
+    create_movies_list_statistics()
+    create_movies_list_statistics_trigger
+
+*/
+DROP FUNCTION IF EXISTS create_movies_list_statistics();
+
+CREATE OR REPLACE FUNCTION create_movies_list_statistics() RETURNS TRIGGER AS $$
+    BEGIN
+        IF (TG_OP = 'DELETE') THEN
+            DELETE FROM movies_list_statistics WHERE list_id = NEW.id;
+            IF NOT FOUND THEN RETURN NULL; END IF;
+            RETURN OLD;
+
+        ELSIF (TG_OP = 'INSERT') THEN
+            INSERT INTO movies_list_statistics (list_id) VALUES (NEW.id);
+            RETURN NEW;
+            
+        END IF;
+    END;
+$$ LANGUAGE plpgsql;
+
+
+/* Create the trigger (drop it if it already exists too)
+--------------------------------------------------------- */
+DROP TRIGGER IF EXISTS create_movies_list_statistics_trigger ON movies_list_info;
+
+CREATE TRIGGER create_movies_list_statistics_trigger
+    AFTER INSERT OR DELETE
+    ON movies_list_info
+    FOR EACH ROW -- could you do ROW.id instead ? "postgresql create trigger for each row value of a specific column"
+    EXECUTE PROCEDURE create_movies_list_statistics();

@@ -149,24 +149,14 @@
 
                     {% endif %}
                 {% endif %}
-
-                
-
             </div>
             
-
             <div class="list_preview_wrapper">
                 {% for watch_list in user_lists %}
-
-                <div class="list_preview">
-                    <h3> {{ watch_list[3] }} </h3>
-                    <p>  {{ watch_list[4] }}  </p>
-                    <p>  Created On: {{ watch_list[6] }}  </p>
-                    <a href="{{ url_for('watch_list', listID=watch_list[0]) }}">View List</a>
-                </div>
-
+                    {{ watch_list_card(watch_list[0]) | safe }}
                 {% endfor %}
             </div>
+
         </div>
 
         <!-- User Statistics -->

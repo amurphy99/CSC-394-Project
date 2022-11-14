@@ -6,40 +6,39 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style-light.css') }}">
 <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/1ede25e61c.js" crossorigin="anonymous"></script>
+
 
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background: #1f6cf2; height: 80px;">
   <div class="container-fluid">
-    <a class="navbar-brand" style="margin-left: 35px;"  href="#">CinemUs</a>
+    <a class="navbar-brand" style="margin-left: 35px;"  href="{{ url_for('home_page') }}">CinemUs</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav d-flex justify-content-end w-100">
 
-        <li class="nav-item">
-          <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('home_page', userID=g.user[0]) }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('index') }}">Users</a>
-        </li>
+        <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('home_page') }}"                      > Home              </a></li>
         {% if g.user %}
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('user_page', userID=g.user[0]) }}">{{ g.user[1] }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.logout') }}">Log Out</a>
-          </li>
+            <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('user_page', userID=g.user[0]) }}"> {{ g.user[1] }}   </a></li>
+            <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.logout') }}"                > Log Out           </a></li>
+            {% if g.user[3] == 1 %} <!-- preview_database and users index -->
+                <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('index') }}"                  > Users             </a> </li>
+                <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('preview_database') }}"       > Database          </a> </li>
+            {% endif %}
         {% else %}
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.register') }}">Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.login') }}">Log In</a>
-          </li>
+            <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.register') }}"              > Register          </a></li>
+            <li class="nav-item"><a class="nav-link fw-bold text-white p-1 ms-3" href="{{ url_for('auth.login') }}"                 > Log In            </a></li>
         {% endif %}
+
       </ul>
     </div>
+
+    
   </div>
 </nav>
 
@@ -57,7 +56,64 @@
 
 <!-- Footer -->
 <div class="my-footer"> 
-  <!-- MovieDB api credit for movie info -->
+  <div class="row">
+    <div class="col">
+      <h6>Credit:</h6>
+      <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="TMDb">
+      <p>This product uses the TMDb API but is not endorsed or certified by TMDb.</p> 
+    </div>
+    <div class="col">
+      <h3>About</h3>
+      <p>This project was made for a capstone class at Depaul University.</p>
+      <p>Class Number: CSC-394</p>
+      <p>Class Name: Software Projects</p>
+    </div>
+    <div class="col" style="line-height: 5px;">
+      <h3>Team</h3>
+      <p>Joseph Reyes</p>
+      <p>Andrew Murphy</p>
+      <p>Benas Blaskevicius</p>
+      <p>Calvin Musoke</p>
+      <p>Brenden Mitra</p>
+      <p>Derrick Mainor</p>
+    </div>
+    <div class="col">
+      <h3>Links</h3>
+      <br>
+      <ul>
+        <li><a href="{{ url_for('home_page', userID=g.user[0]) }}">Home</a></li>
+      {% if g.user %}
+      <li>
+        <a href="{{ url_for('user_page', userID=g.user[0]) }}">{{ g.user[1] }}</a>
+      </li>
+      <li>
+        <a href="{{ url_for('auth.logout') }}">Log Out</a>
+      </li>
+      <!-- preview_database -->
+      {% if g.user[3] == 1 %}
+      <li>
+        <a href="{{ url_for('preview_database') }}">Database</a>
+      </li>
+      {% endif %}
+
+    {% else %}
+      <li>
+        <a href="{{ url_for('auth.register') }}">Register</a>
+      </li>
+      <li>
+        <a href="{{ url_for('auth.login') }}">Log In</a>
+      </li>
+    {% endif %}
+      </ul>
+    </div>
+    <div class="col" style="justify-content: center;">
+      <h3>Github</h3>
+      <p>Check out our github!</p>
+      <div class="github-icon">
+        <a href="https://github.com/amurphy99/CSC-394-Project" target="_blank"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+  </div>
 </div>
 
 
