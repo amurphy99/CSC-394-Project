@@ -1,7 +1,7 @@
 from flask import Flask, render_template, g, request, flash, session, url_for
 
 from flaskr.db import get_db, close_db
-from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list, get_relationship, send_friend_request, get_friends_list, update_bio, remove_friend
+from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list, get_relationship, send_friend_request, get_friends_list, update_bio, remove_friend, genres_string
 
 from flaskr.card_display_controls import watch_list_card
 
@@ -143,6 +143,10 @@ def user_page(userID):
     page_info = {   "num_friends"   : len(get_friends_list(userID)),
                     "user_bio"      : user_bio }
 
+
+    user_genres_string = genres_string( general_list_info[0] )
+    print(user_genres_string)
+
     # return the template with all of the information we assembled for display
     return render_template( 'user_page/user_page.html', 
                             this_user       = this_user,
@@ -151,7 +155,8 @@ def user_page(userID):
                             user_lists      = user_lists, 
                             statistics      = statistics, 
                             user_comparison = user_comparison,
-                            friends_button  = friends_button       )
+                            friends_button  = friends_button,       
+                            genres_string   = user_genres_string)
 
 
 

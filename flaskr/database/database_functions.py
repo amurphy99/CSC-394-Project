@@ -511,3 +511,26 @@ def get_friend_requests(user_id):
     return friend_requests
 
 
+def genres_string(list_id):
+    # prep for return
+    genre_string = ""
+
+    # open db connection
+    db = get_db(); cur = db.cursor()
+    
+    cur.execute( f"SELECT * FROM genre_counts WHERE list_id = {list_id};" )
+    results = cur.fetchall()
+
+    if len(results) == 0:
+        cur.close()
+        return ""
+
+    for entry in results:
+        cur.execute( f"SELECT genre_name FROM genres WHERE genre_id = {entry[1]};" )
+        name = cur.fetchone()
+        genre_string += f"{name[0]}:{entry[2]}, "
+
+    # close the cursor and db connection
+    cur.close()
+
+    return genre_string[:-2]
