@@ -1,9 +1,14 @@
 <style>
     .outgoing-requests {}
 
+    .manage-friends{
+        background-color: lightgrey;
+        height: 300px;
+        padding: 3px;
+    }
 </style>
 
-<div>
+<div class="manage-friends">
 
 <h3> Incoming Requests </h3> 
 <table class="incoming-requests">
@@ -34,7 +39,8 @@
     {% endfor %}
 
 </table>
-
+<br>
+<br>
 <h3> Outgoing Requests </h3> 
 <table class="outgoing-requests">
     <tr>
