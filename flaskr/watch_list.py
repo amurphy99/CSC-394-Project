@@ -5,7 +5,7 @@ from flask import Flask, render_template, g, request, flash
 from flaskr.db import get_db
 
 from flaskr.movieDBapi import api_query, genre_query
-from flaskr.database.database_functions import add_movie_to_list
+from flaskr.database.database_functions import add_movie_to_list, genres_string
 
 
 
@@ -71,8 +71,16 @@ def watch_list(listID):
 
     cur.close(); db.close()
 
+    user_genres_string = genres_string( listID )
+    print(user_genres_string)
 
-    return render_template('watch_list/watch_list.html', list_info=list_info, owner_username=list_owner[1], movies_list=display_list, listID=listID)
+
+    return render_template( 'watch_list/watch_list.html', 
+                            list_info       = list_info, 
+                            owner_username  = list_owner[1], 
+                            movies_list     = display_list, 
+                            listID          = listID,
+                            genres_string   = user_genres_string)
 
 
 
