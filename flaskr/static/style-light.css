@@ -202,10 +202,10 @@ ul li a {
 /* Bio */
 .user_page_bio {
     flex-grow: 4;
-    border: solid 1px;
     padding: 15px;
     padding-bottom: 5px;
     position: relative;
+    min-width: 50%;
 }
 
 .user_page_bio button {
@@ -239,8 +239,7 @@ ul li a {
 
 
 .user_pie_chart {
-    flex-grow: 1;
-    border: solid 1px;
+    max-width: 40%;
 }
 
 
@@ -315,6 +314,7 @@ ul li a {
     justify-content: flex-start;
     padding: 0 1.0rem;
     gap: 1.0rem;
+    min-width: 50%;
 }
 .list_preview_wrapper {
     display: flex;
