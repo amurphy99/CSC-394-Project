@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g, request, flash, session
+from flask import Flask, render_template, g, request, flash, session, url_for
 
 from flaskr.db import get_db, close_db
 from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list
@@ -141,16 +141,6 @@ def user_page(userID):
 
 
 
-
-
-
-
-
-
-
-
-
-
 #@app.route('/new_list_modal', methods=('POST'))
 def new_list_modal():
     return render_template('user_page/new_list_modal.html')
@@ -189,66 +179,73 @@ def create_new_list():
 
 
 
-'''      
-sample api output:
--------------------
-{
-   "adult":false,
-   "backdrop_path":"/yzqaKAhglTrkeOfuIXYYArf0WnA.jpg",
-   "belongs_to_collection":{
-      "id":137697,
-      "name":"Finding Nemo Collection",
-      "poster_path":"/ucM59odfzLdQlmtNVAkmiB9Qw3J.jpg",
-      "backdrop_path":"/2hC8HHRUvwRljYKIcQDMyMbLlxz.jpg"
-   },
-   "budget":94000000,
-   "genres":[
-      {
-         "id":16,
-         "name":"Animation"
-      },
-      {
-         "id":10751,
-         "name":"Family"
-      }
-   ],
-   "homepage":"http://movies.disney.com/finding-nemo",
-   "id":12,
-   "imdb_id":"tt0266543",
-   "original_language":"en",
-   "original_title":"Finding Nemo",
-   "overview":"Nemo, an adventurous young clownfish, is unexpectedly taken from his Great Barrier Reef home to a dentist's office aquarium. It's up to his worrisome father Marlin and a friendly but forgetful fish Dory to bring Nemo home -- meeting vegetarian sharks, surfer dude turtles, hypnotic jellyfish, hungry seagulls, and more along the way.",
-   "popularity":144.729,
-   "poster_path":"/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg",
-   "production_companies":[
-      {
-         "id":3,
-         "logo_path":"/1TjvGVDMYsj6JBxOAkUHpPEwLf7.png",
-         "name":"Pixar",
-         "origin_country":"US"
-      }
-   ],
-   "production_countries":[
-      {
-         "iso_3166_1":"US",
-         "name":"United States of America"
-      }
-   ],
-   "release_date":"2003-05-30",
-   "revenue":940335536,
-   "runtime":100,
-   "spoken_languages":[
-      {
-         "english_name":"English",
-         "iso_639_1":"en",
-         "name":"English"
-      }
-   ],
-   "status":"Released",
-   "tagline":"There are 3.7 trillion fish in the ocean. They're looking for one.",
-   "title":"Finding Nemo",
-   "video":false,
-   "vote_average":7.826,
-   "vote_count":16963
-}
-'''
+
+
+
+
+
+def test_modal():
+
+    if request.method == 'POST':
+        info = str(request.form["info"])
+
+        return render_template("card_displays/modal_base.html", test_body_content=info) 
+
+    return "<h1> shouldnt be returned </h1>"
+
+
+
+
+def test_modal_receive():
+
+    if request.method == 'POST':
+        info = str(request.form["info"])
+        print(info)
+
+        return "empty"
+
+    return "<h1> shouldnt be returned </h1>"
+
+
+
+
+
+
+
+def modal_form_edit_bio():
+    # form controls
+    form_control = {    "hx-post-url"   : url_for("modal_form_edit_bio_receive"),
+                        "hx-target-id"  : "#modal-body"                             }
+
+    # form header
+    form_header = "Edit Bio"
+
+    # form content
+    form_content = "<input type='text' name='new_bio' value='previous bio'>"
+
+    print(render_template( "card_displays/modal_base.html", 
+                            form_control    = form_control, 
+                            form_header     = form_header,
+                            form_content    = form_content      ))
+
+    return render_template( "card_displays/modal_base.html", 
+                            form_control    = form_control, 
+                            form_header     = form_header,
+                            form_content    = form_content      )
+
+
+
+def modal_form_edit_bio_receive():
+
+    info = str(request.form["new_bio"])
+    print(info)
+
+    return f"<p> {info} </p>"
+
+
+
+
+
+
+
+

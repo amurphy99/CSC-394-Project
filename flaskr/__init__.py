@@ -66,6 +66,12 @@ def create_app(test_config=None):
     app.add_url_rule('/user/<userID>',          methods=('GET', 'POST'), view_func=user_page.user_page)
     app.add_url_rule('/user/modal',             methods=('GET', 'POST'), view_func=user_page.new_list_modal)
     app.add_url_rule('/user/create_new_list',   methods=('GET', 'POST'), view_func=user_page.create_new_list)
+    app.add_url_rule('/user/test_modal',        methods=('GET', 'POST'), view_func=user_page.test_modal)
+    app.add_url_rule('/user/test_modal_receive',methods=('GET', 'POST'), view_func=user_page.test_modal_receive)
+
+    app.add_url_rule('/user/modal_form_edit_bio',        methods=('GET', 'POST'), view_func=user_page.modal_form_edit_bio)
+    app.add_url_rule('/user/modal_form_edit_bio_receive',methods=('GET', 'POST'), view_func=user_page.modal_form_edit_bio_receive)
+
 
     from . import watch_list
     app.add_url_rule('/watch_list/<listID>',                methods=('GET', 'POST'), view_func=watch_list.watch_list)
@@ -73,6 +79,7 @@ def create_app(test_config=None):
     app.add_url_rule('/watch_list/get_movie_cards',         methods=('GET', 'POST'), view_func=watch_list.get_movie_cards)
     app.add_url_rule('/watch_list/show_user_input_form',    methods=('GET', 'POST'), view_func=watch_list.show_user_input_form)
     app.add_url_rule('/watch_list/movie_added_htmx',        methods=('GET', 'POST'), view_func=watch_list.movie_added2)
+
 
     from . import view_database
     app.add_url_rule('/api_testing/preview_database',        methods=('GET', 'POST'), view_func=view_database.preview_database)

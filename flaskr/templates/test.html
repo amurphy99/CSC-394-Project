@@ -44,7 +44,40 @@
             <td>privileges      </td>
         </tr>
 
-
     </table>
+
+
+
+
+    <style>
+        .hide {
+            display: none;
+            }
+            
+        .myDIV:hover + .hide {
+            display: block;
+            color: red;
+        }
+        .tooltest {border: 1px solid black;}
+    </style>
+
+    <div class="tooltest">
+
+        <h2>Display an Element on Hover</h2>
+
+        <div class="myDIV">Hover over me.</div>
+        <div class="hide">I am shown when someone hovers over the div above.</div>
+        
+    </div>
+
+    
+    <form
+        hx-post="{{ url_for('test_modal') }}"
+        hx-target="#modals-here" 
+        hx-swap="outerHTML" 
+    >
+        <button type="submit"> Edit </button>
+    </form>
+    <div id="modals-here"> </div>
 
 {% endblock %}

@@ -128,50 +128,25 @@
 
         <!-- "Add Movie" Modal -->
         <div class="watch_lists_info">
-            
             <!-- 
             Only show the edit buttons if the one viewing this user page is logged in as the owner or an editor
                 the users id (if logged in):    {{ g.user[0]    }}
                 id of the user page owner:      {{ list_info[1] }}
-                ids of editors:                 (not yet implemented)
-
             -->
             {% if g.user[0]|int == list_info[1]|int %}
-
             <form hx-post="/watch_list/modal" hx-target="#modals-here" hx-swap="innerHTML">
-
                 <input type="hidden" name="listID"      value="{{ listID    }}">
                 <input type="hidden" name="movie_info"  value="{{ movie     }}">
-
                 <button type="submit"> Add Movie </button>
-
             </form>
-
             {% endif %}
 
         </div>
 
 
-
-
-
-
-
-
-        <!-- 
-            .trending-list {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                row-gap: 1.0rem;
-                column-gap: 1.0rem;
-                padding: 0;
-                text-decoration: none;
-            }
-        -->
         <style>
             .watch-list-movies{
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-
                 display: grid;
                 grid-template-columns: repeat(5, 1fr);
 
