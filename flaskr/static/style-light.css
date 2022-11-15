@@ -203,8 +203,41 @@ ul li a {
 .user_page_bio {
     flex-grow: 4;
     border: solid 1px;
-    padding: 0 1.0rem;
+    padding: 15px;
+    padding-bottom: 5px;
+    position: relative;
 }
+
+.user_page_bio button {
+    position: absolute;
+    bottom: 10px;
+    width: 15%;
+    padding: 3px;
+    color: black;
+    z-index: 1;
+    /* background-color: lightgrey; */
+}
+
+.user_page_bio button::after{
+    content: '';
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,122,255, 0.5);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 200ms ease-in;
+
+}
+
+.user_page_bio button:hover::after{
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+
 .user_pie_chart {
     flex-grow: 1;
     border: solid 1px;

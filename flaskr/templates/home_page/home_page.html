@@ -78,6 +78,7 @@
                 </div>
             </div>
 
+            
         </div>
         
         <div class="trending-list" id="trending-list"> 
@@ -106,7 +107,7 @@
                 - which means we also need the users id
         -->
 
-        <p class="friends-list-header"> Friends </p>
+        <p class="friends-list-header"> Friends &nbsp;<i class="fa-solid fa-user-group"></i></a> </p>
 
         {% if g.user is not none %}
         <form   hx-post="{{ url_for('modal_form_add_friends') }}"
@@ -133,6 +134,7 @@
 
 
     </div>
+
 
 
 </div>
