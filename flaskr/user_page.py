@@ -156,7 +156,7 @@ def user_page(userID):
                             statistics      = statistics, 
                             user_comparison = user_comparison,
                             friends_button  = friends_button,       
-                            genres_string   = user_genres_string)
+                            user_genres     = user_genres_string)
 
 
 
@@ -198,7 +198,7 @@ def create_new_list():
         db.commit()
         new_list = cur.fetchone()
         
-        cur.close(); db.close()
+        cur.close()#; db.close()
 
 
         return render_template('user_page/list_created_htmx.html', new_list=new_list)
