@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} ADMIN PANEL {% endblock %}</h1>
+    <h1 class="text-center my-2">{% block title %} ADMIN PANEL {% endblock %}</h1>
     <h3> {{ debug_info }} </h3>
-    <table class="test4">
-        <tr class="test3">
-          <th class="test1">User ID</th>
-          <th class="test2">Username</th>
-          <th class="test2">Password</th>
-          <th class="test1">Privileges</th>
+    <table class="table table-bordered table-striped table-secondary text-center align-middle shadow">
+        <tr class="">
+          <th class="">User ID</th>
+          <th class="">Username</th>
+          <th class="">Password</th>
+          <th class="">Privileges</th>
           
         </tr>
         {% for this_user in test_users %}
-            <tr class="test3">
+            <tr class="">
                 <!-- user ID -->
                 <!-- -------------------------------------------------------- -->
-                <td class="test1"> 
+                <td class=""> 
                     {{ this_user[0] }}
                     <!-- stars show which user is currently selected -->
                     {% if this_user[0]|int == userID|int %}
@@ -28,7 +28,7 @@
 
                 <!-- Username -->
                 <!-- -------------------------------------------------------- -->
-                <td class="test2"> 
+                <td class="d-flex flex-column justify-content-center align-items-center"> 
                     <div> {{ this_user[1] }} </div>
                     <!-- Buttons to delte user, need to click a second time to confirm -->
                     <form method="post"> 
@@ -47,7 +47,7 @@
 
                 <!-- Password -->
                 <!-- -------------------------------------------------------- -->
-                <td class="test2"> 
+                <td class=""> 
                     <form method="post"> 
                         {% if this_user[0]|int == userID and action|int == 1 %}    
                             <!-- if this user's password IS being reset, show an input box and submit button -->
@@ -68,7 +68,7 @@
 
                 <!-- Privilege Level -->
                 <!-- -------------------------------------------------------- -->
-                <td class="test1"> 
+                <td class="d-flex flex-column"> 
                     <div> {{ this_user[3] }} </div>
                     
                     <!-- Button just changes the users privelages -->
@@ -92,27 +92,27 @@
 
         <!-- Add User Button -->
         <!-- -------------------------------------------------------- -->
-        <tr class="test3">
+        <tr class="">
         	<form method="post"> 
                 <!-- Button to display form fields and to confirm when done -->
            		{% if action|int == 7 %}    
-           			<td class="test1"> 
+           			<td class=""> 
                         <input type="submit" value="Finish" >
                         <input type="hidden" name="action"        value="{{  8 }}"  >
                         <input type="hidden" name="modify_userID" value="{{ -1 }}"  >    
 					</td>
-					<td class="test2"> Username: <input type="new_username" name="new_username" id="new_username" required> </td>
-					<td class="test2"> Password: <input type="new_password" name="new_password" id="new_password" required> </td>
-					<td class="test1"> Default Privilege Level: 0 </td>
+					<td class="d-flex flex-column justify-content-center align-items-center"> <span> Username: </span> <span><input type="new_username" name="new_username" id="new_username" required></span> </td>
+					<td class="d-flex flex-column justify-content-center align-items-center"> <span> Password: </span> <span><input type="new_password" name="new_password" id="new_password" required></span> </td>
+					<td class=""> Default Privilege Level: 0 </td>
 				{% else %}
-					<td class="test1">
+					<td class="">
 						<input type="submit" value="Create New User" >
                         <input type="hidden" name="action"        value="{{  7 }}"  >
                         <input type="hidden" name="modify_userID" value="{{ -1 }}"  >  
                     </td>
-					<td class="test2">   </td>
-					<td class="test2">   </td>
-					<td class="test1">   </td>
+					<td class="">   </td>
+					<td class="">   </td>
+					<td class="">   </td>
 				{% endif %}
 			</form>
 	    </tr>
