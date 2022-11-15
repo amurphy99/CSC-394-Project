@@ -1,7 +1,7 @@
 from flask import Flask, render_template, g, request, flash, session, url_for
 
 from flaskr.db import get_db, close_db
-from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list, get_relationship, send_friend_request, get_friends_list, update_bio
+from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list, get_relationship, send_friend_request, get_friends_list, update_bio, remove_friend
 
 def format_time(time):
     days    = int(time // (24*60))
@@ -124,37 +124,19 @@ def user_page(userID):
     # -------------------------------------------------------------------------------
 
 
-    # friend button
-    # - if are not signed in, show sign in to add friends
-    # - if you are the page owner, dont show button
-    # if you are not the page owner, show add friend button
-    # if you are their friend, show remove friend
-    # 0 = not friends, no requests
-    # 1 = friends
-    # 2 = outgoing friend request
-    # 3 = incoming friend request
-    # button takes sender id, receiver id, action
+
+
+    # add friend button
+    # ------------------
+    user1        = -1
     relationship = -1
-    button_text = "Sign in to add friends!"
-    user1 = -1
-
     if g.user != None:
-        relationship = get_relationship(g.user[0], userID)
-   
-        if      relationship == 0: button_text = "Add Friend"      
-        elif    relationship == 1: button_text = "Remove Friend"
-        elif    relationship == 2: button_text = "Friend Request Sent"
-        elif    relationship == 3: button_text = "Accept Incoming Friend Request"
-        else:                      button_text = "problem"
-
         user1 = g.user[0]
-        
-    button_dict = {
-        "button_text": button_text, 
-        "relationship": relationship, 
-        "user": user1, 
-        "other": userID 
-    }
+        relationship = get_relationship(user1, userID)
+
+    friends_button = get_friends_button(user1, userID, relationship)
+
+
 
     page_info = {   "num_friends"   : len(get_friends_list(userID)),
                     "user_bio"      : user_bio }
@@ -167,7 +149,7 @@ def user_page(userID):
                             user_lists      = user_lists, 
                             statistics      = statistics, 
                             user_comparison = user_comparison,
-                            button_dict     = button_dict       )
+                            friends_button  = friends_button       )
 
 
 
@@ -260,6 +242,9 @@ def modal_form_edit_bio_receive():
 
 
 
+
+
+
 def friend_request_button():
     relationship = int(request.form["relationship"])
     user1        = int(request.form["user1"])
@@ -267,7 +252,58 @@ def friend_request_button():
 
     if relationship == 0 or relationship == 3:
         send_friend_request(user1, user2)
-    
-    return "refresh to see"
+
+    if relationship == 1:
+        remove_friend(user1, user2)
 
 
+    return get_friends_button(user1, user2, relationship)
+
+
+
+def get_friends_button(user1, user2, relationship):
+    # -1 = not signed in
+    #  0 = not friends, no requests
+    #  1 = friends
+    #  2 = outgoing friend request
+    #  3 = incoming friend request
+
+    if relationship == -1: 
+        button_text = "Sign in to add friends!"
+        disabled = "disabled"
+
+    elif relationship == 0: 
+        button_text = "Add Friend"
+        disabled = ""
+
+    elif relationship == 1: 
+        button_text = "Remove Friend"
+        disabled = ""
+
+    elif relationship == 2: 
+        button_text = "Friend Request Sent"
+        disabled = "disabled"
+
+    elif relationship == 3: 
+        button_text = "Accept Incoming Friend Request"
+        disabled = ""
+
+    else:
+        button_text = "problem"
+        disabled = "disabled"
+
+
+    button_html = f"""
+        <form   id="add-friend"
+                hx-post="{ url_for('friend_request_button') }"
+                hx-target="#add-friend"
+                hx-swap="innerHTML"
+            >
+            <input type="hidden" name="relationship"    value="{ relationship }">
+            <input type="hidden" name="user1"           value="{ user1 }">
+            <input type="hidden" name="user2"           value="{ user2 }">
+
+            <button type="submit" { disabled }> { button_text } </button>
+        </form>
+        """
+    return button_html

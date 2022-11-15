@@ -373,6 +373,24 @@ def resolve_friend_request(sender_id, receiver_id, answer):
 
 
 
+def remove_friend(user_id, other_id):
+    # open db connection
+    db = get_db(); cur = db.cursor()
+
+    cur.execute(  f"DELETE FROM friends WHERE \
+                    (friend_1_id = { user_id} AND friend_2_id = {other_id}) OR \
+                    (friend_1_id = {other_id} AND friend_2_id = { user_id});")
+    db.commit()
+
+    # close the cursor and db connection
+    cur.close(); db.close()
+
+
+
+
+
+
+
 
 def get_friends_list(user_id):
     # return list
@@ -492,4 +510,5 @@ def get_friend_requests(user_id):
                         "outgoing_requests" : outgoing     }
 
     return friend_requests
+
 
