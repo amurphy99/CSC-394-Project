@@ -21,8 +21,6 @@
 
 <div class="user_page_VStack">
     
-<<<<<<< Updated upstream
-=======
     <div class="user-page-item"> 
 
         <!-- User Bio -->
@@ -77,7 +75,7 @@
                 // set the colors
                 var color = d3.scaleOrdinal()
                     .domain(data)
-                    .range(["#377ba8", "#cae6f6","gray","#D3D3D3"])
+                    .range(["#145DA0", "#7EC8E3","#2E8BC0","#000C66"])
 
                 // Calculate the relative size of each section
                 var pie = d3.pie()
@@ -107,10 +105,10 @@
                 .attr("transform", function(d) { return "translate(" + d3.arc().innerRadius(0).outerRadius(radius).centroid(d) + ")";  })
                 .style("text-anchor", "middle")
                 .style("font-size", 12)
+                .attr('fill','#E1D9D1')
                 // })
             // }
             </script>
->>>>>>> Stashed changes
 
 
 
