@@ -11,9 +11,20 @@
         text-decoration: none;
         color: black;
         position:relative
+
     }
+
+    .trending-item:hover {
+        transform:scale(1.1);
+        background: linear-gradient(to right, #00093c, rgba(0,122,255));
+        color: white;
+        box-shadow: 2px 2px 2px #000;
+        z-index: 2;
+    }
+
     .trending-item:hover .overlay {
   opacity: 1;
+  transition: 1s;
 }
     .movie-card-img {
       display: block;
@@ -32,6 +43,7 @@
   opacity: 0;
   transition: .5s ease;
   background-color: rgba(0,0,0,0.6);
+  /* transform:scale(1.1); */
 }
 
 
