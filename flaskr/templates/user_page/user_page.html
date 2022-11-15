@@ -35,15 +35,22 @@
         <div id="userComparisonChart" class="user_pie_chart">
             <h4>Total movie count by genre</h4>
             <script src="https://d3js.org/d3.v4.js"></script>
-            <script>
-                // function pieChart(){
+            <var id="pieData">{{user_genres}}</var>
+
+            <script>//Creates pychart from inputted string
+                pieInfo=document.getElementById('pieData')
+                pieInfo.style.visibility='hidden';
+                pieInfo=document.getElementById('pieData')
+                pieInfo.style.visibility='hidden';
+                genreString=pieInfo.textContent;
+                genreArray=genreString.split(',')
                 var width = 250
                 height = 250
                 margin = 20
-
+ 
                 // The radius of the piepchart
                 var radius = Math.min(width, height) / 2 - margin
-
+ 
             //add chart to canvas
                 var svg = d3.select("#userComparisonChart")
                     .append("svg")
@@ -51,19 +58,24 @@
                     .attr("height", height)
                     .append("g")
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-                var data = {Horror: 6, Comedy: 3, Action:9, Documentary: 6}
-
+ 
+                //  data = {Horror: 6, Comedy: 5, Action:9, Documentary: 6}
+                 data={}
+                 for(let i=0;i<genreArray.length;i++){//Parses string into array
+                    console.log(genreArray[i].split(':')[0])
+                 data[genreArray[i].split(':')[0]]=genreArray[i].split(':')[1];
+            }
+                // console.log(data1)
                 // set the colors
                 var color = d3.scaleOrdinal()
                     .domain(data)
-                    .range(["#377ba8", "#cae6f6","gray","#D3D3D3"])
-
+                    .range(["#0000ff","#ff0000", "#ffa500","#008000","#4b0082","#ee82ee"])
+ 
                 // Calculate the relative size of each section
                 var pie = d3.pie()
                     .value(function(d) {return d.value; })
                     var enterData = pie(d3.entries(data))
-
+ 
                 // graph each section of the pie chart
                 svg
                     .selectAll('mySlices')
@@ -76,7 +88,7 @@
                     .attr('fill', function(d){ return(color(d.data.key)) })
                         .attr("stroke", "black")
                         .style("stroke-width", "3px")
-                    
+                   
                 //Adds labels
                 svg
                 .selectAll('mySlices')
@@ -86,9 +98,9 @@
                 .text(function(d){ return d.data.key+""})
                 .attr("transform", function(d) { return "translate(" + d3.arc().innerRadius(0).outerRadius(radius).centroid(d) + ")";  })
                 .style("text-anchor", "middle")
-                .style("font-size", 9) // Changed the size so comedy fully fits in the graph 
-
-            // }
+                .style("font-size", 10)
+                .attr('fill','White')
+ 
             </script>
 
         </div>
