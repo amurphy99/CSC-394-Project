@@ -1,66 +1,60 @@
 <div id="movie_cards">
-<!--
-    Inputs:
-        * results
-            - "source"      = url for movie poster
-            - "alt_text"    = alt text for image
-            - "info"        = list of (key, value) tuples with movie info
-            
-        * api_feedback
-            - tuple with (number of results shown, total results received)
-
--->
-    <div>
-
-        <h4> Results:</h4>
-
-        
-        {% for movie in results %}
-        
-            <div class="user-movie-card">
-                <!--
-                    first start with an HStack, 3 elements
-                        * movie poster (image)
-                        * movie information (table)
-                        * add movie button / "already in this list" button 
-                -->
-                
-                <img src="{{ movie['source'] }}" alt="{{ movie['alt_text'] }}">
-
-                <div class="movie-card-info">
-                    <table>
-                        <tr>
-                            <th>Key</th> <th>Value</th>
-                        </tr>
-                        {% for info_pair in movie['info'] %}
-                        <tr>
-                            <td> {{ info_pair[0] }} </td> <td> {{ info_pair[1] }} </td>
-                        </tr>
-                        {% endfor %}
-                    </table>
+    <!--
+        Inputs:
+            * results
+                - "source"      = url for movie poster
+                - "alt_text"    = alt text for image
+                - "info"        = list of (key, value) tuples with movie info
+    
+            * api_feedback
+                - tuple with (number of results shown, total results received)
+    
+    -->
+        <div>
+    
+            <h4> Results:</h4>
+    
+    
+            {% for movie in results %}
+            <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-12">
+                <div class="row p-2 bg-white border rounded">
+                    <div class="col-md-3 mt-1"><img style="width:100%" class="img-fluid img-responsive rounded product-image" alt="{{ movie['alt_text'] }}" src="{{ movie['source'] }}"></div>
+                    <div class="col-md-6 mt-1 movie-card-info">
+                        <h5>{{movie['info'][0][1]}}</h5>
+                        <div class="d-flex flex-row">
+                            <div class="ratings mr-2">#</div><span>{{movie['info'][1][1]}}</span>
+                        </div>
+                        <div class="mt-1 mb-1 spec-1"><span>Realeased at </span><span class="dot"></span><span>{{movie['info'][3][1]}}<hr></span></div>
+                        <p class="text-justify text-truncate para mb-0">{{movie['info'][2][1]}}<br><br></p>
+                    </div>
+                    <div class="align-items-center align-content-center col-md-3 border-left mt-1 movie-card-button">
+    
+                      <h6 class="text-success">Select this movie</h6>
+                        <div class="d-flex flex-column mt-4">
+                          <form hx-post="/watch_list/show_user_input_form" hx-target="#movie_cards" hx-swap="outerHTML">
+    
+                              <input type="hidden" name="listID"     value="{{ listID    }}">
+                              <input type="hidden" name="movie_info" value="{{ movie }}">
+    
+                              <button class="btn btn-primary btn-sm"  type="submit"> Select </button>
+    
+                          </form>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="movie-card-button">
-
-                    <form hx-post="/watch_list/show_user_input_form" hx-target="#movie_cards" hx-swap="outerHTML">
-        
-                        <input type="hidden" name="listID"     value="{{ listID    }}">
-                        <input type="hidden" name="movie_info" value="{{ movie }}">
-
-                        <button type="submit"> Select </button>
-        
-                    </form>
-
-                    
-                </div>
-
             </div>
-        
-        {% endfor %}
+        </div>
     </div>
-
-
-    <!-- API feedback -->
-    <p> showing first {{ api_feedback[0] }} results out of {{ api_feedback[1] }} received </p>
-
-</div>
+    
+    
+    
+            {% endfor %}
+        </div>
+    
+    
+        <!-- API feedback -->
+        <p> showing first {{ api_feedback[0] }} results out of {{ api_feedback[1] }} received </p>
+    
+    </div>

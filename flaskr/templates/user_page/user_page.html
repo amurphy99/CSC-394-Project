@@ -101,19 +101,13 @@
     <!-- Socials -->
     <div class="user_page_socials">
         <p> Friends: {{ page_info["num_friends"] }} </p>
-
-        <form   id="add-friend"
-                hx-post="{{ url_for('friend_request_button') }}"
-                hx-target="#add-friend"
-                hx-swap="innerHTML"
-            >
-            <input type="hidden" name="relationship"    value="{{ button_dict['relationship'] }}">
-            <input type="hidden" name="user1"           value="{{ button_dict['user'] }}">
-            <input type="hidden" name="user2"           value="{{ button_dict['other'] }}">
-
-            <button type="submit"> {{ button_dict["button_text"] }} </button>
-        </form>
         
+        {% if g.user is not none %}
+            {% if g.user[0]|int != this_user[0]|int %}
+                {{ friends_button | safe }}
+            {% endif %}
+        {% endif %}
+    
     </div>
 
 
@@ -157,24 +151,33 @@
                 -->
                 {% if g.user is not none %}
                     {% if g.user[0]|int == this_user[0]|int %}
-                    
-                    <button 
-                        hx-get="/user/modal" 
-                        hx-target="#modals-here" 
-                        hx-trigger="click"
-                        hx-swap="innerHTML"
-                        > Create New Watch List
-                    </button>
-
+                    <form   hx-post="{{ url_for('modal_form_create_watch_list') }}"
+                            hx-target="#modals-here" 
+                            hx-swap="innerHTML"
+                        >
+                        <button type="submit" data-toggle="modal" data-target="#myModal"> Create New Watch List </button>
+                    </form>
                     {% endif %}
                 {% endif %}
             </div>
-            
-            <div class="list_preview_wrapper">
+
+
+
+            <style>
+                .list_preview_wrapper2 {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+
+                    gap: 1.5rem;
+                    padding: 0.0rem 1.5rem 1.5rem 1.5rem;
+                }
+            </style>
+            <div class="list_preview_wrapper2">
                 {% for watch_list in user_lists %}
                     {{ watch_list_card(watch_list[0]) | safe }}
                 {% endfor %}
             </div>
+
 
         </div>
 

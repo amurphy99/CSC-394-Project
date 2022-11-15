@@ -1,10 +1,35 @@
+
 from flask import Flask, render_template, g, request, flash
 
 from flaskr.db import get_db
 
 from flaskr.movieDBapi import api_query, genre_query
 from flaskr.database.database_functions import get_watch_list_statistics, get_poster
-from flaskr.user_page import format_time
+#from flaskr.user_page import format_time
+
+
+def format_time(time):
+    days    = int(time // (24*60))
+    hours   = int((time-(days*24)) // 60)
+    minutes = int(time-((days*24*60)+(hours*60)))
+
+    formatted_time = ""
+    if days > 0: 
+        formatted_time += f"{days:2}d "
+        formatted_time += f"{hours:2}h "
+        formatted_time += f"{minutes:2}m"
+        return formatted_time
+
+    elif hours > 0:
+        formatted_time += f"{hours:2}h "
+        formatted_time += f"{minutes:2}m"
+        return formatted_time
+
+    else:
+        formatted_time += f"{minutes:2}m"
+        return formatted_time
+
+
 
 
 def watch_list_card(list_id):
@@ -29,7 +54,7 @@ def watch_list_card(list_id):
         poster_path = BASE_URL + POSTER_SIZE + get_poster(list_statistics[0][5])
 
     formatted_runtime = format_time(list_statistics[1][2])
-
+    
     card_info = {   "id"                : list_statistics[0][0],
                     "list_name"         : list_statistics[0][3],
                     "list_description"  : list_statistics[0][4],
@@ -48,9 +73,6 @@ def movie_card(movie):
         * "id"      = movieDB id
         * "title"   = movie title
         * "poster"  = url for the movies poster image
-        * "overview"  = movie description
-        * "release_date"  = movie release date
-        * "genres" = movie genres
 
     '''
     return render_template("card_displays/movie_card.html", movie=movie)
@@ -74,14 +96,7 @@ def watch_list_movie_card(movie_info):
                         "movie"     : "dict with: id, title, poster" }
     '''
 
-    movie = {
-    "id": movie_info["id"],
-    "title": movie_info["title"],
-    "poster": movie_info["poster"],
-    # "overview": movie_info["overview"],
-    # "release_date": movie_info["release_date"],
-    # "genres": movie_info["genres"]
-     }
+    movie = { "id": movie_info["id"], "title": movie_info["title"], "poster": movie_info["poster"] }
 
 
     card_info = {   "status"    : movie_info["status"],
@@ -91,3 +106,6 @@ def watch_list_movie_card(movie_info):
 
 
     return render_template("card_displays/watch_list_movie_card.html", card_info=card_info)
+
+
+
