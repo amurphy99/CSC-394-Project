@@ -656,7 +656,12 @@ ul li a {
 }
 
 
-
+.benefits {
+    line-height: 10px;
+    position: relative;
+    justify-content: center;
+    margin-left: 60%;
+}
 
 
 
