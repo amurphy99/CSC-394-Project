@@ -2,7 +2,7 @@ from flask import Flask, render_template, g, request, flash, session
 
 from flaskr.db import get_db, close_db
 from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list
-
+import csv
 
 
 #@app.route('/user/<userID>', methods=('GET', 'POST'))
@@ -41,6 +41,7 @@ def user_page(userID):
     currently_watching  = (general_list[9] - (general_list[10] + general_list[11]))
     finished            = general_list[11]  
     user_bio            = general_list[4]
+    user_genres         ='Foreign: 6, Drama: 4'
 
     # prepare stats
     # --------------
@@ -98,7 +99,9 @@ def user_page(userID):
                             user_bio        = user_bio,
                             user_lists      = user_lists, 
                             statistics      = statistics, 
-                            user_comparison = user_comparison   )
+                            user_comparison = user_comparison
+                            user_genres     = 'Foreign: 6, Drama: 4'   
+                            )
 
 
 
@@ -149,5 +152,12 @@ def create_new_list():
 
     return
 
+# def writeCSV():
+#     fields=['Genre','Count']
+#     data=[['Horror',5],['Action',7]]
+#     with open('totalGenreCount.csv', mode='w')as genreInfo:
+#         infoWriter=csv.writer(genreInfo, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+#         infoWriter.writerow(fields)
+#         infoWriter.writerow(data)
 
 

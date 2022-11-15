@@ -73,7 +73,7 @@
             <p> {{ list_info[4] }} </p>
         </div>
 
-
+        <var id="pieChart">Comedy: 2,Action: 1,Adventure: 3</var>
         <!-- "Add Movie" Modal -->
         <div class="watch_lists_info">
             <h3> {{ "this_user[1]" }}'s Watch Lists</h3>
@@ -98,7 +98,30 @@
                         .append("g")
                         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-                    var data = {Comedy: 2, Action:1}
+                    // var data = {Comedy: 2, Action:1}
+                    const input=document.getElementById("pieChart");
+                    input.style.display = "none";
+                    const data1 = input.textContent.split(/[,:]+/);
+                    // var data={Comedy: 0, Action: 0}
+                    // eval("data."+Mystery+" = '"+7+"'");
+                    var data={};
+                    for(let i=0;i<data1.length;i+=2){
+                        genre=data1[i];
+                        count=data1[i+1];
+                        console.log(genre+count)
+                        data[genre]=count;
+                        // Object.defineProperty(data,genre,{value: count})
+                        // data.genre=count;
+
+                    }
+                    // data[data1[0]]=data1[1]
+                    // data[data1[2]]=data1[3]
+                    // x="hjgg";
+                    // let x =mystery;
+                    // let y = 6;
+                    // [data].map((obj)=> obj[x]=y)
+                    // const data=[document.getElementById("pieChart").textContent.split(',')]
+                    console.log(data1)
 
                     // set the colors
                     var color = d3.scaleOrdinal()
