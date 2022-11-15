@@ -250,12 +250,17 @@ def friend_request_button():
     user1        = int(request.form["user1"])
     user2        = int(request.form["user2"])
 
-    if relationship == 0 or relationship == 3:
+    if relationship == 0:
         send_friend_request(user1, user2)
+        relationship = 2
 
-    if relationship == 1:
+    elif relationship == 3:
+        send_friend_request(user1, user2)
+        relationship = 1
+
+    elif relationship == 1:
         remove_friend(user1, user2)
-
+        relationship = 0
 
     return get_friends_button(user1, user2, relationship)
 
