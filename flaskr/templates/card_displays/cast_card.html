@@ -1,0 +1,71 @@
+<style>
+    .trending-item {
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        padding: 1.0rem 1.0rem 0.0rem 1.0rem;
+
+        text-decoration: none;
+        color: black;
+        position:relative
+
+    }
+
+    .trending-item:hover {
+        transform:scale(1.1);
+        background: linear-gradient(to right, #00093c, rgba(0,122,255));
+        color: white;
+        box-shadow: 2px 2px 2px #000;
+        z-index: 2;
+    }
+
+    .trending-item:hover .overlay {
+  opacity: 1;
+  transition: 1s;
+}
+    .movie-card-img {
+      display: block;
+        max-width: 100%;
+        max-height: 90%;
+        width: auto;
+    }
+    .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: rgba(0,0,0,0.6);
+  /* transform:scale(1.1); */
+}
+
+
+    .movie-card-title {
+        padding: 1.0rem 0.0rem 1.0rem 0.0rem;
+        margin: auto;
+    }
+    .text {
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: justify;
+}
+</style>
+
+<div class="cast-box"> 
+    <img src="https://d3uscstcbhvk7k.cloudfront.net/static/images/slider-placeholder-2x.png" alt="">
+    <div class="cast-name">
+        <p>hello</p>
+    </div>
+</div>
