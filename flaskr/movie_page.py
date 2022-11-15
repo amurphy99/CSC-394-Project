@@ -55,6 +55,21 @@ def movie_page(movieID):
     for cast in result_cast:
         movieCast.append(cast['name'])
         movieCast.append(cast['profile_path'])
+    
+    movieCharacter = []
+    for cast in result_cast:
+        movieCharacter.append(cast['character'])
+    
+    # print(movieCharacter)
+
+    character1 = movieCharacter[0]
+    character2 = movieCharacter[1]
+    character3 = movieCharacter[2]
+    character4 = movieCharacter[3]
+    character5 = movieCharacter[4]
+    character6 = movieCharacter[5]
+        
+    print(character1)
 
     cast_profile_1 = BASE_URL + POSTER_SIZE + movieCast[1]
     cast_profile_2 = BASE_URL + POSTER_SIZE + movieCast[3]
@@ -85,6 +100,12 @@ def movie_page(movieID):
     movieDisplay.append(cast_profile_4)
     movieDisplay.append(cast_profile_5)
     movieDisplay.append(cast_profile_6)
+    movieDisplay.append(character1)
+    movieDisplay.append(character2)
+    movieDisplay.append(character3)
+    movieDisplay.append(character4)
+    movieDisplay.append(character5)
+    movieDisplay.append(character6)
 
 
     # print(movieDisplay[12])
@@ -112,6 +133,12 @@ def movie_page(movieID):
     movieDisplay[16] = cast_profile_4
     movieDisplay[17] = cast_profile_5
     movieDisplay[18] = cast_profile_6
+    movieDisplay[19] = character1
+    movieDisplay[20] = character2
+    movieDisplay[21] = character3
+    movieDisplay[22] = character4
+    movieDisplay[23] = character5
+    movieDisplay[24] = character6
     
     '''
     # print(result_movie['genres'][0]['name'])

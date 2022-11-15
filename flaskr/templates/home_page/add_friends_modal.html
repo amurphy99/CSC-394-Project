@@ -1,0 +1,123 @@
+<style>
+    .outgoing-requests {}
+
+    .manage-friends{
+        background-color: lightgrey;
+        height: 300px;
+        padding: 3px;
+    }
+</style>
+
+
+
+<div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h1 class="modal-title"> {{ form_header }} </h1>
+            <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        
+
+        <!-- Modal body -->
+        <div id="modal-body" class="modal-body"> 
+            <div class="manage-friends">
+                <h3> Search Users </h3> 
+                <div>
+                    <form hx-post="{{ url_for('modal_form_search_users') }}" hx-target="#search-results" hx-swap="innerHTML">
+                        <input type="text" name="username" required>
+                        <button class="btn btn-primary" type="submit" value="Submit"> Search </button>
+                    </form>
+
+                    <div id="search-results">
+
+                    </div>
+
+
+                </div>
+                <br>
+
+
+                <h4> Incoming Requests </h4> 
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">From:</th>
+                        <th scope="col">Sent:</th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for request in friend_requests["incoming_requests"] %}
+                    <tr id="incoming-{{ request[0] }}">
+                            <td> {{ request[3] }} </td>
+                            <td> {{ request[4] }} </td>
+                            <td>
+                                <form hx-post="{{ url_for('modal_form_resolve_request') }}" hx-target="#incoming-{{ request[0] }}" hx-swap="outerHTML"> 
+                                    <input type="hidden" name="sender_id"   value="{{ request[0]    }}" >
+                                    <input type="hidden" name="receiver_id" value="{{ g.user[0]     }}" >
+                                    <input type="hidden" name="answer"      value="{{ 1             }}" >
+                                    <button class="btn btn-success" type="submit"> Accept </button>
+                                </form>
+                            </td>
+                            <td>
+                                <form hx-post="{{ url_for('modal_form_resolve_request') }}" hx-target="#incoming-{{ request[0] }}" hx-swap="outerHTML"> 
+                                    <input type="hidden" name="sender_id"   value="{{ request[0]    }}" >
+                                    <input type="hidden" name="receiver_id" value="{{ g.user[0]     }}" >
+                                    <input type="hidden" name="answer"      value="{{ 0             }}" >
+                                    <button class="btn btn-danger" type="submit"> Decline </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                <br>
+
+
+                <h4> Outgoing Requests </h4> 
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"> To:    </th>
+                        <th scope="col"> Sent:  </th>
+                        <th scope="col">        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for request in friend_requests["outgoing_requests"] %}
+                        <tr id="outgoing-{{ request[1] }}">
+                            <td> {{ request[3] }} </td>
+                            <td> {{ request[4] }} </td>
+                            <td>
+                                <form hx-post="{{ url_for('modal_form_resolve_request') }}" hx-target="#outgoing-{{ request[1] }}" hx-swap="outerHTML"> 
+                                    <input type="hidden" name="sender_id"   value="{{ g.user[0]     }}" >
+                                    <input type="hidden" name="receiver_id" value="{{ request[1]    }}" >
+                                    <input type="hidden" name="answer"      value="{{ 0             }}" >
+                                    <button class="btn btn-danger" type="submit" > Cancel </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                
+
+
+            </div>
+        </div>
+
+ 
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+
+    </div>
+</div>
+
+

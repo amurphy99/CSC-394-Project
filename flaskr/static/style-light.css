@@ -602,6 +602,7 @@ ul li a {
     background-color: rgba(0,122,255); 
     width: 200px; 
     height: 350px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 
 
@@ -612,11 +613,19 @@ ul li a {
 
 .cast-name {
     font-size: 20px;
-    display: flex;
+    /* display: flex; */
     position: absolute;
     justify-content: center;
     align-items: center;
     color: white;
+}
+
+.character-name {
+    width: 176px;
+    font-size: 15px; 
+    color: lightgray;
+    position: relative; 
+    right: 10%;
 }
 
 /* .box {
@@ -645,6 +654,7 @@ ul li a {
 .watch_list_pie_chart {
     flex-grow: 1;
 }
+
 
 
 

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, g, request, flash, url_for
 from flaskr.db import get_db
 from flaskr.movieDBapi import trending_movies, filtered_search,api_movie_page
-from flaskr.database.database_functions import get_friends_list, get_friend_requests, resolve_friend_request
+from flaskr.database.database_functions import get_friends_list, get_friend_requests, resolve_friend_request, get_relationship
 
 
 #@app.route('/', methods=('GET', 'POST'))
@@ -117,13 +117,7 @@ def new_trending_list():
 
 
 
-
-
-
-
-
-
-
+'''
 def modal_form_add_friends():
     user_id = int(request.form["user_id"])
     friend_requests = get_friend_requests(user_id)
@@ -137,9 +131,25 @@ def modal_form_add_friends():
                             form_control    = form_control, 
                             form_header     = form_header,
                             form_content    = form_content      )
+'''
+
+
+
+def modal_form_add_friends():
+    user_id = int(request.form["user_id"])
+
+    friend_requests = get_friend_requests(user_id)
+
+    form_header     = "Manage Friends"
+
+    return render_template( "home_page/add_friends_modal.html", 
+                            form_header     = form_header,
+                            friend_requests = friend_requests      )
 
 
 def modal_form_resolve_request():
+    if "username" in request.form: return modal_form_search_users2(str(request.form["username"]))
+
     sender_id   = int(request.form["sender_id"])
     receiver_id = int(request.form["receiver_id"])
     answer      = int(request.form["answer"])
@@ -149,4 +159,103 @@ def modal_form_resolve_request():
     return ""
 
 
+def modal_form_search_users():
+    username = str(request.form["username"])
+    #print(username)
 
+    db = get_db(); cur = db.cursor()
+
+    cur.execute(f"SELECT * FROM all_users ORDER BY SIMILARITY(username,'{username}') DESC LIMIT 3;")
+    results = cur.fetchall()
+    
+    cur.close()
+    #print(results)
+
+    user1 = g.user[0]
+    search_results = []
+    for result in results:
+        user_id = result[0] 
+        username = result[1]
+        relationship = get_relationship(user1, user_id)
+        friends_button = get_friends_button(user1, user_id, relationship)
+
+        search_results.append( [user_id, username, friends_button] )
+
+        
+    return render_template("home_page/user_search_results.html", search_results=search_results)
+
+
+
+
+def get_friends_button(user1, user2, relationship):
+
+    if relationship == -1: 
+        button_text = "Sign in to add friends!"
+        disabled = "disabled"
+
+    elif relationship == 0: 
+        button_text = "Add Friend"
+        disabled = ""
+
+    elif relationship == 1: 
+        button_text = "Remove Friend"
+        disabled = ""
+
+    elif relationship == 2: 
+        button_text = "Friend Request Sent"
+        disabled = "disabled"
+
+    elif relationship == 3: 
+        button_text = "Accept Incoming Friend Request"
+        disabled = ""
+
+    else:
+        button_text = "problem"
+        disabled = "disabled"
+
+
+    button_html = f"""
+        <form   id="add-friend-{user2}"
+                hx-post="{ url_for('friend_request_button') }"
+                hx-target="#add-friend-{user2}"
+                hx-swap="innerHTML"
+            >
+            <input type="hidden" name="relationship"    value="{ relationship }">
+            <input type="hidden" name="user1"           value="{ user1 }">
+            <input type="hidden" name="user2"           value="{ user2 }">
+
+            <button class="btn btn-primary" type="submit" { disabled }> { button_text } </button>
+        </form>
+        """
+    return button_html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def modal_form_search_users2(username):
+    #print(username)
+
+    db = get_db(); cur = db.cursor()
+
+    #cur.execute(f"CREATE EXTENSION pg_trgm;")
+    #db.commit()
+
+    cur.execute(f"SELECT * FROM all_users ORDER BY SIMILARITY(username,'{username}') DESC LIMIT 3;")
+    results = cur.fetchall()
+    
+    cur.close()
+    #print(results)
+
+    return f"<p> {username} </p>"
