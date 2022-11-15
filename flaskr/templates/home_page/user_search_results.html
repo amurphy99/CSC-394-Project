@@ -1,0 +1,17 @@
+<table class="table text-center">
+    <thead>
+    <tr>
+        <th scope="col"> Username:  </th>
+        <th scope="col">            </th>
+    </tr>
+    </thead>
+
+    <tbody>
+        {% for user in search_results %}
+        <tr id="result-{{ user[0] }}">
+            <td>  <a href="{{ url_for('user_page', userID=user[0]) }}"> {{ user[1] }} </a> </td>
+            <td> {{ user[2] | safe }} </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
