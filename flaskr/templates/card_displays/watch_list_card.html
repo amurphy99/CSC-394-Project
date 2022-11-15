@@ -37,7 +37,12 @@
         padding: 0.5rem 0.5rem 0 0.5rem;
         gap: 1.0rem;
     }
-    .watch-list-card-right > img { min-width: 9.0rem; max-width: 9.0rem; }
+    .watch-list-card-img {
+        max-width: 100%;
+        max-height: 90%;
+        width: auto;
+    }
+
     .watch-list-card-left {
         flex: 2 1 60%;
         display: flex;
@@ -78,7 +83,7 @@
         </div>
 
         <div class="watch-list-card-right">
-            <img src="{{ card_info['recently_added'] }}" alt="Poster for the most recently added movie. ">
+            <img class="watch-list-card-img" src="{{ card_info['recently_added'] }}" alt="Poster for the most recently added movie. ">
             <p> Recently Added: <br> {{ card_info["last_updated"] }} </p>
         </div>
 
