@@ -368,3 +368,80 @@ def resolve_friend_request(sender_id, receiver_id, answer):
 
     # maybe add a success/failure feedback message
     return None
+
+
+
+
+
+def get_friends_list(user_id):
+    # return list
+    friends_list = []
+    
+    # open db connection
+    db = get_db(); cur = db.cursor()
+
+    # check if the movie is already in the movies_list table
+    cur.execute(f"SELECT * FROM friends WHERE friend_1_id = {user_id} OR friend_2_id = {user_id};")
+    user_friends = cur.fetchall()
+
+    for friend in user_friends:
+        if friend[0] != user_id:
+            cur.execute(f"SELECT * FROM all_users WHERE id = {friend[0]};")
+            friend_row = cur.fetchone()
+            friends_list.append( [friend_row[1], friend[0]] )
+        else:
+            cur.execute(f"SELECT * FROM all_users WHERE id = {friend[1]};")
+            friend_row = cur.fetchone()
+            friends_list.append( [ friend_row[1], friend[1]] )
+
+    # close the cursor and db connection
+    cur.close(); db.close(); close_db()
+
+    return friends_list
+
+
+def get_relationship(user_id, other_id):
+    '''
+    0 = not friends, no requests
+    1 = friends
+    2 = outgoing friend request
+    3 = incoming friend request
+    '''
+    # open db connection
+    db = get_db(); cur = db.cursor()
+
+    # check if already friends
+    # -------------------------
+    cur.execute(f"SELECT * FROM friends WHERE friend_1_id = {user_id} AND friend_2_id = {other_id};")
+    user_friends = cur.fetchall()
+
+    cur.execute(f"SELECT * FROM friends WHERE friend_1_id = {other_id} AND friend_2_id = {user_id};")
+    user_friends_2 = cur.fetchall()
+
+    if len(user_friends) > 0 or len(user_friends_2) > 0:
+        cur.close(); db.close(); close_db()
+        return 1
+
+
+    # check if pending friend request 
+    # --------------------------------
+    cur.execute(f"SELECT * FROM friend_requests WHERE sender_id = {user_id} AND receiver_id = {other_id};")
+    user_friends = cur.fetchall()
+    if len(user_friends) > 0:
+        cur.close(); db.close(); close_db()
+        return 2
+
+    cur.execute(f"SELECT * FROM friend_requests WHERE sender_id = {other_id} AND receiver_id = {user_id};")
+    user_friends = cur.fetchall()
+    if len(user_friends) > 0:
+        cur.close(); db.close(); close_db()
+        return 3
+
+
+    # close the cursor and db connection
+    cur.close(); db.close()
+    close_db()
+
+    return 0
+
+

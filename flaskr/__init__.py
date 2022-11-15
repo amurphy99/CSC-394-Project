@@ -66,11 +66,10 @@ def create_app(test_config=None):
     app.add_url_rule('/user/<userID>',          methods=('GET', 'POST'), view_func=user_page.user_page)
     app.add_url_rule('/user/modal',             methods=('GET', 'POST'), view_func=user_page.new_list_modal)
     app.add_url_rule('/user/create_new_list',   methods=('GET', 'POST'), view_func=user_page.create_new_list)
-    app.add_url_rule('/user/test_modal',        methods=('GET', 'POST'), view_func=user_page.test_modal)
-    app.add_url_rule('/user/test_modal_receive',methods=('GET', 'POST'), view_func=user_page.test_modal_receive)
 
-    app.add_url_rule('/user/modal_form_edit_bio',        methods=('GET', 'POST'), view_func=user_page.modal_form_edit_bio)
-    app.add_url_rule('/user/modal_form_edit_bio_receive',methods=('GET', 'POST'), view_func=user_page.modal_form_edit_bio_receive)
+    app.add_url_rule('/user/friend_request_button',         methods=['POST'], view_func=user_page.friend_request_button)
+    app.add_url_rule('/user/modal_form_edit_bio',           methods=['POST'], view_func=user_page.modal_form_edit_bio)
+    app.add_url_rule('/user/modal_form_edit_bio_receive',   methods=['POST'], view_func=user_page.modal_form_edit_bio_receive)
 
 
     from . import watch_list

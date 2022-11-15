@@ -1,7 +1,7 @@
 from flask import Flask, render_template, g, request, flash, session, url_for
 
 from flaskr.db import get_db, close_db
-from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list
+from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list, get_relationship, send_friend_request
 
 def format_time(time):
     days    = int(time // (24*60))
@@ -130,13 +130,58 @@ def user_page(userID):
     # -------------------------------------------------------------------------------
 
 
+    # friend button
+    # - if are not signed in, show sign in to add friends
+    # - if you are the page owner, dont show button
+    # if you are not the page owner, show add friend button
+    # if you are their friend, show remove friend
+    # 0 = not friends, no requests
+    # 1 = friends
+    # 2 = outgoing friend request
+    # 3 = incoming friend request
+    # button takes sender id, receiver id, action
+    relationship = -1
+    button_text = "Sign in to add friends!"
+    user1 = -1
+
+    if g.user != None:
+        relationship = get_relationship(g.user[0], userID)
+   
+        if      relationship == 0: button_text = "Add Friend"      
+        elif    relationship == 1: button_text = "Remove Friend"
+        elif    relationship == 2: button_text = "Friend Request Sent"
+        elif    relationship == 3: button_text = "Accept Incoming Friend Request"
+        else:                      button_text = "problem"
+
+        user1 = g.user[0]
+        
+    button_dict = {
+        "button_text": button_text, 
+        "relationship": relationship, 
+        "user": user1, 
+        "other": userID 
+    }
+
+
+
+
     # return the template with all of the information we assembled for display
     return render_template( 'user_page/user_page.html', 
                             this_user       = this_user, 
                             user_bio        = user_bio,
                             user_lists      = user_lists, 
                             statistics      = statistics, 
-                            user_comparison = user_comparison   )
+                            user_comparison = user_comparison,
+                            button_dict     = button_dict       )
+
+
+
+
+
+
+
+
+
 
 
 
@@ -184,49 +229,19 @@ def create_new_list():
 
 
 
-def test_modal():
-
-    if request.method == 'POST':
-        info = str(request.form["info"])
-
-        return render_template("card_displays/modal_base.html", test_body_content=info) 
-
-    return "<h1> shouldnt be returned </h1>"
-
-
-
-
-def test_modal_receive():
-
-    if request.method == 'POST':
-        info = str(request.form["info"])
-        print(info)
-
-        return "empty"
-
-    return "<h1> shouldnt be returned </h1>"
-
-
-
-
-
-
-
 def modal_form_edit_bio():
+    # get current bio
+    current_bio = str(request.form["current_bio"])
+
     # form controls
     form_control = {    "hx-post-url"   : url_for("modal_form_edit_bio_receive"),
                         "hx-target-id"  : "#modal-body"                             }
-
+    
     # form header
     form_header = "Edit Bio"
 
     # form content
-    form_content = "<input type='text' name='new_bio' value='previous bio'>"
-
-    print(render_template( "card_displays/modal_base.html", 
-                            form_control    = form_control, 
-                            form_header     = form_header,
-                            form_content    = form_content      ))
+    form_content = f"<input type='text' name='new_bio' value='{current_bio}'>"
 
     return render_template( "card_displays/modal_base.html", 
                             form_control    = form_control, 
@@ -234,18 +249,21 @@ def modal_form_edit_bio():
                             form_content    = form_content      )
 
 
-
 def modal_form_edit_bio_receive():
-
     info = str(request.form["new_bio"])
-    print(info)
-
+    # change in the database
     return f"<p> {info} </p>"
 
 
 
 
 
+def friend_request_button():
+    relationship = int(request.form["relationship"])
+    user1        = int(request.form["user1"])
+    user2        = int(request.form["user2"])
 
-
-
+    if relationship == 0 or relationship == 3:
+        send_friend_request(user1, user2)
+    
+    return "refresh to see"

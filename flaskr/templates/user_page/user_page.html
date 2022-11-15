@@ -6,46 +6,27 @@
 
 {% block content %}
 
-<!--
-    ideas to add:
-        * recent updates (display previous 3 shows/movies added)
-        * statistics
-            - movies watched
-            - shows watched
-            - average rating
-
---> 
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"> -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
 
 <div class="user_page_VStack">
-    
+
     <div class="user-page-item"> 
 
         <!-- User Bio -->
         <div class="user_page_bio"> 
             <p> {{ user_bio }} </p>
 
-            <form   hx-post="{{ url_for('modal_form_edit_bio') }}"
-                    hx-target="#modals-here" 
-                    hx-trigger="click"
-                    hx-swap="innerHTML"
-            >
-                <button type="submit"
-                        data-toggle="modal" 
-                        data-target="#myModal"
-                        > Edit Bio 
-                </button>
-                <input type="hidden" name="info" value="user-page-button">
-
-            </form>
-
+            {% if g.user is not none %}
+                {% if g.user[0]|int == this_user[0]|int %}
+                <form   hx-post="{{ url_for('modal_form_edit_bio') }}"
+                        hx-target="#modals-here" 
+                        hx-trigger="click"
+                        hx-swap="innerHTML"
+                >
+                    <button type="submit" data-toggle="modal" data-target="#myModal"> Edit Bio </button>
+                    <input type="hidden" name="current_bio" value="{{ user_bio }}">
+                </form>
+                {% endif %}
+            {% endif %}
         </div>
 
         <!-- This will create a pie chart comparing the number of similar and different movies watched by the current user and a friend -->
@@ -114,14 +95,25 @@
 
 
 
-
     <!-- Socials -->
     <div class="user_page_socials">
         <p> Friends:   {{ 25 }} </p>
         <p> Followers: {{ 20 }} </p>
-        <button type="submit"> Add Friend </button>
-        <button type="submit"> Edit Bio </button>
-        <!-- button for user to edit Bio (No Functionality yet)-->
+
+        <form   id="add-friend"
+                hx-post="{{ url_for('friend_request_button') }}"
+                hx-target="#add-friend"
+                hx-swap="innerHTML"
+            >
+            <input type="hidden" name="relationship"    value="{{ button_dict['relationship'] }}">
+            <input type="hidden" name="user1"           value="{{ button_dict['user'] }}">
+            <input type="hidden" name="user2"           value="{{ button_dict['other'] }}">
+
+            <button type="submit"> {{ button_dict["button_text"] }} </button>
+        </form>
+        
+
+
     </div>
 
 
@@ -201,7 +193,7 @@
 
     </div>  
 
-
+    
 
     <div class="modal" id="myModal">
         <div id="modals-here"> </div>

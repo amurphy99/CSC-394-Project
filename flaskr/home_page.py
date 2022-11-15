@@ -1,7 +1,7 @@
 from flask import Flask, render_template, g, request, flash
 from flaskr.db import get_db
 from flaskr.movieDBapi import trending_movies, filtered_search,api_movie_page
-
+from flaskr.database.database_functions import get_friends_list
 
 
 #@app.route('/', methods=('GET', 'POST'))
@@ -35,14 +35,21 @@ def home_page():
         movieDisplay.append(temp)
 
     # prepare friends list for display [id, username]
+    ''' 
     user_friends = [    ["admin",   1],
                         ["Andrew",  2],
                         ["Calvin",  3],
                         ["Joseph",  4],
                         ["Brenden", 5],
                         ["Derrick", 6],
-                        ["Benas",   7]  ]
-
+                        ["Benas",   7]  ] 
+    '''
+    
+    if g.user == None:
+        user_friends = []
+    else:
+        user_friends = get_friends_list(g.user[0])
+ 
     # display page
     return render_template('home_page/home_page.html', movieDisplay=movieDisplay, user_friends=user_friends)
 
