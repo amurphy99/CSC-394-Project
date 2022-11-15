@@ -63,6 +63,9 @@ def create_app(test_config=None):
 
     from . import movie_page
     app.add_url_rule('/movie_page/<movieID>', methods=('GET', 'POST'), view_func=movie_page.movie_page)
+
+    app.add_url_rule('/modal_form_add_movie',           methods=['POST'], view_func=movie_page.modal_form_add_movie)
+    app.add_url_rule('/modal_form_add_movie_receive',   methods=['POST'], view_func=movie_page.modal_form_add_movie_receive)
     
 
     from . import user_page
