@@ -182,3 +182,44 @@
 
 </div>
 {% endblock %}
+
+<!--
+    Watch List Page:
+    ------------------
+        * shows the watch list info
+        * shows all of the movies in the watch list 
+            - just some basic data for now, pictures can come later
+        * edit button brings up a modal window
+        
+    Modal Window:
+    --------------
+        * search bar and "search" button
+        * sends a query to the movieDB api
+        * display first ~3 results for now
+            - when displaying results, compare them to the movies already in the list
+            - for those that are already in, do not show the add button
+        * next to each result there will be an "add" button
+
+    LATER:
+    ------
+        * add ability to edit...
+            - list name
+            - list description
+            - list editors
+            - delete list
+        * add statistics
+            - list movie count
+            - list watch time
+            - list genres pie chart
+            - etc....
+
+
+    Values Passed:
+    --------------
+    * "list_info"
+
+
+    * "owner_username"
+        - retrieved in the python file server
+Refrence for future additions
+-->

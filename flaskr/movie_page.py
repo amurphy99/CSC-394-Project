@@ -1,9 +1,10 @@
-from flask import Flask, render_template, g, request, flash
+from flask import Flask, render_template, g, request, flash, url_for
 from flaskr.db import get_db
 from flaskr.movieDBapi import api_home
 from flaskr.movieDBapi import api_movie_page
 from flaskr.movieDBapi import api_query
 from flaskr.movieDBapi import api_movie_cast
+from flaskr.database.database_functions import add_movie_to_list
 
 
 
@@ -245,3 +246,86 @@ sample api output:
          "order":1
       },
 '''
+
+
+
+
+
+
+def modal_form_add_movie():
+    # get current movie
+    movie_id = int(request.form["movie_id"])
+
+    # form controls
+    form_control = {    "hx-post-url"   : url_for("modal_form_add_movie_receive"),
+                        "hx-target-id"  : "#modal-body"                             }
+    
+    # form header
+    form_header = "Add Movie"
+
+    db = get_db(); cur = db.cursor()
+    cur.execute(f"SELECT * FROM movies_list_info WHERE owner_id = {g.user[0]};")
+    watch_lists = cur.fetchall()
+    cur.close()
+
+    options = ""
+    for list in watch_lists:
+        options += f"<option value='{list[0]}'> {list[3]} </option>" 
+
+
+    # form content
+    # rating, watch status, list_id
+    form_content = f"""
+                    <label for="watch-list"> Choose a list to add this movie to: </label>
+                    <select id="watch-list" name="watch-list">
+                        {options}
+                    </select>
+                    <br>
+
+                    <label for="watch-status"> Enter Completion Status: </label>
+                    <select id="watch-status" name="watch-status">
+                        <option value="0"> Plan to Watch        </option>
+                        <option value="1"> Currently Watching   </option>
+                        <option value="2"> Finished Watching    </option>
+                    </select>
+                    <br>
+    
+                    <label for="rating"> Enter Rating: </label>
+                    <select id="rating" name="rating">
+                        <option value="0"> 0 </option>
+                        <option value="1"> 1 </option>
+                        <option value="2"> 2 </option>
+                        <option value="3"> 3 </option>
+                        <option value="4"> 4 </option>
+                        <option value="5"> 5 </option>
+                    </select>
+   
+                    <input type="hidden" name="movie_id"  value="{ movie_id  }">
+    """
+    return render_template( "card_displays/modal_base.html", 
+                            form_control    = form_control, 
+                            form_header     = form_header,
+                            form_content    = form_content      )
+
+
+
+def modal_form_add_movie_receive():
+    if g.user == None: return "<p> sign-in error </p>"
+
+    movie_id        = int(request.form["movie_id"])
+    list_id         = int(request.form["watch-list"])
+    watch_status    = int(request.form["watch-status"])
+    rating          = int(request.form["rating"])
+
+    movie_dictionary = {
+        "movie_id"      : movie_id,
+        "list_id"       : list_id,
+        "watch_status"  : watch_status,
+        "rating"        : rating,
+    }
+
+    add_movie_to_list(movie_dictionary)
+
+    return f""" <p> Movie Added! </p> 
+                <script> document.getElementById("modal-base-submit").outerHTML = ""; </script>
+            """

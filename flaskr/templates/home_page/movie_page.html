@@ -41,9 +41,18 @@
             </p>
         </div> 
         <!-- add movie button -->
-        <button type="submit" class="movie-page-add-button">
-            Add Movie
-        </button>
+        {% if g.user is not none %}
+        <form   hx-post="{{ url_for('modal_form_add_movie') }}"
+                hx-target="#modals-here" 
+                hx-swap="innerHTML"
+        >
+            <button class="movie-page-add-button" type="submit" data-toggle="modal" data-target="#myModal"> Add Movie </button>
+            <input type="hidden" name="movie_id" value="{{ movieID }}">
+        </form>
+        {% endif %}
+    
+
+
     </div>
 
     <!-- Cast list
@@ -108,6 +117,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal" id="myModal">
+        <div id="modals-here"> </div>
     </div>
     
 {% endblock %}
