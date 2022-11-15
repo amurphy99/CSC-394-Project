@@ -91,7 +91,7 @@ def new_trending_list():
     for key in keys[1:]:
         print(f"{key} : {results[key]}")
 
-
+    
     # prepare movies for display
     # ---------------------------
     movieDisplay = []
