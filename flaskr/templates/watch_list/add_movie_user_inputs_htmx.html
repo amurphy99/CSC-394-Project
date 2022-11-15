@@ -67,3 +67,79 @@
     
     </div>
     
+    <!--
+        Form to add a new movie to your movie list
+        --------------------------------------------
+        CREATE TABLE movies_list_info (
+            id                serial 	PRIMARY KEY,
+            owner_id          int,
+            editor_ids        TEXT,
+            list_name         TEXT,
+            list_description  TEXT,
+            date_created      timestamp DEFAULT CURRENT_TIMESTAMP
+        );
+
+
+        Modal/Form has three stages:
+            * make query to database 
+                - search bar to make the query
+                - "search" button to send query
+                - list of 3 movies is displayed
+                - add movie button next to each one, unless already in this watch list
+            
+            * after user selects a movie to add, show an info page
+                - completion (finished, currently watching, plan to watch)
+                - rating
+                - "Save to List" button
+
+            * display a movie card
+                - title, desc, etc
+                - completion status
+                - rating
+                - sight average rating?
+                - date added?
+
+
+        (the button for closing the modal is separate from the submission button)
+    
+    
+        <style>
+            .my-modal {
+                position: absolute;
+                left: 25%;
+                top: 25%;
+                z-index: 2;
+    
+                margin: auto;
+                width: 50%;
+                background-color: white;
+                border: 3px solid green;
+                padding: 10px;
+    
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+            .my-modal-backdrop {
+                position: absolute;
+                left: 0%;
+                top: 0%;
+                z-index: 1;
+    
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                opacity: 50%;
+            }
+
+            .user-movie-card {
+                border: solid 1px;
+                display: flex;
+                justify-content: space-around;
+            }
+            .user-movie-card > img {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+
+        </style>
+      Help with styling things  
+    --> 
