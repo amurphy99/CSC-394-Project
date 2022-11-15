@@ -1,74 +1,84 @@
+<!--
+    card_info = {  
+        "id"                : list_statistics[0][0],
+        "list_name"         : list_statistics[0][3],
+        "list_description"  : list_statistics[0][4],
+        "recently_added"    : poster_path,
+        "last_updated"      : list_statistics[0][7],
+        "average_rating"    : list_statistics[0][8],
+        "total_movies"      : list_statistics[0][9],
+        "total_runtime"     : list_statistics[1][2]
+    }
+    https://stackoverflow.com/questions/29546550/flexbox-4-items-per-row
+-->
 <style>
-    .trending-item {
+    .watch_list_card {
+        flex: 1 0 40%;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+        background-color: rgba(0,122,255);
+        color: white;
+        /*border: 1px solid black;*/
+        padding: 1.0rem 1.0rem;
+        text-decoration: none;
+    }
+    .watch-list-card-body {
+        display: flex;
+        gap: 1.0rem;
+    }
+    .watch-list-card-right {
+        background-color: rgba(0,100,200);
+        color: white;
+        flex: 1 2 30%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-
-        padding: 1.0rem 1.0rem 0.0rem 1.0rem;
-
-        text-decoration: none;
-        color: black;
-        position:relative
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
+        padding: 0.5rem 0.5rem 0 0.5rem;
+        gap: 1.0rem;
     }
-    .trending-item:hover .overlay {
-  opacity: 1;
-}
-    .movie-card-img {
-      display: block;
-        max-width: 100%;
-        max-height: 90%;
-        width: auto;
+    .watch-list-card-right > img { min-width: 9.0rem; max-width: 9.0rem; }
+    .watch-list-card-left {
+        flex: 2 1 60%;
+        display: flex;
+        flex-direction: column;
+        gap: 1.0rem;
     }
-    .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background-color: rgba(0,0,0,0.6);
-}
-
-
-    .movie-card-title {
-        padding: 1.0rem 0.0rem 1.0rem 0.0rem;
-        margin: auto;
+    .watch-list-card-left > .desc { 
+        flex-grow: 3; 
+        background-color: rgba(0,100,200);
+        color: white;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
+        padding: 0.5rem 0.5rem 0 0.5rem;
     }
-    .text {
-  color: white;
-  font-size: 12px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: justify;
-}
+    .watch-list-card-left > .body { 
+        flex-grow: 1; 
+        background-color: rgba(0,100,200);
+        color: white;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
+        padding: 0.5rem 0.5rem 0 0.5rem;
+    }
+
 </style>
+<a class="watch_list_card" href="{{ url_for('watch_list', listID=card_info['id']) }}">
+    <div class="watch-list-card-body">
 
-<a  class="trending-item"
-    href="{{ url_for('movie_page', movieID=movie['id']) }}"
->
+        <div class="watch-list-card-left">
+            <h3> {{ card_info["list_name"] }} </h3>
 
-    <img class="movie-card-img" src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
-    <div class="overlay">
-        <div class="text">
-          {{movie['overview']}}
-          <hr />
-          <p>
-          release date : {{movie['release_date']}}
-          </p>
-          <p>
-          Genres : {{movie['genres']}}
-          </p>
-        
+            <div class="desc">
+                <p> {{ card_info["list_description"]    }} </p>
+            </div>
+            
+            <div class="body">
+                <p> {{ card_info["total_movies"]        }} movies           <br>
+                    {{ card_info["total_runtime"]       }}                  <br>
+                    {{ card_info["average_rating"]      }}/5 average rating </p>
+            </div> 
         </div>
-    </div>
-    <div class="movie-card-title"> <h3> {{ movie['title'] }} </h3> </div>
 
+        <div class="watch-list-card-right">
+            <img src="{{ card_info['recently_added'] }}" alt="Poster for the most recently added movie. ">
+            <p> Recently Added: <br> {{ card_info["last_updated"] }} </p>
+        </div>
+
+    </div>
 </a>
