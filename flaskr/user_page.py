@@ -1,7 +1,7 @@
 from flask import Flask, render_template, g, request, flash, session, url_for
 
 from flaskr.db import get_db, close_db
-from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list, get_relationship, send_friend_request
+from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list, get_relationship, send_friend_request, get_friends_list, update_bio
 
 def format_time(time):
     days    = int(time // (24*60))
@@ -93,7 +93,6 @@ def user_page(userID):
     # -------------------------------------------------------------------------------
     # area for the comparison code
     # -------------------------------------------------------------------------------
-
     '''
     statistics comparison notes:
     -----------------------------
@@ -113,19 +112,14 @@ def user_page(userID):
             top 3 biggest disagreement in rating + their raitng + your rating 
     
     '''
-
     # checks if the current user is logged in
     if g.user != None:
         # look in database/database_functions.py for more info on what this gives
         movie_lists = get_general_movie_list([userID, g.user[0]])
 
-
-
     # prepare the user comparison data for the page
     user_comparison = [ ("Similar Movies",      10),
                         ("Different Movies",    10) ]
-
-
     # -------------------------------------------------------------------------------
     # -------------------------------------------------------------------------------
 
@@ -162,12 +156,13 @@ def user_page(userID):
         "other": userID 
     }
 
-
-
+    page_info = {   "num_friends"   : len(get_friends_list(userID)),
+                    "user_bio"      : user_bio }
 
     # return the template with all of the information we assembled for display
     return render_template( 'user_page/user_page.html', 
-                            this_user       = this_user, 
+                            this_user       = this_user,
+                            page_info       = page_info, 
                             user_bio        = user_bio,
                             user_lists      = user_lists, 
                             statistics      = statistics, 
@@ -249,12 +244,19 @@ def modal_form_edit_bio():
                             form_content    = form_content      )
 
 
+
 def modal_form_edit_bio_receive():
-    info = str(request.form["new_bio"])
-    # change in the database
-    return f"<p> {info} </p>"
+    if g.user == None: return "<p> sign-in error </p>"
 
+    new_bio = str(request.form["new_bio"])
+    update_bio(new_bio, g.user[0])
 
+    return f""" <h3> New Bio:  </h3>
+                <p>  {new_bio} </p>
+                <script>            
+                    document.getElementById("user_bio_box").innerHTML = "{new_bio}";
+                </script>
+                """
 
 
 
@@ -267,3 +269,5 @@ def friend_request_button():
         send_friend_request(user1, user2)
     
     return "refresh to see"
+
+

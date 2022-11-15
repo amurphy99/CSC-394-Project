@@ -1,6 +1,7 @@
 from flaskr.db import get_db, close_db
 from flaskr.movieDBapi import api_movie_page
 
+
 '''
 Contains:
     
@@ -444,4 +445,51 @@ def get_relationship(user_id, other_id):
 
     return 0
 
+
+def update_bio(new_bio, user_id):
+    # open db connection
+    db = get_db(); cur = db.cursor()
+    
+    cur.execute(  f"UPDATE movies_list_info SET list_description = '{new_bio}' \
+                    WHERE owner_id = {user_id} AND list_name = 'general';"      )
+    db.commit()
+
+    # close the cursor and db connection
+    cur.close(); db.close() 
+
+
+
+def get_friend_requests(user_id):
+    incoming = []
+    outgoing = []
+
+    # open db connection
+    db = get_db(); cur = db.cursor()
+
+    cur.execute(f"SELECT * FROM friend_requests WHERE receiver_id = {user_id};")
+    incoming_requests = cur.fetchall()
+    for request in incoming_requests:
+        cur.execute(f"SELECT username FROM all_users WHERE id = {request[0]};")
+        sender_username = cur.fetchone()
+        formatted_date  = request[2].strftime("%Y-%m-%d %H:%M:%S")
+
+        incoming.append( (request[0], request[1], request[2], sender_username[0], formatted_date) )
+
+
+    cur.execute(f"SELECT * FROM friend_requests WHERE sender_id = {user_id};")
+    outgoing_requests = cur.fetchall()
+    for request in outgoing_requests: 
+        cur.execute(f"SELECT username FROM all_users WHERE id = {request[1]};")
+        receiver_username = cur.fetchone()
+        formatted_date    = request[2].strftime("%Y-%m-%d %H:%M:%S")
+
+        outgoing.append( (request[0], request[1], request[2], receiver_username[0], formatted_date) )
+
+    # close the cursor and db connection
+    cur.close(); db.close() 
+
+    friend_requests = { "incoming_requests" : incoming, 
+                        "outgoing_requests" : outgoing     }
+
+    return friend_requests
 

@@ -13,7 +13,7 @@
 
         <!-- User Bio -->
         <div class="user_page_bio"> 
-            <p> {{ user_bio }} </p>
+            <p id="user_bio_box"> {{ page_info["user_bio"] }} </p>
 
             {% if g.user is not none %}
                 {% if g.user[0]|int == this_user[0]|int %}
@@ -23,11 +23,13 @@
                         hx-swap="innerHTML"
                 >
                     <button type="submit" data-toggle="modal" data-target="#myModal"> Edit Bio </button>
-                    <input type="hidden" name="current_bio" value="{{ user_bio }}">
+                    <input type="hidden" name="current_bio" value="{{ page_info['user_bio'] }}">
                 </form>
                 {% endif %}
             {% endif %}
         </div>
+
+
 
         <!-- This will create a pie chart comparing the number of similar and different movies watched by the current user and a friend -->
         <div id="userComparisonChart" class="user_pie_chart">
@@ -95,10 +97,10 @@
 
 
 
+
     <!-- Socials -->
     <div class="user_page_socials">
-        <p> Friends:   {{ 25 }} </p>
-        <p> Followers: {{ 20 }} </p>
+        <p> Friends: {{ page_info["num_friends"] }} </p>
 
         <form   id="add-friend"
                 hx-post="{{ url_for('friend_request_button') }}"
@@ -112,14 +114,17 @@
             <button type="submit"> {{ button_dict["button_text"] }} </button>
         </form>
         
-
-
     </div>
+
+
+
 
 
 
     <!-- User Page Content -->
     <div class="user_page_HStack">
+
+
 
         <!-- User Statistics -->
         <div class="user-page-statistics">
@@ -138,6 +143,8 @@
             </ul>
         
         </div>
+
+
 
         <!-- Watch List Display -->
         <div class="user_watch_lists">
@@ -170,6 +177,8 @@
             </div>
 
         </div>
+
+
 
         <!-- User Statistics -->
         <div class="user-page-statistics">

@@ -1,7 +1,7 @@
-from flask import Flask, render_template, g, request, flash
+from flask import Flask, render_template, g, request, flash, url_for
 from flaskr.db import get_db
 from flaskr.movieDBapi import trending_movies, filtered_search,api_movie_page
-from flaskr.database.database_functions import get_friends_list
+from flaskr.database.database_functions import get_friends_list, get_friend_requests, resolve_friend_request
 
 
 #@app.route('/', methods=('GET', 'POST'))
@@ -24,32 +24,23 @@ def home_page():
         for key in result_movie['genres']:
             genre_list.append(key['name'])
         genre_string = ', '.join(genre_list)
-        temp = {    "title"     : movie["title"],
-                    "poster"    : BASE_URL + POSTER_SIZE + movie["poster_path"],
-                    "id"        : movie["id"],
-                    "overview"  : movie["overview"],
-                    "release_date": movie["release_date"],
-                    "genres" : genre_string
+        temp = {    "title"         : movie["title"],
+                    "poster"        : BASE_URL + POSTER_SIZE + movie["poster_path"],
+                    "id"            : movie["id"],
+                    "overview"      : movie["overview"],
+                    "release_date"  : movie["release_date"],
+                    "genres"        : genre_string
 
                     }
         movieDisplay.append(temp)
 
+
+
     # prepare friends list for display [id, username]
-    ''' 
-    user_friends = [    ["admin",   1],
-                        ["Andrew",  2],
-                        ["Calvin",  3],
-                        ["Joseph",  4],
-                        ["Brenden", 5],
-                        ["Derrick", 6],
-                        ["Benas",   7]  ] 
-    '''
-    
-    if g.user == None:
-        user_friends = []
-    else:
-        user_friends = get_friends_list(g.user[0])
- 
+    if g.user == None:  user_friends = []
+    else:               user_friends = get_friends_list(g.user[0])
+
+
     # display page
     return render_template('home_page/home_page.html', movieDisplay=movieDisplay, user_friends=user_friends)
 
@@ -122,3 +113,40 @@ def new_trending_list():
 
     # return
     return render_template('home_page/new_trending_list_htmx.html', movieDisplay = movieDisplay)
+
+
+
+
+
+
+
+
+
+
+
+def modal_form_add_friends():
+    user_id = int(request.form["user_id"])
+    friend_requests = get_friend_requests(user_id)
+
+    form_control    = { "hx-post-url"   : url_for("modal_form_resolve_request"),
+                        "hx-target-id"  : "#modal-body"                             }
+    form_header     = "Manage Friends"
+    form_content    = render_template("home_page/modal_form_add_friends.html", friend_requests=friend_requests)
+
+    return render_template( "card_displays/modal_base.html", 
+                            form_control    = form_control, 
+                            form_header     = form_header,
+                            form_content    = form_content      )
+
+
+def modal_form_resolve_request():
+    sender_id   = int(request.form["sender_id"])
+    receiver_id = int(request.form["receiver_id"])
+    answer      = int(request.form["answer"])
+
+    resolve_friend_request(sender_id, receiver_id, answer)
+
+    return ""
+
+
+

@@ -56,6 +56,9 @@ def create_app(test_config=None):
     app.add_url_rule('/',                   methods=('GET', 'POST'), view_func=home_page.home_page)
     app.add_url_rule('/home_page_search',   methods=('GET', 'POST'), view_func=home_page.home_filter_tags)
     app.add_url_rule('/new_trending_list',  methods=('GET', 'POST'), view_func=home_page.new_trending_list)
+
+    app.add_url_rule('/modal_form_add_friends',     methods=['POST'], view_func=home_page.modal_form_add_friends)
+    app.add_url_rule('/modal_form_resolve_request', methods=['POST'], view_func=home_page.modal_form_resolve_request)
     
 
     from . import movie_page

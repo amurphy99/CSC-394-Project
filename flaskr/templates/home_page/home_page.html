@@ -89,6 +89,15 @@
     </div>
 
 
+
+
+
+    <style>
+
+        .friend-username > a {text-decoration: none; color: black;}
+
+    </style>
+
     <div class="friends-list">
         <!-- 
         includes:
@@ -96,20 +105,44 @@
             * link to individual movie page 
                 - which means we also need the users id
         -->
+
         <p class="friends-list-header"> Friends </p>
+
+        {% if g.user is not none %}
+        <form   hx-post="{{ url_for('modal_form_add_friends') }}"
+                hx-target="#modals-here" 
+                hx-swap="innerHTML"
+        >
+            <button class="btn btn-primary" type="submit" 
+                    data-toggle="modal" 
+                    data-target="#myModal"
+            > Add Friends {{ notifications }} </button>
+            <input type="hidden" name="user_id" value="{{ g.user[0] }}">
+        </form>
 
         <ul class="user-friends-list">
             {% for friend in user_friends %}
-                <li class="friend-username"> 
-                    <a href="{{ url_for('user_page', userID=friend[1]) }}"> {{ friend[0] }} </a> 
-                </li>
+                <li class="friend-username"> <a href="{{ url_for('user_page', userID=friend[1]) }}"> {{ friend[0] }} </a> </li>
             {% endfor %}
         </ul>
+
+        {% else %}
+            <p> Log in or create an account to add friends! </p>
+        {% endif %}
+
+
 
     </div>
 
 
 </div>
+
+
+
+<div class="modal" id="myModal">
+    <div id="modals-here"> </div>
+</div>
+
 
 
 {% endblock %}

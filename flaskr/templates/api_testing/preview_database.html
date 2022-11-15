@@ -80,4 +80,57 @@
 
 
 
+<!-- friend_requests 
+--------------------- -->
+<h4> friend_requests </h4>
+<table class="table table-bordered table-striped table-secondary text-center align-middle shadow">
+    <!-- Table Headers 
+    ------------------- -->
+    <tr>
+        {% for header in headers['friend_requests'] %}
+        <th> {{ header }} </th>
+        {% endfor %}
+    </tr>
+
+    <!-- Table Data
+    ---------------- -->
+    {% for row in friend_requests %}
+    <tr>
+        {% for data in row %}
+        <td> {{ data }} </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+<!-- friends 
+------------- -->
+<h4> friends </h4>
+<table class="table table-bordered table-striped table-secondary text-center align-middle shadow">
+    <!-- Table Headers 
+    ------------------- -->
+    <tr>
+        {% for header in headers['friends'] %}
+        <th> {{ header }} </th>
+        {% endfor %}
+    </tr>
+
+    <!-- Table Data
+    ---------------- -->
+    {% for row in friends %}
+    <tr>
+        {% for data in row %}
+        <td> {{ data }} </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+
+
+
+
 {% endblock %}

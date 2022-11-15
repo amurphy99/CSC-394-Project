@@ -1,0 +1,62 @@
+<style>
+    .outgoing-requests {}
+
+</style>
+
+<div>
+
+<h3> Incoming Requests </h3> 
+<table class="incoming-requests">
+    <tr>
+        <th> From:    </th>
+        <th> Sent:  </th>
+    </tr>
+
+    {% for request in friend_requests["incoming_requests"] %}
+    <tr id="incoming-{{ request[0] }}">
+        <td> {{ request[3] }} </td>
+        <td> {{ request[4] }} </td>
+        <td>
+            <form hx-post="{{ url_for('modal_form_resolve_request') }}" hx-target="outgoing-{{ request[1] }}" hx-swap="outerHTML"> 
+                <input type="hidden" name="sender_id"   value="{{ request[0]    }}" >
+                <input type="hidden" name="receiver_id" value="{{ g.user[0]     }}" >
+                <input type="hidden" name="answer"      value="{{ 1             }}" >
+                <button class="btn btn-success" type="submit"> Accept </button>
+            </form>
+            <form hx-post="{{ url_for('modal_form_resolve_request') }}" hx-target="outgoing-{{ request[1] }}" hx-swap="outerHTML"> 
+                <input type="hidden" name="sender_id"   value="{{ request[0]    }}" >
+                <input type="hidden" name="receiver_id" value="{{ g.user[0]     }}" >
+                <input type="hidden" name="answer"      value="{{ 0             }}" >
+                <button class="btn btn-danger" type="submit"> Decline </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+<h3> Outgoing Requests </h3> 
+<table class="outgoing-requests">
+    <tr>
+        <th> To:    </th>
+        <th> Sent:  </th>
+    </tr>
+
+    {% for request in friend_requests["outgoing_requests"] %}
+    <tr id="outgoing-{{ request[1] }}">
+        <td> {{ request[3] }} </td>
+        <td> {{ request[4] }} </td>
+        <td>
+            <form hx-post="{{ url_for('modal_form_resolve_request') }}" hx-target="outgoing-{{ request[1] }}" hx-swap="outerHTML"> 
+                <input type="hidden" name="sender_id"   value="{{ g.user[0]     }}" >
+                <input type="hidden" name="receiver_id" value="{{ request[1]    }}" >
+                <input type="hidden" name="answer"      value="{{ 0             }}" >
+                <button class="btn btn-danger" type="submit"> Cancel </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</div>

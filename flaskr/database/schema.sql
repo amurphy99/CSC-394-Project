@@ -110,6 +110,7 @@ CREATE TABLE genre_counts (
   list_id   INT REFERENCES  movies_list_info(id),
   genre_id  INT REFERENCES  genres(genre_id),
   count     INT DEFAULT     0,
+  UNIQUE(list_id, genre_id),
   CONSTRAINT pk_genre_counts PRIMARY KEY (list_id, genre_id)
 );
 
@@ -122,6 +123,7 @@ CREATE TABLE friend_requests (
   sender_id     INTEGER   REFERENCES  all_users(id),
   receiver_id   INTEGER   REFERENCES  all_users(id),
   date_created  TIMESTAMP DEFAULT     CURRENT_TIMESTAMP,
+  CHECK (sender_id <> receiver_id),
   CONSTRAINT pk_friend_requests PRIMARY KEY (sender_id, receiver_id)
 );
 /* friends table:
@@ -130,6 +132,7 @@ CREATE TABLE friends (
   friend_1_id   INTEGER   REFERENCES  all_users(id),
   friend_2_id   INTEGER   REFERENCES  all_users(id),
   date_created  TIMESTAMP DEFAULT     CURRENT_TIMESTAMP,
+  CHECK (friend_1_id <> friend_2_id),
   CONSTRAINT pk_friends PRIMARY KEY (friend_1_id, friend_2_id)
 );
 
