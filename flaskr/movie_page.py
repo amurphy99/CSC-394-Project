@@ -212,11 +212,9 @@ sample api output:
 }
 
 
- --------credits----------
-  CAST
+    credits
 
-"id":505642,
-   "cast":[
+     "cast":[
       {
          "adult":false,
          "gender":1,
@@ -357,165 +355,103 @@ sample api output:
          "credit_id":"629cf5d99661fc00aadd3121",
          "order":9
       },
-
-      CREW
-
-"crew":[
       {
          "adult":false,
          "gender":1,
-         "id":7232,
-         "known_for_department":"Production",
-         "name":"Sarah Halley Finn",
-         "original_name":"Sarah Halley Finn",
-         "popularity":10.99,
-         "profile_path":"/pI3OhmnHhXLEwuv0Vq6qJHivCJA.jpg",
-         "credit_id":"60326570befb09003e8ff17d",
-         "department":"Production",
-         "job":"Casting"
-      },
-      {
-         "adult":false,
-         "gender":0,
-         "id":7537,
-         "known_for_department":"Sound",
-         "name":"Steve Boeddeker",
-         "original_name":"Steve Boeddeker",
-         "popularity":1.4,
-         "profile_path":"None",
-         "credit_id":"636d10fdf14dad007b25f993",
-         "department":"Sound",
-         "job":"Supervising Sound Editor"
-      },
-      {
-         "adult":false,
-         "gender":0,
-         "id":7537,
-         "known_for_department":"Sound",
-         "name":"Steve Boeddeker",
-         "original_name":"Steve Boeddeker",
-         "popularity":1.4,
-         "profile_path":"None",
-         "credit_id":"636d110421621b009111a36c",
-         "department":"Sound",
-         "job":"Sound Re-Recording Mixer"
+         "id":25703,
+         "known_for_department":"Acting",
+         "name":"Lake Bell",
+         "original_name":"Lake Bell",
+         "popularity":27.904,
+         "profile_path":"/tpBmxNKBebx04vQGnnQ3QNs6nvV.jpg",
+         "cast_id":80,
+         "character":"Dr. Graham",
+         "credit_id":"635c6bb295c0af007f819af5",
+         "order":10
       },
       {
          "adult":false,
          "gender":2,
-         "id":7624,
-         "known_for_department":"Writing",
-         "name":"Stan Lee",
-         "original_name":"Stan Lee",
-         "popularity":17.858,
-         "profile_path":"/kKeyWoFtTqOPsbmwylNHmuB3En9.jpg",
-         "credit_id":"637042af8138310080854e83",
-         "department":"Writing",
-         "job":"Characters"
+         "id":992386,
+         "known_for_department":"Acting",
+         "name":"Alex Livinalli",
+         "original_name":"Alex Livinalli",
+         "popularity":15.063,
+         "profile_path":"/qagXyIZI8oSfpNLuZRChFEwEvNo.jpg",
+         "cast_id":57,
+         "character":"Attuma",
+         "credit_id":"62dce354957e6d0056f00fd5",
+         "order":11
       },
       {
          "adult":false,
          "gender":2,
-         "id":10850,
-         "known_for_department":"Production",
-         "name":"Kevin Feige",
-         "original_name":"Kevin Feige",
-         "popularity":16.337,
-         "profile_path":"/kCBqXZ5PT5udYGEj2wfTSFbLMvT.jpg",
-         "credit_id":"5a8784259251417599044b4d",
-         "department":"Production",
-         "job":"Producer"
+         "id":31512,
+         "known_for_department":"Acting",
+         "name":"Robert John Burke",
+         "original_name":"Robert John Burke",
+         "popularity":11.057,
+         "profile_path":"/4uCjxK6QmPW98W56aCldwINSOcX.jpg",
+         "cast_id":96,
+         "character":"Smitty",
+         "credit_id":"636ca3daf14dad00f273b2c9",
+         "order":12
       },
       {
          "adult":false,
-         "gender":0,
-         "id":10122,
-         "known_for_department":"Production",
-         "name":"Barry H. Waldman",
-         "original_name":"Barry H. Waldman",
-         "popularity":1.96,
-         "profile_path":"None",
-         "credit_id":"62ddc6765ca7040b29905b1f",
-         "department":"Production",
-         "job":"Executive Producer"
+         "gender":2,
+         "id":165424,
+         "known_for_department":"Acting",
+         "name":"Danny Sapani",
+         "original_name":"Danny Sapani",
+         "popularity":9.871,
+         "profile_path":"/h6goTpKA74Z6ePB2BAEEyQnGtCF.jpg",
+         "cast_id":54,
+         "character":"Border Tribe Elder",
+         "credit_id":"622cc82d498ef90044fed321",
+         "order":13
       },
       {
          "adult":false,
-         "gender":0,
-         "id":13306,
-         "known_for_department":"Costume & Make-Up",
-         "name":"Richard Alonzo",
-         "original_name":"Richard Alonzo",
-         "popularity":1.615,
-         "profile_path":"None",
-         "credit_id":"636d0f04d7fbda0088752826",
-         "department":"Costume & Make-Up",
-         "job":"Makeup Artist"
+         "gender":2,
+         "id":4812,
+         "known_for_department":"Acting",
+         "name":"Isaach De Bankolé",
+         "original_name":"Isaach De Bankolé",
+         "popularity":8.427,
+         "profile_path":"/tIihjWrBfzZahWaAwf8XFuYO0JS.jpg",
+         "cast_id":41,
+         "character":"River Tribe Elder",
+         "credit_id":"618df435cb6db50042cee251",
+         "order":14
       },
       {
          "adult":false,
          "gender":1,
-         "id":15524,
-         "known_for_department":"Costume & Make-Up",
-         "name":"Ruth E. Carter",
-         "original_name":"Ruth E. Carter",
-         "popularity":3.94,
-         "profile_path":"/b1CtSVekrYuEmCYt9K3JxWfcJjt.jpg",
-         "credit_id":"6333a27541eee10086e6d518",
-         "department":"Costume & Make-Up",
-         "job":"Costume Design"
+         "id":1181397,
+         "known_for_department":"Acting",
+         "name":"Connie Chiume",
+         "original_name":"Connie Chiume",
+         "popularity":2.365,
+         "profile_path":"/3ET4rE2aAEyczhognWWi1rPAdWo.jpg",
+         "cast_id":86,
+         "character":"Zawavari",
+         "credit_id":"636ca26dd7fbda00e7b6c717",
+         "order":15
       },
       {
          "adult":false,
          "gender":2,
-         "id":18866,
-         "known_for_department":"Writing",
-         "name":"Jack Kirby",
-         "original_name":"Jack Kirby",
-         "popularity":5.902,
-         "profile_path":"/ihhR019gL1WrXdSQNJITAY6dont.jpg",
-         "credit_id":"637042b9172d7f007a5ce50a",
-         "department":"Writing",
-         "job":"Characters"
-      },
-      {
-         "adult":false,
-         "gender":2,
-         "id":24192,
-         "known_for_department":"Sound",
-         "name":"Dave Jordan",
-         "original_name":"Dave Jordan",
-         "popularity":1.4,
-         "profile_path":"None",
-         "credit_id":"6333a247076ce80084c27ab3",
-         "department":"Sound",
-         "job":"Music Supervisor"
-      },
-      {
-         "adult":false,
-         "gender":2,
-         "id":57027,
-         "known_for_department":"Production",
-         "name":"Louis D'Esposito",
-         "original_name":"Louis D'Esposito",
-         "popularity":20.371,
-         "profile_path":"/k9k3WWYdD3uDnrtwM60QirzG9cH.jpg",
-         "credit_id":"6137e4a2e93e950065ed68e5",
-         "department":"Production",
-         "job":"Executive Producer"
-      },
-      {
-         "adult":false,
-         "gender":1,
-         "id":113674,
-         "known_for_department":"Production",
-         "name":"Victoria Alonso",
-         "original_name":"Victoria Alonso",
-         "popularity":6.149,
-         "profile_path":"/xF7Qe1tqgk9KtY8kThKHBWhMqxc.jpg",
-         "credit_id":"6137e4842cde98002b6c4052",
-         "department":"Production",
-         "job":"Executive Producer"
+         "id":7060,
+         "known_for_department":"Acting",
+         "name":"Martin Freeman",
+         "original_name":"Martin Freeman",
+         "popularity":33.385,
+         "profile_path":"/pLG7mmxBXXTVAgzXvQl0ap3qlJU.jpg",
+         "cast_id":10,
+         "character":"Everett Ross",
+         "credit_id":"5d618b0ea1d33200181f79f2",
+         "order":16
       },
 
-'''
+ '''
