@@ -1,74 +1,55 @@
+<!-- 
+    card_info["status"]
+    card_info["rating"]
+    card_info["movie"] = dict with: id, title, poster
+
+    make a second version of this:
+    "edit_watch_list_movie_card.html"
+
+    need color argument in the watch list movie card
+        finished = light gray
+        plan to watch = yellow
+        currently watching = green
+
+    style="color:red"
+
+-->
 <style>
-    .trending-item {
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    .watch-list-movie-card {
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+
+        padding: 0.0rem;
+        gap: 0.0rem;
+    }
+
+    .watch-list-movie-card-info {
+        display: flex;
+        flex-direction: row;
         justify-content: space-between;
 
-        padding: 1.0rem 1.0rem 0.0rem 1.0rem;
-
-        text-decoration: none;
-        color: black;
-        position:relative
+        padding: 0.0rem 0.5rem 0.0rem 0.0rem;
     }
-    .trending-item:hover .overlay {
-  opacity: 1;
-}
-    .movie-card-img {
-      display: block;
-        max-width: 100%;
-        max-height: 90%;
-        width: auto;
-    }
-    .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background-color: rgba(0,0,0,0.6);
-}
+    .watch-list-p  { align-self: center; font-size: 0.9em; }
+    .watch-list-h3 { align-self: center; font-size: 1.2em; font-weight: bold;}
 
+    .watch-list-movie-card-movie { height: 90%; }
+    .watch-list-movie-card-movie > .trending-item { height: 100%; }
+    .watch-list-movie-card-movie > .trending-item > .movie-card-title > h3 { font-size: 1em; }
 
-    .movie-card-title {
-        padding: 1.0rem 0.0rem 1.0rem 0.0rem;
-        margin: auto;
-    }
-    .text {
-  color: white;
-  font-size: 12px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: justify;
-}
 </style>
 
-<a  class="trending-item"
-    href="{{ url_for('movie_page', movieID=movie['id']) }}"
->
+<div class="watch-list-movie-card"> 
 
-    <img class="movie-card-img" src="{{ movie['poster'] }}" alt="movie poster for {{ movie['title'] }}">
-    <div class="overlay">
-        <div class="text">
-          {{movie['overview']}}
-          <hr />
-          <p>
-          release date : {{movie['release_date']}}
-          </p>
-          <p>
-          Genres : {{movie['genres']}}
-          </p>
-        
-        </div>
+    <div class="watch-list-movie-card-info">
+        <div class="watch-list-p" > {{ card_info["status"] }}   </div>
+        <div class="watch-list-h3"> {{ card_info["rating"] }}/5 </div>
     </div>
-    <div class="movie-card-title"> <h3> {{ movie['title'] }} </h3> </div>
 
-</a>
+    <div class="watch-list-movie-card-movie">
+        {{ movie_card(card_info["movie"]) | safe }}
+    </div>
+
+
+</div>
