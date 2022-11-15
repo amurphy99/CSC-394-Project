@@ -3,6 +3,8 @@ from flask import Flask, render_template, g, request, flash, session, url_for
 from flaskr.db import get_db, close_db
 from flaskr.database.database_functions import get_general_user_statistics, get_general_movie_list, get_relationship, send_friend_request, get_friends_list, update_bio, remove_friend
 
+from flaskr.card_display_controls import watch_list_card
+
 def format_time(time):
     days    = int(time // (24*60))
     hours   = int((time-(days*24)) // 60)
@@ -51,8 +53,8 @@ def user_page(userID):
     cur.execute( f"SELECT * FROM movies_list_info WHERE owner_id = '{userID}';" )
     user_lists = cur.fetchall()
 
-    cur.close(); db.close()
-    close_db()
+    cur.close()#; db.close()
+    
 
 
     # get general list for stats
@@ -312,3 +314,74 @@ def get_friends_button(user1, user2, relationship):
         </form>
         """
     return button_html
+
+
+
+
+
+def modal_form_create_watch_list():
+    # form controls
+    form_control = {    "hx-post-url"   : url_for('modal_form_create_watch_list_receive') ,
+                        "hx-target-id"  : "#modal-body"                             }
+    
+    # form header
+    form_header = "Create New Watch List "
+
+    # form content
+    form_content = f"""
+                    <div id="create-new-list-form">
+
+                        <label for="new-list-title"> Title: </label>
+                        <input type="text" id="new-list-title" name="new-list-title" required>
+
+                        <label for="new-list-description"> Description: </label>
+                        <input type="text" id="new-list-description" name="new-list-description"  required>
+
+                        <input type="hidden" name="userID" value="{ g.user[0] }">
+
+                    </div>
+                    """
+
+    return render_template( "card_displays/modal_base.html", 
+                            form_control    = form_control, 
+                            form_header     = form_header,
+                            form_content    = form_content      )
+
+
+
+def modal_form_create_watch_list_receive():
+    if g.user == None: return "<p> sign-in error </p>"
+
+    # get new data
+    new_title   = str(request.form["new-list-title"])
+    new_desc    = str(request.form["new-list-description"])
+    userID      = int(request.form["userID"])
+
+    db = get_db(); cur = db.cursor()
+
+    cur.execute( f"INSERT INTO movies_list_info (owner_id, list_name, list_description) VALUES ({userID}, '{new_title}', '{new_desc}') RETURNING *;" )
+    db.commit()
+    new_list = cur.fetchone()
+    
+    cur.close()#; db.close()
+
+    temp = watch_list_card(new_list[0])
+    print(temp)
+
+    # also include js in the return to insert the new watch list into the watch list div
+    return f""" {temp} """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

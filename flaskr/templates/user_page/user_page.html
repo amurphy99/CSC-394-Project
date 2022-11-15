@@ -151,15 +151,12 @@
                 -->
                 {% if g.user is not none %}
                     {% if g.user[0]|int == this_user[0]|int %}
-                    
-                    <button 
-                        hx-get="/user/modal" 
-                        hx-target="#modals-here" 
-                        hx-trigger="click"
-                        hx-swap="innerHTML"
-                        > Create New Watch List
-                    </button>
-
+                    <form   hx-post="{{ url_for('modal_form_create_watch_list') }}"
+                            hx-target="#modals-here" 
+                            hx-swap="innerHTML"
+                        >
+                        <button type="submit" data-toggle="modal" data-target="#myModal"> Create New Watch List </button>
+                    </form>
                     {% endif %}
                 {% endif %}
             </div>

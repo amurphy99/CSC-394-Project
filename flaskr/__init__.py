@@ -41,10 +41,10 @@ def create_app(test_config=None):
 
     # CARD DISPLAYS
     # ---------------------------------------------
-    from . import card_displays
-    app.jinja_env.globals.update(movie_card             = card_displays.movie_card              )
-    app.jinja_env.globals.update(watch_list_card        = card_displays.watch_list_card         )
-    app.jinja_env.globals.update(watch_list_movie_card  = card_displays.watch_list_movie_card   )
+    from . import card_display_controls
+    app.jinja_env.globals.update(movie_card             = card_display_controls.movie_card              )
+    app.jinja_env.globals.update(watch_list_card        = card_display_controls.watch_list_card         )
+    app.jinja_env.globals.update(watch_list_movie_card  = card_display_controls.watch_list_movie_card   )
 
 
     # ALL OFFICIAL PAGES
@@ -74,6 +74,8 @@ def create_app(test_config=None):
     app.add_url_rule('/user/modal_form_edit_bio',           methods=['POST'], view_func=user_page.modal_form_edit_bio)
     app.add_url_rule('/user/modal_form_edit_bio_receive',   methods=['POST'], view_func=user_page.modal_form_edit_bio_receive)
 
+    app.add_url_rule('/user/modal_form_create_watch_list',         methods=['POST'], view_func=user_page.modal_form_create_watch_list)
+    app.add_url_rule('/user/modal_form_create_watch_list_receive', methods=['POST'], view_func=user_page.modal_form_create_watch_list_receive)
 
     from . import watch_list
     app.add_url_rule('/watch_list/<listID>',                methods=('GET', 'POST'), view_func=watch_list.watch_list)
