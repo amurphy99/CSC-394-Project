@@ -55,10 +55,27 @@
         
         <div class="watch-list-info"> 
 
+
             <div class="watch-list-description">
-                <p> Date Created: {{ list_info[6] }} </p>
-                <p> Last Updated: {{ list_info[7] }} </p>
-                <p> {{ list_info[4] }} </p>
+
+                <style> 
+                    .user-page-statistics{ 
+                        width: 80%; 
+                        padding-top: 1.0rem; 
+                        padding-bottom: 0.0rem; 
+                    }
+                    .watch_list_pie_chart {max-width: 40%;}
+                    </style>
+                <div class="user-page-statistics">
+                <ul class="user-statistics">
+                    {% for entry in statistics %}
+
+                    <li> {{ entry[0] }} - {{ entry[1] }} </li>  
+                    
+                    {% endfor %}
+                </ul>
+                </div>
+
             </div>
 
             <!-- This will create a pie chart comparing the number of similar and different movies watched by the current user and a friend -->
@@ -223,142 +240,3 @@
         - retrieved in the python file server
 Refrence for future additions
 -->
-<!--<div class="user_page_VStack">
-    
-    <div class="user-page-item"> 
-        <div id="userComparisonChart" class="user_pie_chart">
-            <h4>Total movie count by genre</h4>
-            <script src="https://d3js.org/d3.v4.js"></script>
-            <script>
-                // function pieChart(){
-                var width = 250
-                height = 250
-                margin = 20
-
-                // The radius of the piepchart
-                var radius = Math.min(width, height) / 2 - margin
-
-            //add chart to canvas
-                var svg = d3.select("#userComparisonChart")
-                    .append("svg")
-                    .attr("width", width)
-                    .attr("height", height)
-                    .append("g")
-                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-                var data = {Horror: 6, Comedy: 3, Action:9, Documentary: 6}
-
-                // set the colors
-                var color = d3.scaleOrdinal()
-                    .domain(data)
-                    .range(["#377ba8", "#cae6f6","gray","#D3D3D3"])
-
-                // Calculate the relative size of each section
-                var pie = d3.pie()
-                    .value(function(d) {return d.value; })
-                    var enterData = pie(d3.entries(data))
-
-                // graph each section of the pie chart
-                svg
-                    .selectAll('mySlices')
-                    .data(enterData)
-                    .enter()
-                    .append('path')
-                    .attr('d', d3.arc()
-                    .innerRadius(0)
-                    .outerRadius(radius))
-                    .attr('fill', function(d){ return(color(d.data.key)) })
-                        .attr("stroke", "black")
-                        .style("stroke-width", "3px")
-                    
-                //Adds labels
-                svg
-                .selectAll('mySlices')
-                .data(enterData)
-                .enter()
-                .append('text')
-                .text(function(d){ return d.data.key+""})
-                .attr("transform", function(d) { return "translate(" + d3.arc().innerRadius(0).outerRadius(radius).centroid(d) + ")";  })
-                .style("text-anchor", "middle")
-                .style("font-size", 9) // Changed the size so comedy fully fits in the graph 
-
-            // }
-            </script>
-
-        </div>
-
-    </div>
-     <div class="user_page_socials">
-        <p> Friends:   {{ 25 }} </p>
-        <p> Followers: {{ 20 }} </p>
-        <button type="submit"> Add Friend </button>
-        <button type="submit"> Edit Bio </button>
-        <div class="user-page-statistics">
-
-            <p class="statistics-header"> Statistics </p>
-        
-            <ul class="user-statistics">
-                {% for entry in statistics %}
-
-                <div class="statistics-spacer">
-                <li class="statistics-label"> {{ entry[0] }} <li>
-                <li class="statistics-item" > {{ entry[1] }} <li>
-                </div>
-
-                {% endfor %}
-            </ul>
-        
-        </div>
-
-         {% if g.user is not none %}
-                    {% if g.user[0]|int == this_user[0]|int %}
-                    
-                    <button 
-                        hx-get="/user/modal" 
-                        hx-target="#modals-here" 
-                        hx-trigger="click"
-                        hx-swap="innerHTML"
-                        > Create New Watch List
-                    </button>
-
-                    {% endif %}
-                {% endif %}
-            </div>
-            
-            <div class="list_preview_wrapper">
-                {% for watch_list in user_lists %}
-                    {{ watch_list_card(watch_list[0]) | safe }}
-                {% endfor %}
-            </div>
-
-        </div>
-
-        <div class="user-page-statistics">
-
-            <p class="statistics-header"> User Comparison </p>
-        
-            <ul class="user-statistics">
-                {% for entry in user_comparison %}
-
-                <div class="statistics-spacer">
-                <li class="statistics-label"> {{ entry[0] }} <li>
-                <li class="statistics-item" > {{ entry[1] }} <li>
-                </div>
-
-                {% endfor %}
-               
-
-            </div>
-            </ul>
-        
-        </div>
-
-    </div>  
-
-    <div id="modals-here"> </div>
-
-</div>
-
-{% endblock %}   CODE REFRENCE BUT DOES NOT FULLY WORK
-
- -->
