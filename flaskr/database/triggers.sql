@@ -137,7 +137,8 @@ CREATE TRIGGER general_movies_list_control_trigger
 
 
 
-
+DROP FUNCTION IF EXISTS update_general_movies_list();
+DROP TRIGGER IF EXISTS update_general_movies_list_trigger ON movies_list;
 
 /* trigger for updating general list
 ----------------------------------------------
@@ -146,7 +147,7 @@ CREATE TRIGGER general_movies_list_control_trigger
     update_general_movies_list()
     update_general_movies_list_trigger
 
-*/
+
 DROP FUNCTION IF EXISTS update_general_movies_list();
 
 CREATE OR REPLACE FUNCTION update_general_movies_list() RETURNS TRIGGER AS $$
@@ -176,10 +177,10 @@ CREATE OR REPLACE FUNCTION update_general_movies_list() RETURNS TRIGGER AS $$
         END IF;
     END;
 $$ LANGUAGE plpgsql;
-
+*/
 
 /* Create the trigger (drop it if it already exists too)
---------------------------------------------------------- */
+--------------------------------------------------------- 
 DROP TRIGGER IF EXISTS update_general_movies_list_trigger ON movies_list;
 
 CREATE TRIGGER update_general_movies_list_trigger
@@ -187,7 +188,7 @@ CREATE TRIGGER update_general_movies_list_trigger
     ON movies_list
     FOR EACH ROW -- could you do ROW.id instead ? "postgresql create trigger for each row value of a specific column"
     EXECUTE PROCEDURE update_general_movies_list();
-
+*/
 
 
 

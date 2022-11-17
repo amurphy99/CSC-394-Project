@@ -115,7 +115,7 @@ def get_general_user_statistics(user_ids):
         # -------------------------------------------
         cur.execute( f"SELECT * FROM movies_list_info WHERE owner_id = '{userID}' AND list_name = 'general';" )
         general_list_info = cur.fetchone()
-        print(general_list_info)
+        #print(general_list_info)
 
         # get the users "general" movies_list_statstics
         # ----------------------------------------------
@@ -132,6 +132,20 @@ def get_general_user_statistics(user_ids):
 
     # return the dict
     return user_statistics_dict
+
+
+def get_general_list_id(user_id):
+
+    # open db connection
+    db = get_db(); cur = db.cursor()
+
+    cur.execute( f"SELECT id FROM movies_list_info WHERE owner_id = '{user_id}' AND list_name = 'general';" )
+    general_list_id = cur.fetchone()[0]
+
+    # close the cursor and db connection
+    cur.close()#; db.close()
+
+    return general_list_id
 
 
 
@@ -239,8 +253,20 @@ def add_movie_to_list(movie_dictionary):
 
     f_movie_title = f_movie_title.replace("'", "''")
 
+
     # open db connection
     db = get_db(); cur = db.cursor()
+
+    # check if being added to general list
+    cur.execute(f"SELECT list_name FROM movies_list_info WHERE id = {f_list_id};")
+    list_name = cur.fetchone()[0]
+    if list_name == "general":  general_list = True
+    else:                       general_list = False
+
+    # get the users id
+    cur.execute(f"SELECT owner_id FROM movies_list_info WHERE id = {f_list_id};")
+    user_id = cur.fetchone()[0]
+
 
     # check if the movie is already in the movies_list table
     cur.execute(f"SELECT * FROM movies_list WHERE list_id = {f_list_id} AND movie_id = {f_movie_id};")
@@ -294,7 +320,16 @@ def add_movie_to_list(movie_dictionary):
 
     # close the cursor and db connection
     cur.close()#; db.close()
-    
+
+
+
+    # add to general list if not already being added to general list
+    if not general_list:
+        general_list_id = get_general_list_id(user_id)
+        new_movie_dictionary = movie_dictionary
+        new_movie_dictionary["list_id"] = general_list_id
+        add_movie_to_list(new_movie_dictionary)
+
 
     # maybe add a success/failure feedback message
     return None
@@ -533,6 +568,6 @@ def genres_string(list_id):
 
     # close the cursor and db connection
     cur.close()
-    print(genre_string)
+    #print(genre_string)
 
     return genre_string[:-2]

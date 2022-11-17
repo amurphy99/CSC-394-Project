@@ -388,18 +388,6 @@ def watch_list_edit_movie_htmx():
 
 
 
-def test_modal():
-
-    if request.method == 'POST':
-        # get form data
-        list_id          = int (request.form["list_id"      ])
-        card_info        = eval(request.form["card_info"    ])
-
-    
-
-    return
-
-
 
 
 

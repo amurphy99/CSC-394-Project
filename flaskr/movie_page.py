@@ -70,7 +70,7 @@ def movie_page(movieID):
     character5 = movieCharacter[4]
     character6 = movieCharacter[5]
         
-    print(character1)
+    #print(character1)
 
     cast_profile_1 = BASE_URL + POSTER_SIZE + movieCast[1]
     cast_profile_2 = BASE_URL + POSTER_SIZE + movieCast[3]
@@ -300,7 +300,7 @@ def modal_form_add_movie():
                         <option value="5"> 5 </option>
                     </select>
    
-                    <input type="hidden" name="movie_id"  value="{ movie_id  }">
+                    <input type="hidden" name="movie_id"  value="{ movie_id }">
     """
     return render_template( "card_displays/modal_base.html", 
                             form_control    = form_control, 
