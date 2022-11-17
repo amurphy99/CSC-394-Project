@@ -47,6 +47,7 @@ def user_page(userID):
     # -----------------------
     db = get_db(); cur = db.cursor()
 
+    '''
     cur.execute( f"SELECT * FROM all_users;" )
     test_all_users = cur.fetchall()
     for row in test_all_users:
@@ -55,7 +56,8 @@ def user_page(userID):
             printed_row += f"{key}: {row[key]}, "
         printed_row = printed_row[:-2] + "]"
         print(printed_row)
-
+    '''
+    
     cur.execute( f"SELECT * FROM all_users WHERE id = '{userID}';" )
     this_user = cur.fetchone()
 
