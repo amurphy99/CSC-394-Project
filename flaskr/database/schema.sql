@@ -109,7 +109,7 @@ CREATE TABLE genres (
 CREATE TABLE genre_counts (
   list_id   INT REFERENCES  movies_list_info(id),
   genre_id  INT REFERENCES  genres(genre_id),
-  count     INT DEFAULT     0,
+  count     INT DEFAULT     1,
   UNIQUE(list_id, genre_id),
   CONSTRAINT pk_genre_counts PRIMARY KEY (list_id, genre_id)
 );

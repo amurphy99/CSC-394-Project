@@ -153,19 +153,21 @@
     </div>
 
 
-        <!-- "Add Movie" Modal -->
+        <!-- Modal for adding movies -->
         <div class="watch_lists_info">
             <!-- 
             Only show the edit buttons if the one viewing this user page is logged in as the owner or an editor
                 the users id (if logged in):    {{ g.user[0]    }}
                 id of the user page owner:      {{ list_info[1] }}
             -->
-            {% if g.user[0]|int == list_info[1]|int %}
-            <form hx-post="/watch_list/modal" hx-target="#modals-here" hx-swap="innerHTML">
-                <input type="hidden" name="listID"      value="{{ listID    }}">
-                <input type="hidden" name="movie_info"  value="{{ movie     }}">
-                <button type="submit"> Add Movie </button>
-            </form>
+            {% if g.user is not none %}
+                {% if g.user[0]|int == list_info[1]|int %}
+                    <form hx-post="/watch_list/modal" hx-target="#modals-here" hx-swap="innerHTML">
+                        <input type="hidden" name="listID"      value="{{ listID    }}">
+                        <input type="hidden" name="movie_info"  value="{{ movie     }}">
+                        <button type="submit"> Add Movie </button>
+                    </form>
+                {% endif %}
             {% endif %}
 
         </div>

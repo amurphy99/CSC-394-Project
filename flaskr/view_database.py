@@ -20,6 +20,9 @@ def preview_database():
     cur.execute( f"SELECT * FROM genres;" )
     genres = cur.fetchall()
 
+    cur.execute( f"SELECT * FROM genre_counts;" )
+    genre_counts = cur.fetchall()
+
     cur.execute( f"SELECT * FROM friend_requests;" )
     friend_requests = cur.fetchall()
 
@@ -32,7 +35,8 @@ def preview_database():
 
     headers = { "movies_list_info"       : ["id", "owner_id", "list_name", "recently_added", "average_rating", "total_movies"],
                 "movies_list_statistics" : ["list_id", "total_movies", "total_runtime", "total_budget"],
-                "genres"                 : ["genre_id", "genre_name", "popularity"], 
+                "genres"                 : ["genre_id", "genre_name", "popularity"],
+                "genre_counts"           : ["list_id", "genre_id", "count"],
                 "friend_requests"        : ["sender_id", "receiver_id", "date_created"],
                 "friends"                : ["friend_1_id", "friend_2_id", "date_created"] }
 
@@ -46,6 +50,7 @@ def preview_database():
                             movies_list_info_reduced    = movies_list_info_reduced,
                             movies_list_statistics      = movies_list_statistics,
                             genres                      = genres,
+                            genre_counts                = genre_counts,
                             friend_requests             = friend_requests,
                             friends                     = friends                    ) 
 

@@ -79,6 +79,29 @@
 </table>
 
 
+<!-- genre_counts 
+------------ -->
+<h4> genre_counts </h4>
+<table class="table table-bordered table-striped table-secondary text-center align-middle shadow">
+    <!-- Table Headers 
+    ------------------- -->
+    <tr>
+        {% for header in headers['genre_counts'] %}
+        <th> {{ header }} </th>
+        {% endfor %}
+    </tr>
+
+    <!-- Table Data
+    ---------------- -->
+    {% for row in genre_counts %}
+    <tr>
+        {% for data in row %}
+        <td> {{ data }} </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
 
 <!-- friend_requests 
 --------------------- -->

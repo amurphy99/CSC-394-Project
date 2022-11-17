@@ -183,15 +183,21 @@ def filtered_search(tags, method, query="", num_results=9, range=None):
         # filter through the results
         # ---------------------------
         for movie in results:
+            if len(matches) >= 9: break
             results_searched += 1
-            match = True
 
+            match = True
             # release year (not implemented)
+            # if movie["release_date"] not in range(start date, end date): match = False
 
             # genres
             for id in tags:
                 if int(id) not in movie['genre_ids']: match = False
 
+            # make sure there is a poser
+            if movie["poster_path"] == None: match = False
+
+            # if the movie made it through each check, then approve it
             if match: matches.append(movie)
 
 

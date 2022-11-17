@@ -92,9 +92,9 @@ def init_db():
     are defined.
     '''
     # dont do anything if testing
-    if current_app.config["TESTING"]: print("init_db() called")
+    if current_app.config["TESTING"]: print("init_db() called (testing)")
     else:
-        print("init-db called")
+        print("init-db called (not testing)")
         #init_schema()
         #init_triggers()
         #init_sample_data()

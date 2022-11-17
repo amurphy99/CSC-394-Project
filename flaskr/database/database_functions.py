@@ -113,8 +113,9 @@ def get_general_user_statistics(user_ids):
 
         # get the users "general" movies_list_info
         # -------------------------------------------
-        cur.execute( f"SELECT * FROM movies_list_info WHERE id = '{userID}' AND list_name = 'general';" )
+        cur.execute( f"SELECT * FROM movies_list_info WHERE owner_id = '{userID}' AND list_name = 'general';" )
         general_list_info = cur.fetchone()
+        print(general_list_info)
 
         # get the users "general" movies_list_statstics
         # ----------------------------------------------
@@ -164,7 +165,7 @@ def get_general_movie_list(user_ids):
 
         # get the list id of the user's general list
         # -------------------------------------------
-        cur.execute( f"SELECT * FROM movies_list_info WHERE id = '{userID}' AND list_name = 'general';" )
+        cur.execute( f"SELECT * FROM movies_list_info WHERE owner_id = '{userID}' AND list_name = 'general';" )
         general_list_id = cur.fetchone()[0]
 
         # get all movies from the general list
@@ -284,8 +285,8 @@ def add_movie_to_list(movie_dictionary):
                 cur.execute(f"UPDATE genres SET popularity = popularity + 1 WHERE genre_id = {genre_id} AND genre_name = '{genre_name}';")
             
             # now insert into table bc we know it is in
-            cur.execute(  f"INSERT INTO genre_counts (list_id, genre_id) \
-                            VALUES ('{f_list_id}', '{genre_id}') \
+            cur.execute(  f"INSERT INTO genre_counts (list_id, genre_id, count) \
+                            VALUES ('{f_list_id}', '{genre_id}', {1}) \
                             ON CONFLICT (list_id, genre_id) DO UPDATE SET count = EXCLUDED.count + 1;" )
 
         # commit changes
@@ -532,5 +533,6 @@ def genres_string(list_id):
 
     # close the cursor and db connection
     cur.close()
+    print(genre_string)
 
     return genre_string[:-2]
