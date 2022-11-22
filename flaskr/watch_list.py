@@ -4,7 +4,7 @@ from flask import Flask, render_template, g, request, flash
 #from flaskr.db import get_database_connection
 from flaskr.db import get_db
 
-from flaskr.movieDBapi import api_query, genre_query
+from flaskr.movieDBapi import api_query
 from flaskr.database.database_functions import add_movie_to_list, genres_string, get_watch_list_statistics
 
 
@@ -223,10 +223,10 @@ def show_user_input_form():
     return 
 
 
-
+'''
 # app.add_url_rule('/watch_list/movie_added_htmx', methods=('GET', 'POST'), view_func=watch_list.movie_added)
 def movie_added():
-    '''
+    
     Receiving:
         * movie info
         * userID (can use to make sure the user has permissions to modify this list)
@@ -252,7 +252,7 @@ def movie_added():
             UPDATE movies SET popularity = popularity + 1 WHERE id = '{f_movie_id}';
     ")
     
-    '''
+    
     # create the new watch list
     if request.method == 'POST':
         # get form data
@@ -290,7 +290,7 @@ def movie_added():
         return render_template('watch_list/movie_added_htmx.html', movie=movie, watch_status=str_watch_status, rating=rating)
 
     return "<h1> this should not return </h1>"
-
+'''
 
 
 def movie_added2():

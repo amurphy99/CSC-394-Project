@@ -3,7 +3,7 @@ from flask import Flask, render_template, g, request, flash
 
 from flaskr.db import get_db
 
-from flaskr.movieDBapi import api_query, genre_query
+from flaskr.movieDBapi import api_query
 from flaskr.database.database_functions import get_watch_list_statistics, get_poster
 #from flaskr.user_page import format_time
 

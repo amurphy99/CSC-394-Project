@@ -1,6 +1,6 @@
 from flask import Flask, render_template, g, request, flash, url_for
 from flaskr.db import get_db
-from flaskr.movieDBapi import api_home
+
 from flaskr.movieDBapi import api_movie_page
 from flaskr.movieDBapi import api_query
 from flaskr.movieDBapi import api_movie_cast

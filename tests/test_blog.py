@@ -16,6 +16,25 @@ def test_index(client, auth):
     #assert b'href="/1/update"' in response.data
 
 
+def test_index_promote(client, auth):
+    response = client.post('/index', data={'modify_userID': '1', 'action': '3' })
+    assert response.status_code == 200
+
+
+
+def test_view_database(client, auth):
+    assert client.get('/api_testing/preview_database').status_code == 200
+
+
+
+
+
+
+
+
+
+
+
 '''
 A user must be logged in to access the create, update, and delete views. 
 The logged in user must be the author of the post to access update and delete, otherwise a 403 Forbidden status is returned. 

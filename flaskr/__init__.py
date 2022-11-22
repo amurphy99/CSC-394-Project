@@ -94,18 +94,6 @@ def create_app(test_config=None):
 
     # ALL TESTING PAGES
     # ---------------------------------------------
-    from . import test
-    app.add_url_rule('/test1', methods=('GET', 'POST'), view_func=test.test1)
-    app.add_url_rule('/test2', methods=('GET', 'POST'), view_func=test.test2)
-
-    from . import index_htmx
-    app.add_url_rule('/index_htmx',             methods=('GET', 'POST'), view_func=index_htmx.index_htmx         )
-    app.add_url_rule('/reset_password_htmx',    methods=('GET', 'POST'), view_func=index_htmx.reset_password_htmx)
-
-    @app.route('/test3')
-    def test3():
-        return render_template('test2.html')
-
     from . import movieDBapi
     app.add_url_rule('/api_testing',        methods=('GET', 'POST'), view_func=movieDBapi.api_testing)
     app.add_url_rule('/send_query_htmx',    methods=('GET', 'POST'), view_func=movieDBapi.get_results)

@@ -32,8 +32,7 @@ def api_query(query):
 
     return response_list
 
-
-
+'''
 def genre_query():
 
     endpoint = "https://api.themoviedb.org/3/genre/movie/list?api_key=f059b4ab8738e8777362529e74ffb62a&language=en-US"
@@ -44,8 +43,7 @@ def genre_query():
 
     return response_list
 
-
-
+'''
 
 
 #@app.route('/api_testing', methods=('GET', 'POST'))
@@ -77,23 +75,6 @@ def get_results():
  
 
 
-
-
-def api_home():
-    # build api request url
-    base        = "https://api.themoviedb.org/3/trending"
-    optionals   = "/movie/day?api_key="
-    api_key     = "f059b4ab8738e8777362529e74ffb62a"
-
-    endpoint = base + optionals + api_key
-
-    # returns a dictionary
-    first_response  = requests.get(endpoint)
-    response_list   = first_response.json()
-
-    #print(response_list)
-
-    return response_list
 
 
 
@@ -255,21 +236,6 @@ def api_movie_cast(movieID):
 
     return response_list
 
-def home_search():
 
-    if request.method == "POST":
-        
-        search_term = request.form["searched"]
-
-        base        = "https://api.themoviedb.org/3/search/movie?api_key="
-        api_key     = "f059b4ab8738e8777362529e74ffb62a"
-        search_url  = base + api_key
-
-        endpoint = search_url + '&query=' + search_term
-
-        first_response = requests.get(endpoint)
-        response_list = first_response.json()
-
-        return response_list
 
 
